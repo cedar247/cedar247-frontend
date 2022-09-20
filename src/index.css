@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.DashBody{
+  background-image: url('./components/Images/Back1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position:center ;
+  /* position: absolute; */
+  background-size: cover;
+  height: 100vh;
+}
+.SideBody{
+  background-image: url('./components/Images/side1.png');
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position:center ;
+  /* position: absolute; */
+  background-size: cover;
+  min-height: 100px;
+}
