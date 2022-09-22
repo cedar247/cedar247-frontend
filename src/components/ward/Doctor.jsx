@@ -10,14 +10,11 @@ import { Grid } from '@material-ui/core';
 const useStyles = makeStyles({
     root: {
       minWidth: 275,
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
+      backgroundColor: '#F5F6FA'
     },
     title: {
       fontSize: 14,
+      color: '#F4A965'
     },
     pos: {
       marginBottom: 12,
@@ -26,7 +23,6 @@ const useStyles = makeStyles({
 
 export default function Doctor(props) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
         <Grid item md={4} s={6}>
@@ -52,7 +48,13 @@ export default function Doctor(props) {
                 </CardContent>
 
                 <CardActions>
-                    <Button size="small">View Schedule</Button>
+                    <Button 
+                        size="small" 
+                        color='secondary' 
+                        variant="outlined"
+                    >
+                        View Schedule
+                    </Button>
                 </CardActions>
             </Card>
         </Grid>

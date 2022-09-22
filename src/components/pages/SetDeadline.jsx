@@ -64,24 +64,34 @@ export default function SetDeadline() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
-                    <Typography variant='h2' component="h1">
+                    <Typography 
+                        variant='h4' 
+                        component="h1"
+                        align='center'
+                        gutterBottom
+                    >
                         Set Deadline
                     </Typography>
 
                     {/* content of the main is here */}
                     <form action="">
                         <MonthPicker/>
-                        <TextField
-                            id="date"
-                            label="Deadline"
-                            type="date"
-                            defaultValue="2022-09-23"
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                        />
+                        <Box textAlign='center' m={3}>
+                            <TextField
+                                id="date"
+                                label="Deadline"
+                                type="date"
+                                defaultValue="2022-09-23"
+                                InputLabelProps={{
+                                shrink: true,
+                                }}
+                                margin='normal'
+                                color='secondary'
+                            
+                            />
+                        </Box>
 
-                        <Box textAlign='center'>
+                        <Box textAlign='center' m={3}>
                             <Button variant="contained" color="primary" type='submit'>
                                 Set Deadline
                             </Button>

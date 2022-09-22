@@ -6,19 +6,36 @@ import AddWard from './components/pages/AddWard';
 import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#465AF7'
+    },
+    secondary: {
+      main: "#7858D7"
+    }
+  },
+  typography: {
+    fontFamily: 'Quicksand'
+  }
+})
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<LoginForm/>}></Route>
-          <Route path="/wards" element={<PersistentDrawerLeft/>}></Route>
-          <Route path="/add-wards" element={<AddWard/>}></Route>
-          <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
-          <Route path="/set-deadline" element={<SetDeadline/>}></Route>
-          <Route path="/view-doctors" element={<DoctorsView/>}></Route>
-        </Routes>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<LoginForm/>}></Route>
+            <Route path="/wards" element={<PersistentDrawerLeft/>}></Route>
+            <Route path="/add-wards" element={<AddWard/>}></Route>
+            <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
+            <Route path="/set-deadline" element={<SetDeadline/>}></Route>
+            <Route path="/view-doctors" element={<DoctorsView/>}></Route>
+          </Routes>
+        </Router>
+      </ThemeProvider>
   );
 }
 

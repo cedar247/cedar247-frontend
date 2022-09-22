@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import { TextField } from '@mui/material';
+import { TextField, Grid } from '@mui/material';
 import Shift from './Shift';
 import Typography from '@material-ui/core/Typography';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -23,102 +23,120 @@ export default function WardDetails() {
 
     return (
         <Box>
-            <TextField 
-                id="outlined-basic" 
-                label="Name of the Ward" 
-                variant="outlined" 
-                color='primary'
-                fullWidth
-            />
+            <Grid container >
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Name of the Ward" 
+                        variant="outlined" 
+                        color='secondary'
+                        fullWidth
+                        margin='normal'
+                    />
+                </Grid>
 
-            <TextField 
-                id="outlined-basic" 
-                label="Number of the Ward" 
-                variant="outlined" 
-                color='primary' 
-                type="number"
-            />
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Number of the Ward" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        fullWidth
+                        margin='normal'
+                    />
+                </Grid>
+            </Grid>
 
             <TextField 
                 id="outlined-basic" 
                 label="Number of the shifts" 
                 variant="outlined" 
-                color='primary' 
+                color='secondary' 
                 type="number"
                 onChange={(e) => setNumOfShifts(e.target.value)}
+                fullWidth
+                margin='dense'
+                
             />
 
             {Array.from(Array(numOfShifts), (e, i) => {
                 return <Shift key={i} />
             })}
 
-            <Typography>
+            <Typography
+                variant='h6'
+                component='p'
+            >
                 Doctor catergories: *need to select at least one type
             </Typography>
 
-            <FormGroup>
+            <Box>
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={doctorCategories.checkedSeniorRegistrar}
-                        onChange={handleCategories}
-                        name="checkedSeniorRegistrar"
-                        color="primary"
+                <FormGroup>
+
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={doctorCategories.checkedSeniorRegistrar}
+                            onChange={handleCategories}
+                            name="checkedSeniorRegistrar"
+                            color="secondary"
+                        />
+                        }
+                        label="Senior Registrar"
                     />
-                    }
-                    label="Senior Registrar"
-                />
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={doctorCategories.checkedRegistrar}
-                        onChange={handleCategories}
-                        name="checkedRegistrar"
-                        color="primary"
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={doctorCategories.checkedRegistrar}
+                            onChange={handleCategories}
+                            name="checkedRegistrar"
+                            color="secondary"
+                        />
+                        }
+                        label="Registrar"
                     />
-                    }
-                    label="Registrar"
-                />
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={doctorCategories.checkedSeniorHO}
-                        onChange={handleCategories}
-                        name="checkedSeniorHO"
-                        color="primary"
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={doctorCategories.checkedSeniorHO}
+                            onChange={handleCategories}
+                            name="checkedSeniorHO"
+                            color="secondary"
+                        />
+                        }
+                        label="Senior Home Officer"
                     />
-                    }
-                    label="Senior Home Officer"
-                />
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={doctorCategories.checkedHO}
-                        onChange={handleCategories}
-                        name="checkedHO"
-                        color="primary"
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={doctorCategories.checkedHO}
+                            onChange={handleCategories}
+                            name="checkedHO"
+                            color="secondary"
+                        />
+                        }
+                        label="Home Officer"
                     />
-                    }
-                    label="Home Officer"
-                />
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={doctorCategories.checkedMO}
-                        onChange={handleCategories}
-                        name="checkedMO"
-                        color="primary"
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={doctorCategories.checkedMO}
+                            onChange={handleCategories}
+                            name="checkedMO"
+                            color="secondary"
+                        />
+                        }
+                        label="Medical Officer"
                     />
-                    }
-                    label="Medical Officer"
-                />
 
-            </FormGroup>
+                </FormGroup>
+            </Box>
             
         </Box>
     )
