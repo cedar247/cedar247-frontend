@@ -57,7 +57,12 @@ export default function AddWard() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
-                    <Typography variant='h1'>
+                    <Typography 
+                        variant='h4' 
+                        component="h1"
+                        align='center'
+                        gutterBottom
+                    >
                         Add Ward
                     </Typography>
 

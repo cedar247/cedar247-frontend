@@ -58,13 +58,21 @@ export default function CreateSchedule() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
-                    <Typography variant='h2' component="h1">
+                    <Typography 
+                        variant='h4' 
+                        component="h1"
+                        align='center'
+                        gutterBottom
+                    >
                         Create Schedule
                     </Typography>
 
                     {/* content of the main is here */}
                     <form action="">
-                        <Typography>
+                        <Typography 
+                            variant='h5'
+                            component='p'
+                            >
                             Number of doctors needed per day:
                         </Typography>
                         <Grid container spacing={3}>
@@ -73,23 +81,33 @@ export default function CreateSchedule() {
                             <ShiftDetails shiftName="Night shift"/>
                         </Grid>
 
-                        <TextField 
-                            id="outlined-basic" 
-                            label="Senior Registrar" 
-                            variant="outlined" 
-                            color='primary' 
-                            type="number"
-                        />
+                        <Grid container spacing={3}>
+                            <Grid item md={6} sm={12} xs={12}>
+                                <TextField 
+                                    id="outlined-basic" 
+                                    label="Home Officer" 
+                                    variant="outlined" 
+                                    color='secondary' 
+                                    type="number"
+                                    fullWidth
+                                    margin='normal'
+                                />
+                            </Grid>
 
-                        <TextField 
-                            id="outlined-basic" 
-                            label="Senior Registrar" 
-                            variant="outlined" 
-                            color='primary' 
-                            type="number"
-                        />
+                            <Grid item md={6} sm={12} xs={12}>
+                                <TextField 
+                                    id="outlined-basic" 
+                                    label="Medical Officer" 
+                                    variant="outlined" 
+                                    color='secondary' 
+                                    type="number"
+                                    fullWidth
+                                    margin='normal'
+                                />
+                            </Grid>
+                        </Grid>
 
-                        <Box textAlign='center'>
+                        <Box textAlign='center' m={3}>
                             <Button variant="contained" color="primary" type='submit'>
                                 Add Ward
                             </Button>

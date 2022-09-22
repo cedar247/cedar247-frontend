@@ -58,8 +58,13 @@ export default function DoctorsView() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
-                    <Typography variant='h3' component="h1">
-                        Add Ward
+                    <Typography 
+                        variant='h4' 
+                        component="h1"
+                        align='center'
+                        gutterBottom
+                    >
+                        Doctors
                     </Typography>
 
                     {/* content of the main is here */}

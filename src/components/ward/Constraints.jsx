@@ -28,7 +28,9 @@ export default function Constraints() {
     return (
         <Box>
             <Typography 
-                variant="h2"
+                variant="h5"
+                component="h2"
+                textAlign="center"
             >
                 Constraints
             </Typography>
