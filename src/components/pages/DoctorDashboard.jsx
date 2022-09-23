@@ -180,22 +180,6 @@ export default function DoctorDashboard() {
                                 }}
                             >
                                 <div className={classes.paper}>
-                                    {/* <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <AddHomeIcon color="success" sx={{ fontSize: 30 }} />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            View Schedule
-                                        </Button>
-                                    </ListItem>
-                                    <Divider variant="inset" color="secondary" /> */}
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
@@ -219,15 +203,7 @@ export default function DoctorDashboard() {
                                                 <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="secondary"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            Change password
-                                        </Button>
+                                        <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
                                     </ListItem>
                                 </div>
                             </List>
@@ -255,14 +231,6 @@ export default function DoctorDashboard() {
                 </Drawer>
 
                 {/* <Main open={open}>
-                    <DrawerHeader />
-                    <div className="container text-center"
-                        style={{
-                            width: "auto", height: "auto", textAlign: "center"
-                        }}><h2>WARDS</h2></div> */}
-                    {/* <ResponsiveGrid /> */}
-                    {/* <OutlinedCard/> */}
-                    {/* <Details/>
                 </Main> */}
             </Box>
         </div>

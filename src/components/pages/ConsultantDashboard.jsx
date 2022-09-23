@@ -271,14 +271,7 @@ export default function ConsultantDashboard() {
                 {/* main body */}
                 
                 {/* <Main open={open}>
-                    <DrawerHeader />
-                    <div className="container text-center"
-                        style={{
-                            width: "auto", height: "auto", textAlign: "center"
-                        }}><h2>WARDS</h2></div> */}
-                    {/* <ResponsiveGrid /> */}
-                    {/* <OutlinedCard/> */}
-                    {/* <Details/>
+                
                 </Main> */}
             </Box>
         </div>
