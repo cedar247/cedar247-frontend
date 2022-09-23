@@ -20,12 +20,6 @@ import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import Avatar from '@mui/material/Avatar';
-// import ResponsiveGrid from './Gridss';
-// import Divider from '@mui/material/Divider';
-// import OutlinedCard from './Cards';
-// import Details from './Details';
-// import Back2 from './Back2.jpg'
 import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 const useStyles = makeStyles({
