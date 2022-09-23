@@ -10,10 +10,10 @@ import DoctorDashboard from './components/pages/DoctorDashboard'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App />
     {/* <LoginForm/> */}
     {/* <PersistentDrawerLeft/> */}
-    <ConsultantDashboard/>
+    {/* <ConsultantDashboard/> */}
     {/* <DoctorDashboard/> */}
   </React.StrictMode>
 );
