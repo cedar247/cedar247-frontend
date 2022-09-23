@@ -18,22 +18,9 @@ export default function WardDetails() {
         checkedMO: true
     });
 
-    // const [shiftArray,setShiftArray]=useState([]);
-
-    // const handleShifts = (e) => setNumOfShifts(e.target.value){
-    //     const Shifts = () => {
-    //         return (<>{Array.from(Array(numOfShifts), (e, i) => {
-    //             return <Shift key={i}>{i}</Shift>
-    //         })}</>)
-    //     }
-    // }
-
-    const [ i, setI ] = useState(0);
-
     const handleCategories = (event) => {
         setDoctorCategories({ ...doctorCategories, [event.target.name]: event.target.checked });
       };
-      console.log("shifts",numOfShifts)
 
       const createShifts = () => {
         let arr = []

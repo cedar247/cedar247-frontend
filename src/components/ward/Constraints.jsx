@@ -13,7 +13,18 @@ export default function Constraints() {
         evening: true,
         night: true
     });
+    const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
 
+
+    const createShiftGroups = () => {
+        let arr = []
+        for (let i = 0; i < numOfConsecutiveGroups; i++) {
+          arr.push(<Shifts/>)
+        }
+        return(<div>
+            {arr.map(shifts=>shifts)}
+            </div>)
+    }
 
     const [casualtyDay, setCasualtyDay] = useState("");
 
@@ -30,7 +41,7 @@ export default function Constraints() {
             <Typography 
                 variant="h5"
                 component="h2"
-                textAlign="center"
+                align="center"
             >
                 Constraints
             </Typography>
@@ -39,7 +50,7 @@ export default function Constraints() {
                 id="outlined-basic" 
                 label="Maximum number of leaves per month:" 
                 variant="outlined" 
-                color='primary' 
+                color='secondary' 
                 type="number"
             />
 
@@ -47,13 +58,12 @@ export default function Constraints() {
                 id="outlined-basic" 
                 label="How many consecutive groups of shifts:" 
                 variant="outlined" 
-                color='primary' 
+                color='secondary' 
                 type="number"
+                onChange={(e)=>setNumOfConsecutiveGroups(e.target.value)}
             />
 
-            <Shifts>
-
-            </Shifts>
+            {createShiftGroups()}
 
             <Typography>
                 What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
@@ -68,7 +78,7 @@ export default function Constraints() {
                         checked={shiftTypes.morning}
                         onChange={handleShiftTypes}
                         name="morning"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Morning"
@@ -82,7 +92,7 @@ export default function Constraints() {
                         checked={shiftTypes.evening}
                         onChange={handleShiftTypes}
                         name="evening"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Evening"
@@ -96,7 +106,7 @@ export default function Constraints() {
                         checked={shiftTypes.night}
                         onChange={handleShiftTypes}
                         name="night"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Night"

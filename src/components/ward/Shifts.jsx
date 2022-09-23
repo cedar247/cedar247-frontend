@@ -22,7 +22,7 @@ export default function Shifts() {
                         checked={shiftTypes.morning}
                         onChange={handleShiftTypes}
                         name="morning"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Morning"
@@ -34,7 +34,7 @@ export default function Shifts() {
                         checked={shiftTypes.evening}
                         onChange={handleShiftTypes}
                         name="evening"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Evening"
@@ -46,7 +46,7 @@ export default function Shifts() {
                         checked={shiftTypes.night}
                         onChange={handleShiftTypes}
                         name="night"
-                        color="primary"
+                        color="secondary"
                     />
                     }
                     label="Night"
