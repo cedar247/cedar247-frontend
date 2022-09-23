@@ -197,7 +197,7 @@ export default function DoctorDashboard() {
                                                 <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
+                                        {/* <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div> */}
                                     </ListItem>
                                 </div>
                             </List>
