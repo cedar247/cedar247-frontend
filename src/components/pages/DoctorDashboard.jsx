@@ -22,6 +22,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
+import ChangePassword from '../pages/ChangePassword.jsx';
+import CustomizedDialogs from '../layouts/Dialog.jsx';
+
+
 const useStyles = makeStyles({
     paper: {
         background: "#f5f5f5"

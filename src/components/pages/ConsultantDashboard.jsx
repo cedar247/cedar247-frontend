@@ -26,7 +26,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import CustomizedDialogs from '../layouts/Dialog.jsx';
 import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
-import ChangePassword from '../pages/ChangePassword.jsx'
+import Calendar from '../pages/Calendar.jsx';
+import ChangePassword from '../pages/ChangePassword.jsx';
 
 const useStyles = makeStyles({
     paper: {
@@ -264,9 +265,9 @@ export default function ConsultantDashboard() {
                 </Drawer>
                 {/* main body */}
                 
-                {/* <Main open={open}>
-                
-                </Main> */}
+                <Main open={open} style={{paddingTop: '100px' }}>
+                    <Calendar />
+                </Main>
             </Box>
         </div>
     );
