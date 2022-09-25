@@ -251,6 +251,8 @@ export default class Calendar extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            checked:props.checked,
+            windowHeight:props.windowHeight,
             data: appointments,
             confirmationVisible: false,
             editingFormVisible: false,
@@ -313,6 +315,7 @@ export default class Calendar extends React.PureComponent {
             }
         );
     }
+    
 
     componentDidUpdate() {
         this.appointmentForm.update();
@@ -389,17 +392,20 @@ export default class Calendar extends React.PureComponent {
 
     render() {
         const {
+            checked,
             currentDate,
             data,
             confirmationVisible,
             editingFormVisible,
             startDayHour,
             endDayHour,
+            windowHeight,
         } = this.state;
+        console.log(windowHeight);
 
         return (
             <Paper >
-                <Scheduler data={data} height = {700}  >
+                <Scheduler data={data} height = {windowHeight} >
                     <ViewState currentDate={currentDate} />
                     <EditingState
                         onCommitChanges={this.commitChanges}
@@ -408,11 +414,12 @@ export default class Calendar extends React.PureComponent {
                         }
                         onAddedAppointmentChange={this.onAddedAppointmentChange}
                     />
-                    <WeekView
+                    {/* <WeekView
+                        width = {100}
                         startDayHour={startDayHour}
                         endDayHour={endDayHour}
-                    />
-                    <MonthView />
+                    /> */}
+                    <MonthView height = {windowHeight} />
                     <AllDayPanel />
                     <EditRecurrenceMenu />
                     <Appointments />
@@ -423,8 +430,9 @@ export default class Calendar extends React.PureComponent {
                     />
                     <Toolbar />
                     <DateNavigator />
-                    <ViewSwitcher />
+                    {/* <ViewSwitcher /> */}
                     <AppointmentForm
+                        checked = {this.checked}
                         overlayComponent={this.appointmentForm}
                         visible={editingFormVisible}
                         onVisibilityChange={this.toggleEditingFormVisibility}

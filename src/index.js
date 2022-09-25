@@ -7,8 +7,8 @@ import LoginForm from './components/pages/Signin';
 import PersistentDrawerLeft from './components/pages/Persistant';
 import ConsultantDashboard from './components/pages/ConsultantDashboard'
 import DoctorDashboard from './components/pages/DoctorDashboard'
-
-
+import CreateSchedule from './components/pages/CreateSchedule'
+import DefineRequirements from './components/pages/defineRequirements'
 
 
 
@@ -16,7 +16,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <ConsultantDashboard/>
+    {/* <CreateSchedule/> */}
+    {/* <ConsultantDashboard/> */}
+    {/* <DoctorDashboard/> */}
+    {/* <PersistentDrawerLeft /> */}
+    <DefineRequirements />
   </React.StrictMode>
 );
 

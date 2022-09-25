@@ -26,10 +26,10 @@ const ChangePassword = () => {
         // props.resetForm()
     }
     return (
-        <Grid>
+        <Grid> 
             <Paper elevation={0} style={paperStyle}>
                 <Grid align='center'>
-                    <Typography variant='caption'>Fill the form to create an account</Typography>
+                    <Typography variant='caption' ><h3 align="center" >Change Password</h3></Typography>
                 </Grid>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                     {(props) => (
