@@ -136,9 +136,9 @@ class LoginForm extends React.Component {
             <>
             {/* <ButtonAppBar/> */}
                 <div className="container text-center bg-white bg-opacity-75 p-3" style={{
-                    width: "340px", height: "320px", marginTop: "16rem", padding: '25px'
+                    width: "340px", height: "320px", marginTop: "10rem", padding: '25px'
 
-                    , boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
+                    , marginBottom: "6rem" ,boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
                     borderRadius: '10px'
                 }}>
                     <Box
@@ -201,8 +201,6 @@ class LoginForm extends React.Component {
                         Sign In
                     </Button>
                 </div>
-                <br />
-                <br />
 
                 <Typography variant="body2" color="text.secondary" align="center">
                     {'Copyright © '}
