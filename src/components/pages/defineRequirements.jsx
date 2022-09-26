@@ -50,9 +50,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function DefineRequirements() {
     const [open, setOpen] = React.useState(false);
-    const [numberofRequirements, setNumberofRequirements] = React.useState();
+    const [add, setAdd] = React.useState(1);
     const [RequirementGrid, setRequirementGrid] = React.useState([]);
-    console.log(numberofRequirements);
+    console.log(add);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -73,19 +73,21 @@ export default function DefineRequirements() {
             });
     };
 
-    const AddRequirementToGrid = () =>{
-        const length =  RequirementGrid.length
-        console.log(numberofRequirements);
-        console.log(length);
+    function AddRequirementToGrid(number){
+        // const length =  RequirementGrid.length
+        // console.log(numberofRequirements);
+        // console.log(length);
+        // const number = e.target.value
+        // console.log(number);
         const newItem ={ 
-            id : {},
+            key : {number},
             date :"",
             morning : "",
             evening: "",
             night: ""
         };
         setRequirementGrid((RequirementGrid)=>[...RequirementGrid, newItem])
-        setNumberofRequirements();
+        setAdd((add)=>(add+1));
     };
 
     const dropRequirementFromGrid = () => {
@@ -101,7 +103,7 @@ export default function DefineRequirements() {
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open} style={{paddingTop: '70px' }} >
-                    <Box sx={{ ...box, borderRadius: 10 }}>
+                    {/* <Box sx={{ ...box, borderRadius: 10 }}> */}
                         <Typography 
                             variant='h4' 
                             component="h1"
@@ -113,23 +115,14 @@ export default function DefineRequirements() {
 
                         {/* content of the main is here */}
                         <form action="">
-
-                            <TextField 
-                                id="outlined-basic" 
-                                label="Number of requirements" 
-                                variant="outlined" 
-                                color='secondary' 
-                                type="number"
-                                InputProps={{ inputProps: { min: 1 }}}
-                                margin='normal'
-                                onChange = {AddRequirementToGrid}
-                                style ={{marginBottom: 30}}
-                            />
+                            <p>
+                                <Button variant="outlined" color="primary" value = {add} onClick={() => AddRequirementToGrid({add})} >Add Requirement</Button>
+                            </p>
                             <Grid container spacing={5} item>
                                 {requirementGridComponent()}
                             </Grid>
                         </form>
-                    </Box>
+                    {/* </Box> */}
                 </Main>
             </Box>
         </div>
