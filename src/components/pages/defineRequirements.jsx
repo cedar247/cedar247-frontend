@@ -1,24 +1,29 @@
-import React from 'react';
+import React from "react";
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Header from '../common/consultant/Header';
-import SideBar from "../common/consultant/SideBar";
 import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
-import Requirements from "../common/doctor/Requirements.jsx";
+import { TextField } from "@material-ui/core";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import CssBaseline from '@mui/material/CssBaseline';
+import Drawer from '@mui/material/Drawer';
+import Header from '../common/doctor/Header';
+import SideBar from "../common/doctor/SideBar";
+import { Grid, Paper, Button, Typography } from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles";
+
 
 const drawerWidth = 240;
 
-const box = {
-    bgcolor: 'background.paper',
-    borderColor: 'text.primary',
-    m: '5%',
-    p: '5%',
-    border: 1,
-    width: '90%',
-};
+const useStyles = makeStyles({
+    paper: {
+        background: "#f5f5f5"
+    }
+});
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -39,92 +44,63 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
 );
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-}));
-
-export default function DefineRequirements() {
+export default function Defnerequirements() {
     const [open, setOpen] = React.useState(false);
-    const [add, setAdd] = React.useState(1);
-    const [RequirementGrid, setRequirementGrid] = React.useState([]);
-    console.log(add);
+    const [date, setDate] = React.useState(null);
+    const [morning, setMorning] = React.useState(null);
+    const [evening, setEvening] = React.useState(null);
+    const [night, setNight] = React.useState(null);
+    const paperStyle = { padding: '0 15px 40px 15px', width: 250, }
 
     const handleDrawerOpen = () => {
         setOpen(true);
     };
 
     const handleDrawerClose = () => {
-        
         setOpen(false);
     };
 
-    const requirementGridComponent = () =>{
-        return RequirementGrid.map((item) => {
-            return(
-                <Grid item xs= {12} sm = {6} md = {3} key={item.id} >
-                    <Requirements id = {item.id} />
-                </Grid>
-                );
-            });
-    };
-
-    function AddRequirementToGrid(number){
-        // const length =  RequirementGrid.length
-        // console.log(numberofRequirements);
-        // console.log(length);
-        // const number = e.target.value
-        // console.log(number);
-        const newItem ={ 
-            key : {number},
-            date :"",
-            morning : "",
-            evening: "",
-            night: ""
-        };
-        setRequirementGrid((RequirementGrid)=>[...RequirementGrid, newItem])
-        setAdd((add)=>(add+1));
-    };
-
-    const dropRequirementFromGrid = () => {
-        const dropItem = {
-            
-        }
-    }
-
     return (
-        <div>
+        <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
-                <Main open={open} style={{paddingTop: '70px' }} >
-                    {/* <Box sx={{ ...box, borderRadius: 10 }}> */}
-                        <Typography 
-                            variant='h4' 
-                            component="h1"
-                            align='center'
-                            gutterBottom
-                        >
-                            Define Requirements
-                        </Typography>
-
-                        {/* content of the main is here */}
-                        <form action="">
-                            <p>
-                                <Button variant="outlined" color="primary" value = {add} onClick={() => AddRequirementToGrid({add})} >Add Requirement</Button>
-                            </p>
-                            <Grid container spacing={5} item>
-                                {requirementGridComponent()}
-                            </Grid>
-                        </form>
-                    {/* </Box> */}
+                <Main open={open} >
+                    <Grid align = "center" style ={{paddingTop:"100px"}} > 
+                    <Paper style={paperStyle} style ={{width:"40%",height:"50%", padding:"20px" }}>
+                    <Box align='center' >
+                        <h1 >
+                        Define Requirements
+                        </h1>
+                            <form >
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    label="Select Date"
+                                    value={date}
+                                    onChange ={(newValue)=> setDate(newValue)}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                            <div style={{align: "center", width:'250px' }}>
+                                <FormGroup >
+                                    <FormControlLabel control={<Checkbox value={morning} onchange = {setMorning}  />} label="Morning shift (8 am -1 pm)"  />
+                                </FormGroup>
+                                <FormGroup >
+                                    <FormControlLabel control={<Checkbox value={evening} onchange = {setEvening}  />}  label="Evening shift (1 pm - 7 pm)"/>
+                                </FormGroup>
+                                <FormGroup >
+                                    <FormControlLabel control={<Checkbox value={night}  onchange = {setNight} />}  label="Night shift (7 pm - 8 am)"  />
+                                </FormGroup>
+                                <Button type='submit' style={{margineTop:"10px"}} variant='contained'
+                                            color='primary'>Submit</Button>
+                            </div>
+                            </form>
+                    </Box>
+                    </Paper>
+                    </Grid>
                 </Main>
             </Box>
         </div>
-    );
+    ); 
 }

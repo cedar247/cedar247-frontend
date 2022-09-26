@@ -22,6 +22,7 @@ import { Button } from '@mui/material';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
 import ChangePassword from '../../pages/ChangePassword.jsx';
+import DefineRequirements from '../../pages/defineRequirements.jsx';
 import CustomizedDialogs from '../../layouts/Dialog.jsx';
 
 const useStyles = makeStyles({
@@ -98,15 +99,15 @@ export default function SideBar(props) {
                                             <AddBoxIcon color="success" sx={{ fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        color= "success"
-                                        sx={{ mt: 3, mb: 2, }}
-                                    >
-                                        Define Requirements
-                                    </Button>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Button
+                                            // onClick={handleClickOpen}
+                                            variant="contained"
+                                            fullWidth
+                                            color="success"
+                                        > Define Requirements
+                                        </Button>
+                                    </div>
                                 </ListItem>
                                 <Divider variant="inset" color="secondary" />
                                 <ListItem>
@@ -115,7 +116,15 @@ export default function SideBar(props) {
                                             <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
-                                    <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Button
+                                            // onClick={handleClickOpen}
+                                            variant="contained"
+                                            fullWidth
+                                            color="secondary"
+                                        > Change password
+                                        </Button>
+                                    </div>
                                 </ListItem>
                             </div>
                         </List>

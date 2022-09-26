@@ -9,7 +9,7 @@ import ConsultantDashboard from './components/pages/ConsultantDashboard'
 import DoctorDashboard from './components/pages/DoctorDashboard'
 import CreateSchedule from './components/pages/CreateSchedule'
 import DefineRequirements from './components/pages/defineRequirements'
-
+import ChangePassword from './components/pages/ChangePassword'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,6 +21,7 @@ root.render(
     {/* <DoctorDashboard/> */}
     {/* <PersistentDrawerLeft /> */}
     <DefineRequirements />
+    {/* <ChangePassword/> */}
   </React.StrictMode>
 );
 
