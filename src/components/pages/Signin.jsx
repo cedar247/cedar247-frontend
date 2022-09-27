@@ -50,6 +50,11 @@ class LoginForm extends React.Component {
         });
     };
 
+    handleSubmit() {
+
+        alert(`${this.state.email} , ${this.state.password}`);
+    };
+
     handleOpen() {
 
         this.setState({
@@ -197,6 +202,7 @@ class LoginForm extends React.Component {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        onClick = {()=>this.handleSubmit()}
                     >
                         Sign In
                     </Button>

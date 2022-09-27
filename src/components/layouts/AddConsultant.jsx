@@ -13,7 +13,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
+import { useState } from "react";
+
+
 const theme = createTheme();
+
+
+
+
+
 const currencies = [
   {
     value: 'USD',
@@ -34,9 +42,24 @@ const currencies = [
 ];
 
 export default function AddConsultant(props) {
+
+  const [values, setValues] = React.useState({
+    password: "",
+    re_password: "",
+    showPassword: false,
+    fname: "",
+    lname: "",
+    ememailail: "",
+    contactNO: ""
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  
   const [currency, setCurrency] = React.useState('');
 
-  const handleChange = (event) => {
+  const handleChange2 = (event) => {
     setCurrency(event.target.value);
   };
 
@@ -44,6 +67,7 @@ export default function AddConsultant(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    alert(`${values.contactNO},${values.email}`);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -89,7 +113,7 @@ export default function AddConsultant(props) {
                   select
                   label="Ward"
                   value={currency}
-                  onChange={handleChange}
+                  onChange={handleChange2}
                   SelectProps={{
                     native: true,
                   }}
@@ -109,6 +133,8 @@ export default function AddConsultant(props) {
                   label="Contact Number"
                   name="contactNO"
                   autoComplete="Contact-Number"
+                  value={values.contactNO}
+                  onChange={handleChange('contactNO')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -119,7 +145,7 @@ export default function AddConsultant(props) {
                   select
                   label="Ward"
                   value={currency}
-                  onChange={handleChange}
+                  onChange={handleChange2}
                   SelectProps={{
                     native: true,
                   }}
@@ -139,6 +165,8 @@ export default function AddConsultant(props) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={values.email}
+                  onChange={handleChange('email')}
                 />
               </Grid>
             </Grid>

@@ -38,15 +38,32 @@ const currencies = [
 
 export default function AddDoctor(props) {
 
+  const [values, setValues] = React.useState({
+    password: "",
+    re_password: "",
+    showPassword: false,
+    Name: "",
+    lname: "",
+    ememailail: "",
+    contactNO: ""
+  });
+
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+
   const [currency, setCurrency] = React.useState('EUR');
 
-  const handleChange = (event) => {
+  const handleChange2 = (event) => {
     setCurrency(event.target.value);
   };
 
   const name = props.title;
   const handleSubmit = (event) => {
     event.preventDefault();
+    alert(`${values.contactNO},${values.email}`);
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -83,6 +100,7 @@ export default function AddDoctor(props) {
                   id="Name"
                   label="Name"
                   autoFocus
+                  onChange={handleChange('Name')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -92,7 +110,7 @@ export default function AddDoctor(props) {
                   select
                   label="Ward"
                   value={currency}
-                  onChange={handleChange}
+                  onChange={handleChange2}
                   SelectProps={{
                     native: true,
                   }}
@@ -112,6 +130,7 @@ export default function AddDoctor(props) {
                   label="Contact Number"
                   name="contactNO"
                   autoComplete="Contact-Number"
+                  onChange={handleChange('contactNO')}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -122,6 +141,7 @@ export default function AddDoctor(props) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleChange('email')}
                   
                 />
               </Grid>
