@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     }
 });
 
-const drawerWidth = 270;
+const drawerWidth = 240;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
