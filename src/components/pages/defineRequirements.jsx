@@ -68,7 +68,7 @@ export default function Defnerequirements() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open} >
                     <Grid align = "center" style ={{paddingTop:"100px"}} > 
-                    <Paper style={paperStyle} style ={{width:"40%",height:"50%", padding:"20px" }}>
+                    <Paper style={paperStyle}>
                     <Box align='center' >
                         <h1 >
                         Define Requirements

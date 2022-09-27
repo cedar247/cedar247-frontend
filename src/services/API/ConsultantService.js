@@ -8,6 +8,13 @@ const setDeadline = (details) => {
     return axios.post(APIEndpoint + "/consultant/set-deadline", details);
 }; 
 
-export default {
-    setDeadline
-}
+const getDoctors = () => {
+    return axios.get(APIEndpoint + "/consultant/doctors")
+};
+
+const consulantService = {
+    setDeadline,
+    getDoctors
+};
+
+export default consulantService;
