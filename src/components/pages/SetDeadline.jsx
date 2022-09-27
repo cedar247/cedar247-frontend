@@ -9,6 +9,7 @@ import Constraints from '../ward/Constraints';
 import { Button, Typography, Grid, TextField} from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import MonthPicker from "../schedule/MonthPicker";
+import ConsultantService from "../../services/API/ConsultantService";
 
 const drawerWidth = 240;
 
@@ -43,10 +44,29 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SetDeadline() {
     const [open, setOpen] = React.useState(false);
     const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [values, setValues] = React.useState({
+        month: "",
+        year: "",
+        deadline: ""
+    });
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
       };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("submitted")
+
+        try {
+            const response = await ConsultantService.setDeadline(values);
+    
+            console.log(response);
+        } catch(error) {
+            console.log(error)
+        }
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -75,7 +95,7 @@ export default function SetDeadline() {
 
                     {/* content of the main is here */}
                     <form action="">
-                        <MonthPicker/>
+                        <MonthPicker handleChange={handleChange} values={values}/>
                         <Box textAlign='center' m={3}>
                             <TextField
                                 id="date"
@@ -87,12 +107,12 @@ export default function SetDeadline() {
                                 }}
                                 margin='normal'
                                 color='secondary'
-                            
+                                onChange={handleChange("deadline")}
                             />
                         </Box>
 
                         <Box textAlign='center' m={3}>
-                            <Button variant="contained" color="primary" type='submit'>
+                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Set Deadline
                             </Button>
                         </Box>
