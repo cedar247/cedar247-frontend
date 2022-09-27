@@ -22,6 +22,15 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
+import ChangePassword from '../pages/ChangePassword.jsx';
+import CustomizedDialogs from '../layouts/Dialog.jsx';
+import Calendar from '../pages/Calendar.jsx';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Header from '../common/doctor/Header';
+import SideBar from "../common/doctor/SideBar";
+
 const useStyles = makeStyles({
     paper: {
         background: "#f5f5f5"
@@ -30,6 +39,7 @@ const useStyles = makeStyles({
 
 
 const drawerWidth = 240;
+const windowHeight = window.innerHeight-200;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -50,36 +60,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
 );
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-}));
-
 export default function DoctorDashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [showAllDoctors, setShowAllDoctors] = React.useState(false);
+
+    const handleShowHide = () =>{
+        setShowAllDoctors(!showAllDoctors);
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -93,6 +82,16 @@ export default function DoctorDashboard() {
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
+<<<<<<< HEAD
+                <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <Main open={open} style={{paddingTop: '100px' }}>
+                    <FormGroup >
+                        <FormControlLabel control={<Checkbox onChange ={handleShowHide}  />} style={{paddingLeft: '50px', paddingTop: '10px', width:'350px' }} label="Display All doctors Schedule" />
+                    </FormGroup>
+                    <Calendar windowHeight = {windowHeight} />
+                </Main>
+=======
                 <AppBar position="fixed" open={open}>
                     <Toolbar>
                         <IconButton
@@ -226,6 +225,7 @@ export default function DoctorDashboard() {
 
                 {/* <Main open={open}>
                 </Main> */}
+>>>>>>> main
             </Box>
         </div>
     );
