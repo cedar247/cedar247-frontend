@@ -14,65 +14,60 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
-
+import AdminService from '../../services/API/AdminService';
 
 const theme = createTheme();
 
 
-
-
-
 const currencies = [
   {
-    value: 'USD',
-    label: 'DOllerUS',
+    value: '6333269f4a2f21acab55bc9c',
+    label: '6333269f4a2f21acab55bc9c',
   },
   {
-    value: 'EUR',
-    label: 'EUROPE',
+    value: '6333269f4a2f21acab55bc9c',
+    label: '6333269f4a2f21acab55bc9c',
   },
   {
-    value: 'BTC',
-    label: 'BTC',
+    value: '6333269f4a2f21acab55bc9c',
+    label: '6333269f4a2f21acab55bc9c',
   },
   {
-    value: 'JPY',
-    label: '¥Japan',
+    value: '6333269f4a2f21acab55bc9c',
+    label: '6333269f4a2f21acab55bc9c',
   },
 ];
 
 export default function AddConsultant(props) {
 
   const [values, setValues] = React.useState({
-    password: "",
-    re_password: "",
-    showPassword: false,
-    fname: "",
-    lname: "",
-    ememailail: "",
-    contactNO: ""
+    name: "",
+    email: "",
+    phoneNumber: "",
+    WardID:""
   });
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
   
-  const [currency, setCurrency] = React.useState('');
-
-  const handleChange2 = (event) => {
-    setCurrency(event.target.value);
+  const handleChange3 = (event) => {
+    setValues({ ...values, ["WardID"]: event.target.value });
   };
-
   const name = props.title;
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    alert(`${values.contactNO},${values.email}`);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const handleSubmit = async (e) => {
+    console.log(`${values.WardID}`)
+    e.preventDefault();
+    console.log("submitted")
+
+    try {
+        const response = await AdminService.addConsultant(values);
+
+        console.log(response);
+    } catch(error) {
+        console.log(error)
+    }
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,6 +98,8 @@ export default function AddConsultant(props) {
                   id="Name"
                   label="Name"
                   autoFocus
+                  value={values.name}
+                  onChange={handleChange('name')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -112,8 +109,8 @@ export default function AddConsultant(props) {
                   id="outlined-select-currency-native"
                   select
                   label="Ward"
-                  value={currency}
-                  onChange={handleChange2}
+                  value={values.WardID}
+                  onChange={handleChange3}
                   SelectProps={{
                     native: true,
                   }}
@@ -133,29 +130,9 @@ export default function AddConsultant(props) {
                   label="Contact Number"
                   name="contactNO"
                   autoComplete="Contact-Number"
-                  value={values.contactNO}
-                  onChange={handleChange('contactNO')}
+                  value={values.phoneNumber}
+                  onChange={handleChange("phoneNumber")}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                sx={{ m: 0 }}
-                fullWidth
-                  id="outlined-select-currency-native"
-                  select
-                  label="Ward"
-                  value={currency}
-                  onChange={handleChange2}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
