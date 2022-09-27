@@ -8,29 +8,62 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import MenuItem from '@mui/material/MenuItem';
 
 const theme = createTheme();
 
-export default function SignUp() {
+
+const currencies = [
+  {
+    value: 'USD',
+    label: 'DOllerUS',
+  },
+  {
+    value: 'EUR',
+    label: 'EUROPE',
+  },
+  {
+    value: 'BTC',
+    label: 'BTC',
+  },
+  {
+    value: 'JPY',
+    label: '¥Japan',
+  },
+];
+
+export default function AddDoctor(props) {
+
+  const [values, setValues] = React.useState({
+    password: "",
+    re_password: "",
+    showPassword: false,
+    Name: "",
+    lname: "",
+    ememailail: "",
+    contactNO: ""
+  });
+
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+
+  const [currency, setCurrency] = React.useState('EUR');
+
+  const handleChange2 = (event) => {
+    setCurrency(event.target.value);
+  };
+
+  const name = props.title;
   const handleSubmit = (event) => {
     event.preventDefault();
+    alert(`${values.contactNO},${values.email}`);
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -44,39 +77,60 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <PersonIcon sx={{ fontSize: 30 }} />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            {name}
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="Name"
                   name="firstName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="Name"
+                  label="Name"
                   autoFocus
+                  onChange={handleChange('Name')}
                 />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                sx={{ m: 0, width: '20ch' }}
+                  id="outlined-select-currency-native"
+                  select
+                  label="Ward"
+                  value={currency}
+                  onChange={handleChange2}
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  {currencies.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="contactNO"
+                  label="Contact Number"
+                  name="contactNO"
+                  autoComplete="Contact-Number"
+                  onChange={handleChange('contactNO')}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -87,23 +141,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  onChange={handleChange('email')}
+                  
                 />
               </Grid>
             </Grid>
@@ -113,18 +152,10 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              ADD
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
