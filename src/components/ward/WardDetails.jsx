@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { TextField, Grid } from '@mui/material';
 import Shift from './Shift';
@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 export default function WardDetails() {
     const [ numOfShifts, setNumOfShifts ] = useState(0);
@@ -17,9 +18,32 @@ export default function WardDetails() {
         checkedMO: true
     });
 
+    // const [shiftArray,setShiftArray]=useState([]);
+
+    // const handleShifts = (e) => setNumOfShifts(e.target.value){
+    //     const Shifts = () => {
+    //         return (<>{Array.from(Array(numOfShifts), (e, i) => {
+    //             return <Shift key={i}>{i}</Shift>
+    //         })}</>)
+    //     }
+    // }
+
+    const [ i, setI ] = useState(0);
+
     const handleCategories = (event) => {
         setDoctorCategories({ ...doctorCategories, [event.target.name]: event.target.checked });
       };
+      console.log("shifts",numOfShifts)
+
+      const createShifts = () => {
+        let arr = []
+        for (let i = 0; i < numOfShifts; i++) {
+          arr.push(<Shift/>)
+        }
+        return(<div>
+            {arr.map(shift=>shift)}
+            </div>)
+      }
 
     return (
         <Box>
@@ -54,15 +78,16 @@ export default function WardDetails() {
                 variant="outlined" 
                 color='secondary' 
                 type="number"
-                onChange={(e) => setNumOfShifts(e.target.value)}
+                onChange={(e)=>setNumOfShifts(e.target.value)}
                 fullWidth
                 margin='dense'
                 
             />
 
-            {Array.from(Array(numOfShifts), (e, i) => {
-                return <Shift key={i} />
-            })}
+          
+            
+            {/* numOfShifts.map((i) => <Shift key={i}/>) */}
+            {createShifts()}
 
             <Typography
                 variant='h6'

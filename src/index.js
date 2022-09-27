@@ -3,25 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import LoginForm from './components/pages/Signin';
-import PersistentDrawerLeft from './components/pages/Persistant';
-import ConsultantDashboard from './components/pages/ConsultantDashboard'
-import DoctorDashboard from './components/pages/DoctorDashboard'
-import CreateSchedule from './components/pages/CreateSchedule'
-import DefineRequirements from './components/pages/defineRequirements'
-import ChangePassword from './components/pages/ChangePassword'
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <CreateSchedule/> */}
-    {/* <ConsultantDashboard/> */}
-    {/* <DoctorDashboard/> */}
-    {/* <PersistentDrawerLeft /> */}
-    <DefineRequirements />
-    {/* <ChangePassword/> */}
+    <App />
   </React.StrictMode>
 );
 
