@@ -20,6 +20,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CreateIcon from '@mui/icons-material/Create';
 import GroupsIcon from '@mui/icons-material/Groups';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
+import PasswordIcon from '@mui/icons-material/Password';
+import ChangePassword from '../../pages/ChangePassword.jsx';
+import CustomizedDialogs from '../../layouts/Dialog.jsx';
 
 const useStyles = makeStyles({
     paper: {
@@ -152,6 +155,14 @@ export default function SideBar(props) {
                                         >
                                             Set Deadline
                                         </Button>
+                                    </ListItem>
+                                    <ListItem sx={{ mt: 3, mb: 2 }}>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                                <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
                                     </ListItem>
                                 </div>
                             </List>
