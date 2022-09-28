@@ -43,6 +43,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 export default function ChangePassword() {
     const [open, setOpen] = React.useState(false);
+    const id = ""
 
     const paperStyle = { padding: '0 15px 40px 15px', width: 250, }
     const btnStyle = { marginTop: 10 }
@@ -66,16 +67,17 @@ export default function ChangePassword() {
         confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password not matches").required('Required')
     })
     const onSubmit = async (values, props) => {
-        console.log(values);
+        console.log({id,...values});
         alert("Are you sure you wants to change the password")
         try {
-            const response = await DoctorService.changePassword(values);
+            const response = await DoctorService.changePassword({id,...values});
 
             console.log(response);
 
         } catch (error) {
             console.log(error);
         }
+        // props.resetForm()
     }
 
 
