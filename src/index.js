@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import LoginForm from './components/pages/Signin';
-import PersistentDrawerLeft from './components/pages/Persistant';
-import ConsultantDashboard from './components/pages/ConsultantDashboard'
-import DoctorDashboard from './components/pages/DoctorDashboard'
-
-
 
 
 
@@ -16,6 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    
   </React.StrictMode>
 );
 

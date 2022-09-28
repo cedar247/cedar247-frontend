@@ -7,6 +7,7 @@ import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
 import { createTheme, ThemeProvider } from '@material-ui/core';
+import PopUp from './components/layouts/Popup';
 
 const theme = createTheme({
   palette: {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
             <Route path="/set-deadline" element={<SetDeadline/>}></Route>
             <Route path="/view-doctors" element={<DoctorsView/>}></Route>
+            <Route path="/Popup" element={<PopUp/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>

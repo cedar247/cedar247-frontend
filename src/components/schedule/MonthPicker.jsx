@@ -2,16 +2,18 @@ import React, {useState} from 'react';
 import { InputLabel, Select, MenuItem, FormControl, Box, Grid} from '@material-ui/core';
 import { Typography } from '@mui/material';
 
-export default function MonthPicker() {
+export default function MonthPicker({ values, handleChange }) {
     const [year, setYear] = useState("");
     const [month, setMonth] = useState("");
     
     const handleYear = (e) => {
         setYear(e.target.value);
+        // handleChange("year")(e);
     };
 
     const handleMonth = (e) => {
         setMonth(e.target.value);
+        // handleChange("month")(e);
     }
     
     return (
@@ -32,8 +34,8 @@ export default function MonthPicker() {
                             <Select
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
-                                value={year}
-                                onChange={handleYear}
+                                value={values.year}
+                                onChange={handleChange("year")}
                                 color='secondary'
                             >
                                 <MenuItem value="">
@@ -55,8 +57,8 @@ export default function MonthPicker() {
                             <Select
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
-                                value={month}
-                                onChange={handleMonth}
+                                value={values.month}
+                                onChange={handleChange("month")}
                                 color='secondary'
                             >
                                 <MenuItem value="">
