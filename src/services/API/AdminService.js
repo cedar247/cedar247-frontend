@@ -15,15 +15,18 @@ const addDoctor = (details) => {
 
 
 const getConsultants = () => {
-    return axios.get(APIEndpoint + "/admin/");
+    return axios.get(APIEndpoint + "/admin/getConsultants");
 }; 
 
+const getWards = () => {
+    return axios.get(APIEndpoint + "/admin/");
+}; 
 
 
 export default {
     addConsultant,
     addDoctor,
-    getConsultants
+    getConsultants,getWards
 }
 
 

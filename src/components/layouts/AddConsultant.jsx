@@ -13,60 +13,52 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import AdminService from '../../services/API/AdminService';
+import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 const theme = createTheme();
 
 
-const currencies = [
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-];
 
 export default function AddConsultant(props) {
+
+  const [Wards, setWards] = useState([]);
 
   const [values, setValues] = React.useState({
     name: "",
     email: "",
     phoneNumber: "",
-    WardID:""
+    WardID: ""
   });
 
+
   useEffect(() => {
+    getAllWards();
+  }, []);
+
+  const getAllWards = async () => {
     try {
-      const response =  AdminService.getConsultants();
+      const response = await AdminService.getWards();
       console.log(response);
-      console.log(response.ok);
-      if(response.ok){
-        console.log("OK");
-      }
-  } catch(error) {
+      console.log(response.data);
+      setWards(response.data);
+    } catch (error) {
       console.log(error)
-  }
-  },[]);
+    }
+
+  };
 
 
-  
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  
+
   const handleChange3 = (event) => {
     setValues({ ...values, ["WardID"]: event.target.value });
   };
@@ -78,13 +70,13 @@ export default function AddConsultant(props) {
     console.log("submitted")
 
     try {
-        const response = await AdminService.addConsultant(values);
+      const response = await AdminService.addConsultant(values);
 
-        console.log(response);
-    } catch(error) {
-        console.log(error)
+      console.log(response);
+    } catch (error) {
+      console.log(error)
     }
-}
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -120,24 +112,43 @@ export default function AddConsultant(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                sx={{ m: 0, }}
-                fullWidth
+
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Ward</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values.WardID}
+                    label="Ward"
+                    onChange={handleChange3}
+                  >
+                    {Wards.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <TextField
+                  sx={{ m: 0, }}
+                  fullWidth
+                  focused
                   id="outlined-select-currency-native"
                   select
                   label="Ward"
                   value={values.WardID}
                   onChange={handleChange3}
+                  helperText="Please select your Ward"
                   SelectProps={{
                     native: true,
                   }}
                 >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
+                  {Consultant.map((option) => (
+                    <option key={option._id} value={option._id}>
+                      {option.name}
                     </option>
                   ))}
-                </TextField>
+                </TextField> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

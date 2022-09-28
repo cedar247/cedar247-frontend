@@ -14,27 +14,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import AdminService from '../../services/API/AdminService';
+// import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useState, useEffect } from "react";
+import InputLabel from '@mui/material/InputLabel';
+
 const theme = createTheme();
-
-
-const currencies = [
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-  {
-    value: '6333269f4a2f21acab55bc9c',
-    label: '6333269f4a2f21acab55bc9c',
-  },
-];
 
 
 const curr = [
@@ -57,6 +43,28 @@ const curr = [
 ];
 
 export default function AddDoctor(props) {
+
+  const [Wards, setWards] = useState([]);
+
+  useEffect(() => {
+    getAllWards();
+  }, []);
+
+  const handleChange3 = (event) => {
+    setValues({ ...values, ["WardID"]: event.target.value });
+  };
+  const getAllWards = async () => {
+    try {
+      const response = await AdminService.getWards();
+      console.log(response);
+      console.log(response.data);
+      setWards(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
+
 
   const [values, setValues] = React.useState({
     name: "",
@@ -119,24 +127,22 @@ export default function AddDoctor(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                sx={{ m: 0 }}
-                 fullWidth
-                  id="outlined-select-currency-native"
-                  select
-                  label="Ward"
-                  value={values.WardID}
-                  onChange={handleChange("WardID")}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+              <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Ward</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values.WardID}
+                    label="Ward"
+                    onChange={handleChange3}
+                  >
+                    {Wards.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                 <TextField
