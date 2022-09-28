@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import AdminService from '../../services/API/AdminService';
 
 const theme = createTheme();
@@ -47,6 +47,22 @@ export default function AddConsultant(props) {
     WardID:""
   });
 
+  useEffect(() => {
+    try {
+      const response =  AdminService.getConsultants();
+      console.log(response);
+      console.log(response.ok);
+      if(response.ok){
+        console.log("OK");
+      }
+  } catch(error) {
+      console.log(error)
+  }
+  },[]);
+
+
+  
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -54,6 +70,7 @@ export default function AddConsultant(props) {
   const handleChange3 = (event) => {
     setValues({ ...values, ["WardID"]: event.target.value });
   };
+
   const name = props.title;
   const handleSubmit = async (e) => {
     console.log(`${values.WardID}`)

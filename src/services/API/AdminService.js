@@ -14,9 +14,16 @@ const addDoctor = (details) => {
 }; 
 
 
+const getConsultants = () => {
+    return axios.get(APIEndpoint + "/admin/");
+}; 
+
+
+
 export default {
     addConsultant,
-    addDoctor
+    addDoctor,
+    getConsultants
 }
 
 
