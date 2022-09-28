@@ -8,6 +8,11 @@ const defineRequirements = (details) => {
     return axios.post(APIEndpoint + "/doctor/defineRequirements", details);
 }; 
 
+const changeclendar = (details) => {
+    return axios.post(APIEndpoint + "/doctor/changeClendar", details);
+}; 
+
 export default {
-    defineRequirements
+    defineRequirements,
+    changeclendar,
 }

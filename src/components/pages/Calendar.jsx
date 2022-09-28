@@ -253,7 +253,7 @@ export default class Calendar extends React.PureComponent {
         this.state = {
             checked:props.checked,
             windowHeight:props.windowHeight,
-            data: appointments,
+            data: props.details,
             confirmationVisible: false,
             editingFormVisible: false,
             deletedAppointmentId: undefined,

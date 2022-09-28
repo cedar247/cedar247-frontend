@@ -8,7 +8,7 @@ import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
 import Defnerequirements from './components/pages/defineRequirements'
 import ChangePassword from './components/pages/ChangePassword'
-
+import DoctorDashboard from './components/pages/DoctorDashboard'
 import { createTheme, ThemeProvider } from '@material-ui/core';
 
 const theme = createTheme({
@@ -38,6 +38,7 @@ function App() {
             <Route path="/view-doctors" element={<DoctorsView/>}></Route>
             <Route path="/defineRequirements" element={<Defnerequirements/>}></Route>
             <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
+            <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>
