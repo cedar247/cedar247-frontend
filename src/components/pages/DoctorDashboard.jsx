@@ -62,7 +62,7 @@ export default function DoctorDashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const id = "";
+    const id = "6334249bebcfbf785191df1d";
 
     const handleDrawerOpen = () => {
         setOpen(true);

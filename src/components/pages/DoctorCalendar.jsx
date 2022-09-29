@@ -1,43 +1,19 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
     Scheduler,
     Toolbar,
     MonthView,
-    WeekView,
-    ViewSwitcher,
     Appointments,
     AppointmentTooltip,
-    AppointmentForm,
-    DragDropProvider,
     EditRecurrenceMenu,
     AllDayPanel,
     DateNavigator,
+    Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import { connectProps } from "@devexpress/dx-react-core";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import Fab from "@mui/material/Fab";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import TextField from "@mui/material/TextField";
-import LocationOn from "@mui/icons-material/LocationOn";
-import Notes from "@mui/icons-material/Notes";
-import Close from "@mui/icons-material/Close";
-import CalendarToday from "@mui/icons-material/CalendarToday";
-import Create from "@mui/icons-material/Create";
-import PersonIcon from '@mui/icons-material/Person';
 import DoctorService from "../../services/API/DoctorService";
-import { appointments } from "../pages/dummy_data.js";
+import { appointments, resourcesData } from "../pages/dummy_data.js";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -48,20 +24,47 @@ import Checkbox from '@mui/material/Checkbox';
 
         const [showAllDoctors, setShowAllDoctors] = React.useState(false);
         const [calendar, setCalendar] = React.useState(appointments);
-        const id = props.id;
+        const [doctors, setDoctors] = React.useState(resourcesData);
 
-        const [windowHeight,windowHeightData]= React.useState(null);
+        const id = "6334249bebcfbf785191df1d";
 
-        React.useEffect(async() => {
-            try {
-                const response = await DoctorService.changeclendar({id:id, showAllDoctors:showAllDoctors});
-                // console.log(response);
-                    setCalendar(appointments);
-                // console.log(calendar);
-            } catch (error) {
-                console.log(error);
+        const [windowHeight]= React.useState(props.windowHeight);
+
+        // React.useEffect(async() => {
+        //     async function loadData(){
+        //         try {
+        //             console.log(appointments);
+        //             const response = await DoctorService.changeclendar({id:id, showAllDoctors:showAllDoctors});
+        //             console.log(response);
+        //             setCalendar(formatData(response.data[0]));
+        //             setDoctors(response.data[1]);
+        //             console.log(resourcesData);
+        //             console.log(response.data[1]);
+        //             console.log(formatData(response.data[0]))
+        //         } catch (error) {
+        //             console.log(error);
+        //         }
+        //     }
+
+        // loadData();},[id,showAllDoctors]);
+
+        const formatData = (data) =>{
+            const formatedData = [];
+            for(let i = 0; i < data.length; i++) {
+            const date = data[i]["date"].split("-");
+            const startTime = data[i]["startTime"].split(":");
+            const endTime = data[i]["endTime"].split(":");
+            const item = {
+                    title : data[i]["title"],
+                    startDate: new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(startTime[0]), Number(startTime[1])),
+                    endDate:new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1])) ,
+                    id: data[i]["id"],
+                    doctors: data[i]["doctors"]
+                }
+            formatedData.push(item);
             }
-        },[]);
+            return(formatedData);
+        }
 
         const handleShowHide = async (event) =>{
             // event.preventDefault();
@@ -71,16 +74,19 @@ import Checkbox from '@mui/material/Checkbox';
     
             try {
                 const response = await DoctorService.changeclendar({id:id, showAllDoctors:!showAllDoctors});
-                // console.log(response);
-                    setCalendar(response.data);
-                // console.log(calendar);
+                console.log(response);
+                    setCalendar(formatData(response.data[0]));
+                    setDoctors(response.data[1]);
+                console.log(resourcesData);
+                console.log(response.data[1]);
+                console.log(formatData(response.data[0]));
             } catch (error) {
                 console.log(error);
             }
         };
 
         console.log(windowHeight);
-        console.log(calendar);
+        // console.log(calendar);
 
         return (
             <Paper  >
@@ -95,6 +101,9 @@ import Checkbox from '@mui/material/Checkbox';
                     <EditRecurrenceMenu />
                     <Appointments />
                     <Toolbar />
+                    {/* <Resources
+                        data ={doctors}
+                    /> */}
                     <DateNavigator />
                     <AppointmentTooltip
                         showCloseButton
