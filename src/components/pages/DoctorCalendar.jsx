@@ -30,23 +30,23 @@ import Checkbox from '@mui/material/Checkbox';
 
         const [windowHeight]= React.useState(props.windowHeight);
 
-        // React.useEffect(async() => {
-        //     async function loadData(){
-        //         try {
-        //             console.log(appointments);
-        //             const response = await DoctorService.changeclendar({id:id, showAllDoctors:showAllDoctors});
-        //             console.log(response);
-        //             setCalendar(formatData(response.data[0]));
-        //             setDoctors(response.data[1]);
-        //             console.log(resourcesData);
-        //             console.log(response.data[1]);
-        //             console.log(formatData(response.data[0]))
-        //         } catch (error) {
-        //             console.log(error);
-        //         }
-        //     }
+        React.useEffect(() => {
+            async function loadData(){
+                try {
+                    console.log(appointments);
+                    const response = await DoctorService.changeclendar({id:id, showAllDoctors:showAllDoctors});
+                    console.log(response);
+                    setCalendar(formatData(response.data[0]));
+                    setDoctors(response.data[1]);
+                    console.log(resourcesData);
+                    console.log(response.data[1]);
+                    console.log(formatData(response.data[0]))
+                } catch (error) {
+                    console.log(error);
+                }
+            }
 
-        // loadData();},[id,showAllDoctors]);
+        loadData();},[id,showAllDoctors]);
 
         const formatData = (data) =>{
             const formatedData = [];
