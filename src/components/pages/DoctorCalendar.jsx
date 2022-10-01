@@ -13,7 +13,7 @@ import {
     Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import DoctorService from "../../services/API/DoctorService";
-import { appointments, resourcesData } from "../pages/dummy_data.js";
+import { appointments, resourcesData, doctordetais} from "../pages/dummy_data.js";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -23,8 +23,8 @@ import Checkbox from '@mui/material/Checkbox';
     const Calendar=(props)=>{
 
         const [showAllDoctors, setShowAllDoctors] = React.useState(false);
-        const [calendar, setCalendar] = React.useState(appointments);
-        const [doctors, setDoctors] = React.useState(resourcesData);
+        const [calendar, setCalendar] = React.useState([]);
+        const [doctors, setDoctors] = React.useState([]);
 
         const id = "6334249bebcfbf785191df1d";
 
@@ -34,7 +34,7 @@ import Checkbox from '@mui/material/Checkbox';
             async function loadData(){
                 try {
                     console.log(appointments);
-                    const response = await DoctorService.changeclendar({id:id, showAllDoctors:showAllDoctors});
+                    const response = await DoctorService.changeclendar({id:id, showAllDoctors:false});
                     console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
@@ -46,7 +46,7 @@ import Checkbox from '@mui/material/Checkbox';
                 }
             }
 
-        loadData();},[id,showAllDoctors]);
+        loadData();},[id]);
 
         const formatData = (data) =>{
             const formatedData = [];
@@ -54,10 +54,16 @@ import Checkbox from '@mui/material/Checkbox';
             const date = data[i]["date"].split("-");
             const startTime = data[i]["startTime"].split(":");
             const endTime = data[i]["endTime"].split(":");
+            const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]))
+
+            if (data[i]["title"] == "night"){
+                endDate.setDate(endDate.getDate()+ 1)            
+            }
+
             const item = {
                     title : data[i]["title"],
                     startDate: new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(startTime[0]), Number(startTime[1])),
-                    endDate:new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1])) ,
+                    endDate: endDate,
                     id: data[i]["id"],
                     doctors: data[i]["doctors"]
                 }
@@ -101,9 +107,15 @@ import Checkbox from '@mui/material/Checkbox';
                     <EditRecurrenceMenu />
                     <Appointments />
                     <Toolbar />
-                    {/* <Resources
-                        data ={doctors}
-                    /> */}
+                    <Resources
+                        data ={[{
+                            fieldName: 'doctors',
+                            title: 'Doctors',
+                            instances: doctors,
+                            allowMultiple: true,
+                            },
+                        ]}
+                    />
                     <DateNavigator />
                     <AppointmentTooltip
                         showCloseButton
