@@ -6,6 +6,9 @@ import AddWard from './components/pages/AddWard';
 import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
+import Defnerequirements from './components/pages/defineRequirements'
+import ChangePassword from './components/pages/ChangePassword'
+import DoctorDashboard from './components/pages/DoctorDashboard'
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import PopUp from './components/layouts/Popup';
@@ -33,17 +36,18 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
-
-            <Route exact path="/" element={<LoginForm />}></Route>
-            <Route path="/wards" element={<PersistentDrawerLeft />}></Route>
-            <Route path="/add-wards" element={<AddWard />}></Route>
-            <Route path="/create-schedule" element={<CreateSchedule />}></Route>
-            <Route path="/set-deadline" element={<SetDeadline />}></Route>
-            <Route path="/view-doctors" element={<DoctorsView />}></Route>
+            <Route exact path="/" element={<LoginForm/>}></Route>
+            <Route path="/wards" element={<PersistentDrawerLeft/>}></Route>
+            <Route path="/add-wards" element={<AddWard/>}></Route>
+            <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
+            <Route path="/set-deadline" element={<SetDeadline/>}></Route>
+            <Route path="/view-doctors" element={<DoctorsView/>}></Route>
+            <Route path="/defineRequirements" element={<Defnerequirements/>}></Route>
+            <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
+            <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
             <Route path="/Popup" element={<PopUp />}></Route>
             <Route path="/changepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
-
           </Routes>
         </Router>
       </ThemeProvider>
