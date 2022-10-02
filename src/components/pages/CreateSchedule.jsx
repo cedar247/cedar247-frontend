@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
@@ -8,6 +8,8 @@ import WardDetails from '../ward/WardDetails';
 import Constraints from '../ward/Constraints';
 import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
+import adminService from '../../services/API/AdminService';
+import consulantService from '../../services/API/ConsultantService';
 
 const drawerWidth = 240;
 
@@ -41,6 +43,36 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function CreateSchedule() {
     const [open, setOpen] = React.useState(false);
+    const [shifts, setShifts] = useState([]);
+    const [doctorCategories, setDoctorCategories] = useState();
+   
+    useEffect(() => {
+        getShifts();
+        getDoctorCategories();
+    }, []);
+    
+
+    const getShifts = async () => {
+        try {
+            const response = await adminService.getShifts();
+            if(response.data) {
+                setShifts(response.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getDoctorCategories = async () => {
+        try {
+            const response = await consulantService.getDoctorCategories();
+            if(response.data) {
+                setDoctorCategories(response.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -76,12 +108,21 @@ export default function CreateSchedule() {
                             Number of doctors needed per day:
                         </Typography>
                         <Grid container spacing={3}>
-                            <ShiftDetails shiftName="Morning shift"/>
-                            <ShiftDetails shiftName="Evening shift"/>
-                            <ShiftDetails shiftName="Night shift"/>
+                            {
+                                shifts.map(
+                                    shift => (
+                                        <ShiftDetails shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
+                                    )
+                                )
+                            }
+                            
+                            {/* <ShiftDetails shiftName="Evening shift"/>
+                            <ShiftDetails shiftName="Night shift"/> */}
+
+
                         </Grid>
 
-                        <Grid container spacing={3}>
+                        {/* <Grid container spacing={3}>
                             <Grid item md={6} sm={12} xs={12}>
                                 <TextField 
                                     id="outlined-basic" 
@@ -105,7 +146,7 @@ export default function CreateSchedule() {
                                     margin='normal'
                                 />
                             </Grid>
-                        </Grid>
+                        </Grid> */}
 
                         <Box textAlign='center' m={3}>
                             <Button variant="contained" color="primary" type='submit'>

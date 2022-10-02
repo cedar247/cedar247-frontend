@@ -12,9 +12,14 @@ const getDoctors = () => {
     return axios.get(APIEndpoint + "/consultant/doctors")
 };
 
+const getDoctorCategories = () => {
+    return axios.get(APIEndpoint + "/consultant/get-categories");
+}
+
 const consulantService = {
     setDeadline,
-    getDoctors
+    getDoctors,
+    getDoctorCategories
 };
 
 export default consulantService;
