@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Header from '../common/consultant/Header';
-import SideBar from '../common/consultant/SideBar';
+import Header from '../common/admin/Header';
+import SideBar from '../common/admin/SideBar';
 import { styled, useTheme } from '@mui/material/styles';
 import WardDetails from '../ward/WardDetails';
 import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid } from '@material-ui/core';
-import Doctor from '../ward/Doctor';
-import consulantService from '../../services/API/ConsultantService';
+import { Button, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
+import adminService from '../../services/API/AdminService';
+
 
 const drawerWidth = 240;
 
@@ -40,22 +41,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function DoctorsView() {
-    const [open, setOpen] = useState(false);
-    const [doctors, setDoctors] = useState([]);
-
+export default function SetConstraint() {
+    const [open, setOpen] = React.useState(false);
+    const [shifts, setShifts] = useState([]);
+   
     useEffect(() => {
-        getDoctors();
+            getShifts();
     }, []);
+    
 
-    const getDoctors = async () => {
+    const getShifts = async () => {
         try {
-            const response = await consulantService.getDoctors();
-            setDoctors(response.data);
+            const response = await adminService.getShifts();
+            if(response.data) {
+                setShifts(response.data)
+            }
         } catch (error) {
-
+            console.log(error)
         }
-    };
+    }
+    
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -79,19 +84,18 @@ export default function DoctorsView() {
                         align='center'
                         gutterBottom
                     >
-                        Doctors
+                        Constraints
                     </Typography>
 
                     {/* content of the main is here */}
                     <form action="">
-                        <Grid container spacing={3}>
-
-                            {
-                                doctors.map(
-                                    doctor => (<Doctor key={doctor._id} name={doctor.name} category={doctor.category} wardName={doctor.wardName} wardNumber={doctor.wardNumber} contactNumber={doctor.phoneNumber}/>)
-                                )
-                            }
-                        </Grid>
+                        {/* <WardDetails/> */}
+                        <Constraints shifts={shifts}/>
+                        <Box textAlign='center'>
+                            <Button variant="contained" color="primary" type='submit'>
+                                Add Ward
+                            </Button>
+                        </Box>
                     </form>
                 </Main>
             </Box>

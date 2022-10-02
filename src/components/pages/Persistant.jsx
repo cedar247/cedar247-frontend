@@ -43,6 +43,9 @@ import '../../index.css';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Details from '../layouts/Details';
+import PopUp from '../layouts/Popup';
+import { Main, AppBar, DrawerHeader, drawerWidth } from '../layouts/Drawer'
+
 const useStyles = makeStyles({
     paper: {
         background: "#f5f5f5"
@@ -50,57 +53,26 @@ const useStyles = makeStyles({
 });
 
 
-const drawerWidth = 240;
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: `-${drawerWidth}px`,
-        ...(open && {
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            marginLeft: 0,
-        }),
-    }),
-);
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-}));
-
 export default function PersistentDrawerLeft() {
+
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [openPop, setPopOpen] = React.useState(false);
+    const [Option, setOption] = React.useState(0);
+
+    const handleConsultant = () => {
+        setPopOpen(true);
+        setOption(1);
+    }
+    const handleDoctor = () => {
+        setPopOpen(true);
+        setOption(2);
+    }
+    const handleCloseAddWard = () => {
+        setPopOpen(false);
+    }
+
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -108,6 +80,9 @@ export default function PersistentDrawerLeft() {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+    const SetDefaultOption = () => {
+        setOption(0);
     };
     // document.body.style.backgroundImage = `url(${Back2})`;
     return (
@@ -140,10 +115,10 @@ export default function PersistentDrawerLeft() {
 
 
                             <Button color="inherit">   <Divider orientation="vertical" flexItem>
-                            <Typography variant="h6" component="div">
-                                LOGOUT
-                            </Typography>
-                                </Divider><LogoutIcon /></Button>
+                                <Typography variant="h6" component="div">
+                                    LOGOUT
+                                </Typography>
+                            </Divider><LogoutIcon /></Button>
                         </Box>
 
                     </Toolbar>
@@ -202,10 +177,12 @@ export default function PersistentDrawerLeft() {
                                             </Avatar>
                                         </ListItemAvatar>
                                         <Button
+                                            color="success"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
+
                                         >
                                             WARD
                                         </Button>
@@ -219,10 +196,12 @@ export default function PersistentDrawerLeft() {
                                         </ListItemAvatar>
                                         {/* <ListItemText primary=""/> */}
                                         <Button
+                                            color="primary"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
+                                            onClick={handleConsultant}
                                         >
                                             Consultant
                                         </Button>
@@ -236,10 +215,12 @@ export default function PersistentDrawerLeft() {
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
                                         <Button
+                                            color="secondary"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
+                                            onClick={handleDoctor}
                                         >
                                             Doctor
                                         </Button>
@@ -264,18 +245,18 @@ export default function PersistentDrawerLeft() {
 
                         <Divider />
                         <div className='settings'>
-                        <List>
-                            <ListItem>
-                                {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
-                                <ListItemAvatar>
-                                    <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                        <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                Settings
+                            <List>
+                                <ListItem>
+                                    {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    Settings
 
-                            </ListItem>
-                        </List>
+                                </ListItem>
+                            </List>
                         </div>
                     </div>
                 </Drawer>
@@ -288,7 +269,8 @@ export default function PersistentDrawerLeft() {
                         }}><h2>WARDS</h2></div>
                     {/* <ResponsiveGrid /> */}
                     {/* <OutlinedCard/> */}
-                    <Details/>
+                    <Details />
+                    <PopUp opener={openPop} closer={handleCloseAddWard} DefaultOption={SetDefaultOption} Option={Option} />
                 </Main>
             </Box>
         </div>
