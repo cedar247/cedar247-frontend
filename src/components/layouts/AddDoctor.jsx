@@ -19,6 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState, useEffect } from "react";
 import InputLabel from '@mui/material/InputLabel';
+import { toast } from "react-toastify";
 
 const theme = createTheme();
 
@@ -80,20 +81,33 @@ export default function AddDoctor(props) {
   };
 
   const name = props.title;
-  const handleSubmit = async (e) => {
-    console.log(`${values.WardID}`)
+
+
+
+const onSubmit = async (e) => {
+  if(values.WardID === "" || values.name === ""|| values.email===""|| values.phoneNumber ==="" || values.category ==="" ){
+    e.preventDefault();
+    toast.warn("Fill All Fields",{
+      toastId: "1"})
+  }
+  else{
+    console.log(`${values.name}`)
     e.preventDefault();
     console.log("submitted")
 
     try {
-        const response = await AdminService.addDoctor(values);
-
-        console.log(response);
-    } catch(error) {
-        console.log(error)
+      const response = await AdminService.addDoctor(values);
+      console.log(response);
+      if(response.data.msg =="Success"){
+        toast.success("New Cosultant Added",{
+          toastId: "1"})
+      }
+    } catch (error) {
+      console.log(error)
     }
-}
+  }
 
+}
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -112,7 +126,7 @@ export default function AddDoctor(props) {
           <Typography component="h1" variant="h5">
             {name}
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField

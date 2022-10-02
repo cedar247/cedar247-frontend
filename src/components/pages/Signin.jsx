@@ -19,43 +19,82 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AlertTitle from '@mui/material/AlertTitle';
+import { toast } from "react-toastify";
+import MuiAlert from '@mui/material/Alert';
+import { useState, useEffect } from "react";
+import validator from 'validator';
 // import { ButtonBase } from "@mui/material";
 // import ButtonAppBar from "./Appbar1";
 
 
-class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            showPassword: false,
-            open: true
-        };
+export default function LoginForm() {
+
+    const [emailError, setEmailError] = useState('')
+    const [emailAlert, setAlert] = React.useState(false);
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+    const [values, setValues] = React.useState({
+        email: "",
+        password: "",
+        showPassword: false
+    });
+
+    const validateEmail = (e) => {
+        setAlert({
+            emailAlert: true
+        });
+        var email = e.target.value;
+        setValues({ ...values, email: email });
+        if (validator.isEmail(email)) {
+            setEmailError(<Alert severity="success"><strong>Valid Email ;)</strong> </Alert>)
+        } else {
+            setEmailError(
+                <Alert severity="warning"><strong>Enter Valid Email! </strong> </Alert>
+            )
+        }
     }
 
-    resetForm() {
-        this.setState({
-            email: "",
-            password: "",
-            buttonDisabled: false,
-            showPassword: false
-        });
-    }
 
 
-    handleClose() {
-        this.setState({
-            open: false
-        });
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
     };
 
-    handleSubmit() {
 
-        alert(`${this.state.email} , ${this.state.password}`);
+
+
+    const handleSubmit = async (e) => {
+
+        if (values.email === "" || values.password === "") {
+            toast.info("Fill All Fields", {
+                toastId: "1"
+            })
+
+            e.preventDefault()
+        }
+
+        else {
+            console.log(`${values.email}`)
+            e.preventDefault();
+            console.log("submitted")
+
+            // try {
+            //   const response = await AdminService.addDoctor(values);
+            //   console.log(response);
+            //   if(response.data.msg =="Success"){
+            //     toast.success("New Cosultant Added",{
+            //       toastId: "1"})
+            //   }
+            // } catch (error) {
+            //   console.log(error)
+            // }
+        }
+
     };
 
-    handleOpen() {
+    const handleOpen = () => {
 
         this.setState({
             open: true
@@ -64,27 +103,14 @@ class LoginForm extends React.Component {
 
     };
 
-    handleClickShowPassword() {
-        this.setState({
-            showPassword: !this.state.showPassword
-        });
+    const handleClickShowPassword = () => {
+        setValues({ ...values, ["showPassword"]: !values.showPassword });
     };
 
-    handleMouseDownPassword(event) {
+    const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
-    setInputValue(property, val) {
-        // val = val.trim();
-        // console.log();
-        // console.log(val);
-        if (val.length > 50) {
-            return;
-        }
-        this.setState({
-            [property]: val,
-        });
-    }
 
     // async doLogin() {
     //     if (!this.state.email) {
@@ -135,91 +161,89 @@ class LoginForm extends React.Component {
     //     }
     // }
 
-    render() {
-        // document.body.style.backgroundImage = `url(${background})`;
-        return (
-            <>
+    // document.body.style.backgroundImage = `url(${background})`;
+    return (
+        <>
+        
             {/* <ButtonAppBar/> */}
-                <div className="container text-center bg-white bg-opacity-75 p-3" style={{
-                    width: "340px", height: "320px", marginTop: "10rem", padding: '25px'
+            <div className="container text-center bg-white bg-opacity-75 p-3" style={{
+                width: "340px", height: "auto", marginTop: "10rem", padding: '25px'
 
-                    , marginBottom: "6rem" ,boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
-                    borderRadius: '10px'
-                }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    ><Avatar sx={{ m: 1, bgcolor: 'primary.main', alignItems: 'center' }}>
-                            <LockOutlinedIcon />
-                        </Avatar></Box>
+                , marginBottom: "6rem", boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
+                borderRadius: '10px'
+            }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                ><Avatar sx={{ m: 1, bgcolor: 'primary.main', alignItems: 'center' }}>
+                        <LockOutlinedIcon />
+                    </Avatar></Box>
 
-                    <h2 style={{ margin: "auto", textAlign: "center" }}>Sign in</h2>
-                    <br></br>
-                    <br></br>
+                <h2 style={{ margin: "auto", textAlign: "center" }}>Sign in</h2>
+                <br></br>
+                <br></br>
 
-                    <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Email*</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={'text'}
-                            value={this.state.email ? this.state.email : ""}
-                            onChange={(val) => this.setInputValue("email", val.target.value)}
-                            label="Email*"
-                            startAdornment={<InputAdornment position="start"> <MailOutlineIcon
-                                sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></InputAdornment>}
-                        />
+                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Email*</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={'text'}
+                        value={values.email ? values.email : ""}
+                        onChange={(e) => validateEmail(e)}
+                        label="Email*"
+                        startAdornment={<InputAdornment position="start"> <MailOutlineIcon
+                            sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></InputAdornment>}
+                    />
+                    {emailError}
+                </FormControl>
 
-                    </FormControl>
+                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password ? values.password : ""}
+                        onChange={handleChange("password")}
+                        endAdornment={
+                            <InputAdornment position="end">
 
-                    <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={this.state.showPassword ? 'text' : 'password'}
-                            value={this.state.password ? this.state.password : ""}
-                            onChange={(val) => this.setInputValue("password", val.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    // onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        label="Password*"
+                    />
+                </FormControl>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={handleSubmit}
+                >
+                    Sign In
+                </Button>
+            </div>
 
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => this.handleClickShowPassword()}
-                                        // onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password*"
-                        />
-                    </FormControl>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick = {()=>this.handleSubmit()}
-                    >
-                        Sign In
-                    </Button>
-                </div>
+            <Typography variant="body2" color="text.secondary" align="center">
+                {'Copyright © '}
+                <Link color="inherit" href="#">
+                    Cedar247
+                </Link>{' '}
+                {new Date().getFullYear()}
+                {'.'}
+            </Typography>
+        </>
 
-                <Typography variant="body2" color="text.secondary" align="center">
-                    {'Copyright © '}
-                    <Link color="inherit" href="#">
-                        Cedar247
-                    </Link>{' '}
-                    {new Date().getFullYear()}
-                    {'.'}
-                </Typography>
-            </>
-
-        );
-    }
+    );
 }
 
-export default LoginForm;

@@ -23,10 +23,15 @@ const getWards = () => {
 }; 
 
 
+const getAllWards = () => {
+    return axios.get(APIEndpoint + "/admin/getAll");
+}; 
+
+
 export default {
     addConsultant,
     addDoctor,
-    getConsultants,getWards
+    getConsultants,getWards,getAllWards
 }
 
 
