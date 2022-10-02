@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from "react-router-dom";
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from "@material-ui/core/styles";
 import { styled, useTheme } from '@mui/material/styles';
@@ -21,6 +22,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
+import HomeIcon from '@mui/icons-material/Home';
 import ChangePassword from '../../pages/ChangePassword.jsx';
 import DefineRequirements from '../../pages/defineRequirements.jsx';
 import CustomizedDialogs from '../../layouts/Dialog.jsx';
@@ -46,6 +48,15 @@ export default function SideBar(props) {
     const classes = useStyles();
     const theme = useTheme();
 
+    const handleClickDefineRequirements = () =>{
+        <Redirect to = "/defineRequirements"/>
+    }
+    const     handleClickChangePassword    = () =>{
+        <Redirect to = "/ChangePassword"/>
+    }
+    const handleClickHome    = () =>{
+        <Redirect to = "/DoctorDashboard"/>
+    }
     return (
             <Drawer
                 sx={{
@@ -93,7 +104,7 @@ export default function SideBar(props) {
                             }}
                         >
                             <div className={classes.paper}>
-                                <ListItem>
+                                <ListItem sx={{ mr: 2, ...(!props.defreq && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                             <AddBoxIcon color="success" sx={{ fontSize: 30 }} />
@@ -101,7 +112,7 @@ export default function SideBar(props) {
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
                                         <Button
-                                            // onClick={handleClickOpen}
+                                            onClick={handleClickDefineRequirements}
                                             variant="contained"
                                             fullWidth
                                             color="success"
@@ -110,7 +121,7 @@ export default function SideBar(props) {
                                     </div>
                                 </ListItem>
                                 <Divider variant="inset" color="secondary" />
-                                <ListItem>
+                                <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                             <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
@@ -118,11 +129,27 @@ export default function SideBar(props) {
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
                                         <Button
-                                            // onClick={handleClickOpen}
+                                            onClick={handleClickChangePassword}
                                             variant="contained"
                                             fullWidth
                                             color="secondary"
                                         > Change password
+                                        </Button>
+                                    </div>
+                                </ListItem>
+                                <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <HomeIcon color="primary" sx={{ fontSize: 30 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Button
+                                            onClick={handleClickHome}
+                                            variant="contained"
+                                            fullWidth
+                                            color="primary"
+                                        > Home
                                         </Button>
                                     </div>
                                 </ListItem>

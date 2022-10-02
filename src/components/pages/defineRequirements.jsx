@@ -133,7 +133,7 @@ export default function Defnerequirements() {
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
                 <Header handleDrawerOpen={handleDrawerOpen} open={open} />
-                <SideBar handleDrawerClose={handleDrawerClose} open={open} />
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {true} chanpass ={true} defreq ={false} />
                 <Main open={open}>
                     <DrawerHeader />
                     <Grid align = "center" style ={{paddingTop:"100px"}} > 

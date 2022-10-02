@@ -86,7 +86,7 @@ export default function ChangePassword() {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {true} chanpass ={false} defreq ={true}/>
                 <Main open={open} >
                     <Grid align = "center" style ={{paddingTop:"100px"}} > 
                         <Paper style={paperStyle} style ={{width:"50%",height:"50%", padding:"20px" }}>

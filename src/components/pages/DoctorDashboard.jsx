@@ -76,7 +76,7 @@ export default function DoctorDashboard() {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true}/>
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar  id = {id} windowHeight = {windowHeight} />
                 </Main>
