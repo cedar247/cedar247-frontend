@@ -6,9 +6,15 @@ import AddWard from './components/pages/AddWard';
 import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
+import Defnerequirements from './components/pages/defineRequirements'
+import DoctorChangePassword from './components/pages/DoctorChangePassword'
+import DoctorDashboard from './components/pages/DoctorDashboard'
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import PopUp from './components/layouts/Popup';
+import ChangePassword from './components/layouts/test';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +32,7 @@ const theme = createTheme({
 
 function App() {
   return (
+    <>
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
@@ -35,11 +42,26 @@ function App() {
             <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
             <Route path="/set-deadline" element={<SetDeadline/>}></Route>
             <Route path="/view-doctors" element={<DoctorsView/>}></Route>
-            <Route path="/Popup" element={<PopUp/>}></Route>
+            <Route path="/defineRequirements" element={<Defnerequirements/>}></Route>
+            <Route path="/DoctorChangePassword" element={<DoctorChangePassword/>}></Route>
+            <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
+            <Route path="/Popup" element={<PopUp />}></Route>
+            <Route path="/changepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        theme="colored"
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        draggable={false}
+      />
+    </>
   );
 }
 

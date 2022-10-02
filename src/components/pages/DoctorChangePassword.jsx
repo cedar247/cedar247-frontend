@@ -41,7 +41,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 
-export default function ChangePassword() {
+export default function DoctorChangePassword() {
     const [open, setOpen] = React.useState(false);
     const id = ""
 
