@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect} from "react-router-dom";
+// import {Redirect} from "react-router-dom";
 import Drawer from '@mui/material/Drawer';
 import { makeStyles } from "@material-ui/core/styles";
 import { styled, useTheme } from '@mui/material/styles';
@@ -49,13 +49,13 @@ export default function SideBar(props) {
     const theme = useTheme();
 
     const handleClickDefineRequirements = () =>{
-        <Redirect to = "/defineRequirements"/>
+        // <Redirect to = "/defineRequirements"/>
     }
     const     handleClickChangePassword    = () =>{
-        <Redirect to = "/ChangePassword"/>
+        // <Redirect to = "/ChangePassword"/>
     }
     const handleClickHome    = () =>{
-        <Redirect to = "/DoctorDashboard"/>
+        // <Redirect to = "/DoctorDashboard"/>
     }
     return (
             <Drawer
