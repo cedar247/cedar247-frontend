@@ -9,6 +9,9 @@ import DoctorsView from './components/pages/DoctorsView';
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import PopUp from './components/layouts/Popup';
+import ChangePassword from './components/layouts/test';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
   palette: {
@@ -26,20 +29,35 @@ const theme = createTheme({
 
 function App() {
   return (
+    <>
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
-            <Route exact path="/" element={<LoginForm/>}></Route>
-            <Route path="/wards" element={<PersistentDrawerLeft/>}></Route>
-            <Route path="/add-wards" element={<AddWard/>}></Route>
-            <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
-            <Route path="/set-deadline" element={<SetDeadline/>}></Route>
-            <Route path="/view-doctors" element={<DoctorsView/>}></Route>
-            <Route path="/Popup" element={<PopUp/>}></Route>
+
+            <Route exact path="/" element={<LoginForm />}></Route>
+            <Route path="/wards" element={<PersistentDrawerLeft />}></Route>
+            <Route path="/add-wards" element={<AddWard />}></Route>
+            <Route path="/create-schedule" element={<CreateSchedule />}></Route>
+            <Route path="/set-deadline" element={<SetDeadline />}></Route>
+            <Route path="/view-doctors" element={<DoctorsView />}></Route>
+            <Route path="/Popup" element={<PopUp />}></Route>
+            <Route path="/changepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
+
           </Routes>
         </Router>
       </ThemeProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        theme="colored"
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        draggable={false}
+      />
+    </>
   );
 }
 

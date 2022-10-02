@@ -13,68 +13,90 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import AdminService from '../../services/API/AdminService';
+import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useForm } from "react-hook-form"
+import { successToast } from '../common/Toasts';
+import { toast } from "react-toastify";
 
 const theme = createTheme();
 
 
 
-
-
-const currencies = [
-  {
-    value: 'USD',
-    label: 'DOllerUS',
-  },
-  {
-    value: 'EUR',
-    label: 'EUROPE',
-  },
-  {
-    value: 'BTC',
-    label: 'BTC',
-  },
-  {
-    value: 'JPY',
-    label: '¥Japan',
-  },
-];
-
 export default function AddConsultant(props) {
 
+  // const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const [Wards, setWards] = useState([]);
+
   const [values, setValues] = React.useState({
-    password: "",
-    re_password: "",
-    showPassword: false,
-    fname: "",
-    lname: "",
-    ememailail: "",
-    contactNO: ""
+    name: "",
+    email: "",
+    phoneNumber: "",
+    WardID: ""
   });
+
+
+  useEffect(() => {
+    getAllWards();
+  }, []);
+
+  const getAllWards = async () => {
+    try {
+      const response = await AdminService.getWards();
+      console.log(response);
+      console.log(response.data);
+      setWards(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
+
+
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  
-  const [currency, setCurrency] = React.useState('');
 
-  const handleChange2 = (event) => {
-    setCurrency(event.target.value);
+  const handleChange3 = (event) => {
+    setValues({ ...values, ["WardID"]: event.target.value });
   };
 
   const name = props.title;
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    alert(`${values.contactNO},${values.email}`);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const onSubmit = async (e) => {
+    if(values.WardID === "" || values.name === ""|| values.email===""|| values.phoneNumber ==="" ){
+      e.preventDefault();
+      toast.warn("Fill All Fields",{
+        toastId: "1"})
+    }
+    else{
+      console.log(`${values.name}`)
+      e.preventDefault();
+      console.log("submitted")
+  
+      try {
+        const response = await AdminService.addConsultant(values);
+        console.log(response);
+        if(response.data.msg =="Success"){
+          toast.success("New Cosultant Added",{
+            toastId: "1"})
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+  }
 
   return (
+    <>
+    
+    
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -92,74 +114,91 @@ export default function AddConsultant(props) {
           <Typography component="h1" variant="h5">
             {name}
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="Name"
                   name="firstName"
-                  required
+                  // required
                   fullWidth
                   id="Name"
                   label="Name"
                   autoFocus
+                  value={values.name}
+                  onChange={handleChange('name')}
+                  // {...register("Name",
+                  //   {
+                  //     required: "Name is Required.",
+                  //     minLength: {
+                  //       value: 2,
+                  //       message: "Name must be more than 2 characters"
+                  //     }
+                  //   })
+                  // }
+                  // error={Boolean(errors.Name)}
+                  // helperText={errors.Name?.message}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                sx={{ m: 0, }}
-                fullWidth
+
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Ward</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values.WardID}
+                    label="Ward"
+                    onChange={handleChange3}
+                  //   {...register("Ward",
+                  //   {
+                  //     required: "Ward is Required."
+                  //   })
+                  // }
+                  // error={Boolean(errors.Ward)}
+                  // helperText={errors.Ward?.message}
+                  >
+                    {Wards.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <TextField
+                  sx={{ m: 0, }}
+                  fullWidth
+                  focused
                   id="outlined-select-currency-native"
                   select
                   label="Ward"
-                  value={currency}
-                  onChange={handleChange2}
+                  value={values.WardID}
+                  onChange={handleChange3}
+                  helperText="Please select your Ward"
                   SelectProps={{
                     native: true,
                   }}
                 >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
+                  {Consultant.map((option) => (
+                    <option key={option._id} value={option._id}>
+                      {option.name}
                     </option>
                   ))}
-                </TextField>
+                </TextField> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   fullWidth
                   id="contactNO"
                   label="Contact Number"
                   name="contactNO"
                   autoComplete="Contact-Number"
-                  value={values.contactNO}
-                  onChange={handleChange('contactNO')}
+                  value={values.phoneNumber}
+                  onChange={handleChange("phoneNumber")}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                sx={{ m: 0 }}
-                fullWidth
-                  id="outlined-select-currency-native"
-                  select
-                  label="Ward"
-                  value={currency}
-                  onChange={handleChange2}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -182,5 +221,7 @@ export default function AddConsultant(props) {
         </Box>
       </Container>
     </ThemeProvider>
+
+    </>
   );
 }
