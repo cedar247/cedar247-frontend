@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
@@ -7,6 +7,9 @@ import { styled, useTheme } from '@mui/material/styles';
 import WardDetails from '../ward/WardDetails';
 import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
+import { Link } from "react-router-dom";
+import adminService from "../../services/API/AdminService";
+import { useNavigate } from 'react-router-dom'    
 
 const drawerWidth = 240;
 
@@ -39,7 +42,58 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function AddWard() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
+    // const [ numShifts, setNumShifts ] = useState(0);
+    const [wardDetails, setWardDetails] = React.useState({
+        name: "",
+        number: ""
+    });
+
+    const [shifts, setShifts] = useState([]);
+    const [doctorCategories, setDoctorCategories] = useState({
+        "Senior Registrar": true,
+        "Registrar": true,
+        "Senior Home Officer": true,
+        "Home Officer": true,
+        "Medical Officer": true
+    })
+
+    const handleShiftChange = (e, index, name) => {
+            let cpShifts = [...shifts];
+            let shift = {...cpShifts[index]}
+            shift[name] = e.target.value;
+            cpShifts[index] = shift;
+            setShifts(cpShifts)
+    }
+
+    const handleDoctorCategories = (event) => {
+        setDoctorCategories({ ...doctorCategories, [event.target.name]: event.target.checked });
+    }
+
+
+    const handleChange = (prop) => (event) => {
+        setWardDetails({ ...wardDetails, [prop]: event.target.value });
+      };
+
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await adminService.addWard({...wardDetails, doctorCategories, shifts});
+            if(response.status === 201) {
+                // navigate.push({
+                //     pathname: '/set-constraints',
+                //     state: response.data.wardId
+                // })
+                navigate('/set-constraints')
+            }
+        } catch(error) {
+            console.log(error)
+        }
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -68,12 +122,14 @@ export default function AddWard() {
 
                     {/* content of the main is here */}
                     <form action="">
-                        <WardDetails/>
-                        <Constraints/>
+                        <WardDetails wardDetails={wardDetails} handleChange={handleChange} handleShiftChange={handleShiftChange} handleDoctorCategories={handleDoctorCategories} doctorCategories={doctorCategories}/>
+                        {/* <Constraints/> */}
                         <Box textAlign='center'>
-                            <Button variant="contained" color="primary" type='submit'>
-                                Add Ward
-                            </Button>
+                            <Link to="/set-constraints">
+                                <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
+                                Next
+                                </Button>
+                            </Link>
                         </Box>
                     </form>
                 </Main>
