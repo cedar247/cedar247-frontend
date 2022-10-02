@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 
-export default function Shifts() {
+export default function Shifts({ shifts }) {
     const [shiftTypes, setShiftTypes] = useState({
         morning: true,
         evening: true,

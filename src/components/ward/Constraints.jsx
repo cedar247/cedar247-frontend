@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from '@material-ui/core/Box';
 import Typography  from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -7,19 +7,41 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import Vacation from "./Vacation";
 
-export default function Constraints() {
-    const [shiftTypes, setShiftTypes] = useState({
-        morning: true,
-        evening: true,
-        night: true
-    });
+export default function Constraints({ shifts }) {
+    // const [shifts, setShifts] = useState([
+    //     {
+    //         _id: '1',
+    //         name: 'morning',
+    //         startTime: '08:00',
+    //         endTime: '13:00'
+    //     },
+    //     {
+    //         _id: '2',
+    //         name: 'evening',
+    //         startTime: '13:00',
+    //         endTime: '19:00'
+    //     },
+    //     {
+    //         _id: '3',
+    //         name: 'night',
+    //         startTime: '19:00',
+    //         endTime: '08:00'
+    //     }
+    // ]); // need to get from database
+    const [shiftTypes, setShiftTypes] = useState({});
     const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
 
+    useEffect(() => {
+        getShifts();
+    }, []);
 
+    const getShifts = async () => {
+        
+    }
     const createShiftGroups = () => {
         let arr = []
         for (let i = 0; i < numOfConsecutiveGroups; i++) {
-          arr.push(<Shifts/>)
+          arr.push(<Shifts shifts={shifts}/>)
         }
         return(<div>
             {arr.map(shifts=>shifts)}
@@ -38,13 +60,6 @@ export default function Constraints() {
 
     return (
         <Box>
-            <Typography 
-                variant="h5"
-                component="h2"
-                align="center"
-            >
-                Constraints
-            </Typography>
 
             <TextField 
                 id="outlined-basic" 
@@ -71,20 +86,30 @@ export default function Constraints() {
 
 
             <FormGroup>
+                {
+                    shifts.map(
+                        shift => (
+                            <Box key={shift._id}>
+                                <FormControlLabel
+                                    key={shift._id}
+                                    control={
+                                    <Checkbox
+                                        checked={shiftTypes.morning}
+                                        onChange={handleShiftTypes}
+                                        name={shift.name}
+                                        color="secondary"
+                                        key={shift._id}
+                                    />
+                                    }
+                                    label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
+                                />
 
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.morning}
-                        onChange={handleShiftTypes}
-                        name="morning"
-                        color="secondary"
-                    />
-                    }
-                    label="Morning"
-                />
-
-                <Vacation />
+                                <Vacation/>
+                            </Box>
+                        )
+                    )
+                    
+                }   
 
                 <FormControlLabel
                     control={
