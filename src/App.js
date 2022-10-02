@@ -7,7 +7,7 @@ import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import DoctorsView from './components/pages/DoctorsView';
 import Defnerequirements from './components/pages/defineRequirements'
-import ChangePassword from './components/pages/ChangePassword'
+import DoctorChangePassword from './components/pages/DoctorChangePassword'
 import DoctorDashboard from './components/pages/DoctorDashboard'
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
@@ -43,7 +43,7 @@ function App() {
             <Route path="/set-deadline" element={<SetDeadline/>}></Route>
             <Route path="/view-doctors" element={<DoctorsView/>}></Route>
             <Route path="/defineRequirements" element={<Defnerequirements/>}></Route>
-            <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
+            <Route path="/DoctorChangePassword" element={<DoctorChangePassword/>}></Route>
             <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
             <Route path="/Popup" element={<PopUp />}></Route>
             <Route path="/changepwd" element={<ChangePassword />}></Route>

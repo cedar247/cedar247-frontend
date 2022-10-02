@@ -23,8 +23,6 @@ import { Button } from '@mui/material';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
 import HomeIcon from '@mui/icons-material/Home';
-import ChangePassword from '../../pages/ChangePassword.jsx';
-import DefineRequirements from '../../pages/defineRequirements.jsx';
 import CustomizedDialogs from '../../layouts/Dialog.jsx';
 
 const useStyles = makeStyles({
