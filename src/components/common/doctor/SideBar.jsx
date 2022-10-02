@@ -120,7 +120,7 @@ export default function SideBar(props) {
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="secondary" />
+                                <Divider variant="inset" color="secondary" sx={{ ...(!props.defreq && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
@@ -137,6 +137,7 @@ export default function SideBar(props) {
                                         </Button>
                                     </div>
                                 </ListItem>
+                                <Divider variant="inset" color="secondary" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
