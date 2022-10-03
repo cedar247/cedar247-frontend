@@ -44,7 +44,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SetConstraint() {
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
-   
+    const [maxLeaves, setMaxLeaves] = useState(0);
+    const [numConsecutiveGroupShifts, setNumConsecutiveGroupShifts] = useState(0);
+    const [consecutiveGroups, setConsecutiveGroups] = useState([]);
+    const [specialShifts, setSpecialShifts] = useState([]);
+    const [casualtyDay, setCasualtyDay] = useState('');
+    const [casualtyDayShifts, setCasualtyDayShifts] = useState([]);
+    const [shiftTypes, setShiftTypes] = useState([]);
+
     useEffect(() => {
             getShifts();
     }, []);
@@ -54,7 +61,16 @@ export default function SetConstraint() {
         try {
             const response = await adminService.getShifts();
             if(response.data) {
-                setShifts(response.data)
+                const shiftsGot = response.data;
+                setShifts(shiftsGot)
+                const types = []
+                for(let i = 0; i < shiftsGot.length; i++){
+                    types.push({
+                        id: shiftsGot[i]._id,
+                        checked: true
+                    })
+                }
+                setShiftTypes(types)
             }
         } catch (error) {
             console.log(error)
@@ -90,7 +106,16 @@ export default function SetConstraint() {
                     {/* content of the main is here */}
                     <form action="">
                         {/* <WardDetails/> */}
-                        <Constraints shifts={shifts}/>
+                        <Constraints 
+                            shifts={shifts} 
+                            setMaxLeaves={setMaxLeaves} 
+                            setNumConsecutiveGroupShifts={setNumConsecutiveGroupShifts}
+                            numConsecutiveGroupShifts={numConsecutiveGroupShifts}
+                            casualtyDay={casualtyDay}
+                            setCasualtyDay={setCasualtyDay}
+                            shiftTypes={shiftTypes}
+                            setShiftTypes={setShiftTypes}
+                        />
                         <Box textAlign='center'>
                             <Button variant="contained" color="primary" type='submit'>
                                 Add Ward
