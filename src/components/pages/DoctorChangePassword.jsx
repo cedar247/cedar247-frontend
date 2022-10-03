@@ -11,7 +11,9 @@ import Header from '../common/doctor/Header';
 import SideBar from "../common/doctor/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
 import DoctorService from "../../services/API/DoctorService";
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
 
 const drawerWidth = 240;
 
@@ -71,15 +73,35 @@ export default function DoctorChangePassword() {
         alert("Are you sure you wants to change the password")
         try {
             const response = await DoctorService.changePassword({id,...values});
-
             console.log(response);
-
+            // DescriptionAlerts(true);
         } catch (error) {
             console.log(error);
         }
         // props.resetForm()
     }
-
+    // const DescriptionAlerts = (error) => {
+    //     console.log("error",error);
+    //     if (error){
+    //         return (
+    //             <Stack sx={{ width: '100%' }} spacing={2}>
+    //                 <Alert severity="error">
+    //                 <AlertTitle>Error</AlertTitle>
+    //                 Error in changing Password<strong>check it out!</strong>
+    //                 </Alert>
+    //             </Stack>
+    //         );
+    //     }else{
+    //         return (
+    //             <Stack sx={{ width: '100%' }} spacing={2}>
+    //                 <Alert severity="success">
+    //                 <AlertTitle>Success</AlertTitle>
+    //                 Successfully Changed the Password <strong>check it out!</strong>
+    //                 </Alert>
+    //             </Stack>
+    //         );
+    //     }
+    // }
 
     return (
         <div className='DashBody' >
