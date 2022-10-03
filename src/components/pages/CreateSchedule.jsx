@@ -10,6 +10,7 @@ import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import adminService from '../../services/API/AdminService';
 import consulantService from '../../services/API/ConsultantService';
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -44,7 +45,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function CreateSchedule() {
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
-    const [doctorCategories, setDoctorCategories] = useState();
+    const [doctorCategories, setDoctorCategories] = useState([]);
+    const [requirements, setRequirements] = useState([])
    
     useEffect(() => {
         getShifts();
@@ -57,6 +59,16 @@ export default function CreateSchedule() {
             const response = await adminService.getShifts();
             if(response.data) {
                 setShifts(response.data)
+                const data = response.data;
+                // console.log(data)
+                const arr_requirements = [];
+                for(let i = 0; i < data.length; i++) {
+                    const shiftId = data[i]._id;
+                    const shift = {shiftId: shiftId}
+                    // console.log(shift)
+                    arr_requirements.push(shift);
+                }
+                setRequirements(arr_requirements)
             }
         } catch (error) {
             console.log(error)
@@ -69,9 +81,56 @@ export default function CreateSchedule() {
             if(response.data) {
                 setDoctorCategories(response.data)
             }
+            // console.log(response.data)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleRequirements = (id, index, e, doctorCategory) => {
+        let cpRequirements = [...requirements]
+        let requirement = {...cpRequirements[index]}
+        if(requirement.shiftId == id) {
+            // console.log(typeof doctorCategory)
+            requirement[doctorCategory] = e.target.value;
+            cpRequirements[index] = requirement;
+            setRequirements(cpRequirements)
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let error = false;
+        for(let i = 0; i < requirements.length; i++){
+            const requirementDetails = requirements[i];
+
+            for(const [key, value] of Object.entries(requirementDetails)) {
+                console.log(value)
+                if(value === 0 || value === ""){
+                    error = true;
+                }
+            }
+        }
+
+        // if(error) {
+        //     toast.warning("Fill all the fields", {
+        //         toastId: "1"
+        //     })
+        
+        try {
+            const response = await consulantService.createSchedule(requirements);
+            if(response.status === 201) {
+                toast.success("Schedule created successfully!!", {
+                    toastId: "1"
+                })
+            }
+            console.log(response)
+        } catch(error) {
+            console.log(error)
+        }
+        
+
+        
     }
 
     const handleDrawerOpen = () => {
@@ -95,6 +154,7 @@ export default function CreateSchedule() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Create Schedule
                     </Typography>
@@ -110,8 +170,8 @@ export default function CreateSchedule() {
                         <Grid container spacing={3}>
                             {
                                 shifts.map(
-                                    shift => (
-                                        <ShiftDetails shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
+                                    (shift, index, arr) => (
+                                        <ShiftDetails handleRequirements={handleRequirements} index={index} id={shift._id} shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
                                     )
                                 )
                             }
@@ -122,35 +182,9 @@ export default function CreateSchedule() {
 
                         </Grid>
 
-                        {/* <Grid container spacing={3}>
-                            <Grid item md={6} sm={12} xs={12}>
-                                <TextField 
-                                    id="outlined-basic" 
-                                    label="Home Officer" 
-                                    variant="outlined" 
-                                    color='secondary' 
-                                    type="number"
-                                    fullWidth
-                                    margin='normal'
-                                />
-                            </Grid>
-
-                            <Grid item md={6} sm={12} xs={12}>
-                                <TextField 
-                                    id="outlined-basic" 
-                                    label="Medical Officer" 
-                                    variant="outlined" 
-                                    color='secondary' 
-                                    type="number"
-                                    fullWidth
-                                    margin='normal'
-                                />
-                            </Grid>
-                        </Grid> */}
-
                         <Box textAlign='center' m={3}>
-                            <Button variant="contained" color="primary" type='submit'>
-                                Add Ward
+                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
+                                Create Schedule
                             </Button>
                         </Box>
                         
