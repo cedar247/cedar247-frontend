@@ -24,9 +24,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChangePassword from '../pages/ChangePassword.jsx';
 import CustomizedDialogs from '../layouts/Dialog.jsx';
-import Calendar from '../pages/DoctorCalendar.jsx';
+import Calendar from '../layouts/DoctorCalendar.jsx';
 import Header from '../common/doctor/Header';
 import SideBar from "../common/doctor/SideBar";
+import PopUp from '../layouts/DoctorPopups';
 
 
 const useStyles = makeStyles({
@@ -62,12 +63,28 @@ export default function DoctorDashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [openPop, setPopOpen] = React.useState(false);
+    const [Option, setOption] = React.useState(0);
+
     const id = "6334249bebcfbf785191df1d";
 
+    const handledefinerequirements = () => {
+        setPopOpen(true);
+        setOption(1);
+    }
+    const handleChangePassword = () => {
+        setPopOpen(true);
+        setOption(2);
+    }
+    const handleClosePop = () => {
+        setPopOpen(false);
+    }
+    const SetDefaultOption = () => {
+        setOption(0);
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -76,9 +93,10 @@ export default function DoctorDashboard() {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true} handledefinerequirements = {handledefinerequirements} handleChangePassword= {handleChangePassword} />
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar  id = {id} windowHeight = {windowHeight} />
+                    <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} />
                 </Main>
             </Box>
         </div>

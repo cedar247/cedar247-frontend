@@ -13,17 +13,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import SettingsIcon from '@mui/icons-material/Settings';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import CreateIcon from '@mui/icons-material/Create';
-import GroupsIcon from '@mui/icons-material/Groups';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
-import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
 import HomeIcon from '@mui/icons-material/Home';
-import CustomizedDialogs from '../../layouts/Dialog.jsx';
 
 const useStyles = makeStyles({
     paper: {
@@ -47,14 +41,14 @@ export default function SideBar(props) {
     const theme = useTheme();
 
     const handleClickDefineRequirements = () =>{
-        // <Redirect to = "/defineRequirements"/>
+        props.handledefinerequirements();
     }
     const     handleClickChangePassword    = () =>{
-        // <Redirect to = "/ChangePassword"/>
+        props.handleChangePassword();
     }
-    const handleClickHome    = () =>{
-        // <Redirect to = "/DoctorDashboard"/>
-    }
+    // const handleClickHome    = () =>{
+    //     // <Redirect to = "/DoctorDashboard"/>
+    // }
     return (
             <Drawer
                 sx={{
@@ -136,7 +130,7 @@ export default function SideBar(props) {
                                     </div>
                                 </ListItem>
                                 <Divider variant="inset" color="secondary" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
-                                <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
+                                {/* <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                             <HomeIcon color="primary" sx={{ fontSize: 30 }} />
@@ -151,7 +145,7 @@ export default function SideBar(props) {
                                         > Home
                                         </Button>
                                     </div>
-                                </ListItem>
+                                </ListItem> */}
                             </div>
                         </List>
                     </Box>
