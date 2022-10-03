@@ -10,6 +10,7 @@ import { Button, Typography, Grid, TextField} from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import MonthPicker from "../schedule/MonthPicker";
 import ConsultantService from "../../services/API/ConsultantService";
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -57,12 +58,21 @@ export default function SetDeadline() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("submitted")
+        
+        if (values.month === "" || values.year === "" || values.deadline === ""){
+            toast.warning("Fill All Fields", {
+                toastId: "1"
+            })
+        }
 
         try {
             const response = await ConsultantService.setDeadline(values);
     
-            console.log(response);
+            if(response.status === 201) {
+                toast.success("Deadline has been set successfully!", {
+                    toastId: "1"
+                })
+            }
         } catch(error) {
             console.log(error)
         }
@@ -89,6 +99,7 @@ export default function SetDeadline() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Set Deadline
                     </Typography>

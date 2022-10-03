@@ -82,6 +82,7 @@ export default function WardDetails({ wardDetails, handleChange, handleShiftChan
             <Typography
                 variant='h6'
                 component='p'
+                color='primary'
             >
                 Doctor catergories: *need to select at least one type
             </Typography>

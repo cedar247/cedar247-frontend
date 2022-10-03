@@ -78,6 +78,7 @@ export default function DoctorsView() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Doctors
                     </Typography>

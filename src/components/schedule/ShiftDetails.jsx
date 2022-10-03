@@ -9,7 +9,8 @@ export default function ShiftDetails(props) {
         >
             <Typography
                 variant='h6' 
-                component='p'   
+                component='p'  
+                color='error' 
             >
                 {props.shiftName}:
             </Typography>

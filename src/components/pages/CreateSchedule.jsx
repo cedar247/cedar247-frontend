@@ -10,6 +10,7 @@ import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import adminService from '../../services/API/AdminService';
 import consulantService from '../../services/API/ConsultantService';
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -99,13 +100,37 @@ export default function CreateSchedule() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let error = false;
+        for(let i = 0; i < requirements.length; i++){
+            const requirementDetails = requirements[i];
 
+            for(const [key, value] of Object.entries(requirementDetails)) {
+                console.log(value)
+                if(value === 0 || value === ""){
+                    error = true;
+                }
+            }
+        }
+
+        // if(error) {
+        //     toast.warning("Fill all the fields", {
+        //         toastId: "1"
+        //     })
+        
         try {
             const response = await consulantService.createSchedule(requirements);
+            if(response.status === 201) {
+                toast.success("Schedule created successfully!!", {
+                    toastId: "1"
+                })
+            }
             console.log(response)
         } catch(error) {
             console.log(error)
         }
+        
+
+        
     }
 
     const handleDrawerOpen = () => {
@@ -129,6 +154,7 @@ export default function CreateSchedule() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Create Schedule
                     </Typography>
