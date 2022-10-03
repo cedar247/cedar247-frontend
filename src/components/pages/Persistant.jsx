@@ -45,6 +45,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Details from '../layouts/Details';
 import PopUp from '../layouts/Popup';
 import { Main, AppBar, DrawerHeader, drawerWidth } from '../layouts/Drawer'
+import { useState, useEffect } from "react";
+import AdminService from '../../services/API/AdminService';
 
 const useStyles = makeStyles({
     paper: {
@@ -53,14 +55,29 @@ const useStyles = makeStyles({
 });
 
 
-export default function PersistentDrawerLeft() {
-
+export default function AdminDashboard() {
+    const [Wards, setWards] = useState([]);
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [openPop, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
 
+    useEffect(() => {
+        getAllWards();
+      }, []);
+    
+      const getAllWards = async () => {
+        try {
+          const response = await AdminService.getAllWards();
+          console.log(response);
+          console.log(response.data);
+          setWards(response.data);
+        } catch (error) {
+          console.log(error)
+        }
+    
+      };
     const handleConsultant = () => {
         setPopOpen(true);
         setOption(1);
@@ -269,7 +286,7 @@ export default function PersistentDrawerLeft() {
                         }}><h2>WARDS</h2></div>
                     {/* <ResponsiveGrid /> */}
                     {/* <OutlinedCard/> */}
-                    <Details />
+                    <Details  wards = {Wards}/>
                     <PopUp opener={openPop} closer={handleCloseAddWard} DefaultOption={SetDefaultOption} Option={Option} />
                 </Main>
             </Box>

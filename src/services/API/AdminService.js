@@ -13,6 +13,10 @@ const addDoctor = (details) => {
     return axios.post(APIEndpoint + "/admin/doctor", details);
 }; 
 
+const addUser = (details) => {
+    return axios.post(APIEndpoint + "/admin/user", details);
+}; 
+
 
 const getConsultants = () => {
     return axios.get(APIEndpoint + "/admin/getConsultants");
@@ -30,6 +34,16 @@ const getAllWards = () => {
 const addWard = (ward) => {
     return axios.post(APIEndpoint + "/admin/add-ward", ward);
 }
+const getDoctorTypes = () => {
+    return axios.get(APIEndpoint + "/admin/getDoctorTypes");
+}; 
+
+const DoLogin = (details) => {
+    return axios.post(APIEndpoint + "/admin/dologin",details);
+}; 
+
+
+
 
 const getShifts = () => {
     return axios.get(APIEndpoint+ "/admin/get-shifts")
@@ -41,7 +55,12 @@ const adminService = {
     getShifts,
     addConsultant,
     addDoctor,
-    getConsultants,getWards,getAllWards
+    getConsultants,
+    getWards,
+    getAllWards,
+    getDoctorTypes,
+    addUser,
+    DoLogin,
 }
 
 export default adminService;

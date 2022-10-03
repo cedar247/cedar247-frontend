@@ -53,6 +53,7 @@ export default function PopUp(props) {
         <DialogContent dividers={scroll === "paper"}>
             {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
             {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
+            {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

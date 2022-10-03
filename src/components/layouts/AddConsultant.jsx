@@ -69,25 +69,39 @@ export default function AddConsultant(props) {
 
   const name = props.title;
   const onSubmit = async (e) => {
-    if(values.WardID === "" || values.name === ""|| values.email===""|| values.phoneNumber ==="" ){
+    if (values.WardID === "" || values.name === "" || values.email === "" || values.phoneNumber === "") {
       e.preventDefault();
-      toast.warn("Fill All Fields",{
-        toastId: "1"})
+      toast.info("Fill All Fields", {
+        toastId: "2"
+      })
     }
-    else{
+    else {
       console.log(`${values.name}`)
       e.preventDefault();
       console.log("submitted")
-  
+
       try {
         const response = await AdminService.addConsultant(values);
         console.log(response);
-        if(response.data.msg =="Success"){
-          toast.success("New Cosultant Added",{
-            toastId: "1"})
+        if (response.data.msg == "Success") {
+          toast.success("New Cosultant Added", {
+            toastId: "1"
+          })
         }
+
       } catch (error) {
-        console.log(error)
+        if (error.response.data.msg == "User validation failed: email: The specified email address is already in use.") {
+          toast.warn("Email Already Exits", {
+            toastId: "3"
+          })
+        }
+        else {
+          toast.error("Cosultant Not Added", {
+            toastId: "4"
+          })
+          console.log(error)
+        }
+
       }
     }
 
@@ -95,38 +109,38 @@ export default function AddConsultant(props) {
 
   return (
     <>
-    
-    
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
 
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <PersonIcon sx={{ fontSize: 30 }} />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {name}
-          </Typography>
-          <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="Name"
-                  name="firstName"
-                  // required
-                  fullWidth
-                  id="Name"
-                  label="Name"
-                  autoFocus
-                  value={values.name}
-                  onChange={handleChange('name')}
+
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+              <PersonIcon sx={{ fontSize: 30 }} />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {name}
+            </Typography>
+            <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="Name"
+                    name="firstName"
+                    // required
+                    fullWidth
+                    id="Name"
+                    label="Name"
+                    autoFocus
+                    value={values.name}
+                    onChange={handleChange('name')}
                   // {...register("Name",
                   //   {
                   //     required: "Name is Required.",
@@ -138,34 +152,34 @@ export default function AddConsultant(props) {
                   // }
                   // error={Boolean(errors.Name)}
                   // helperText={errors.Name?.message}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
 
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Ward</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={values.WardID}
-                    label="Ward"
-                    onChange={handleChange3}
-                  //   {...register("Ward",
-                  //   {
-                  //     required: "Ward is Required."
-                  //   })
-                  // }
-                  // error={Boolean(errors.Ward)}
-                  // helperText={errors.Ward?.message}
-                  >
-                    {Wards.map((option) => (
-                      <MenuItem key={option._id} value={option._id}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                {/* <TextField
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Ward</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={values.WardID}
+                      label="Ward"
+                      onChange={handleChange3}
+                    //   {...register("Ward",
+                    //   {
+                    //     required: "Ward is Required."
+                    //   })
+                    // }
+                    // error={Boolean(errors.Ward)}
+                    // helperText={errors.Ward?.message}
+                    >
+                      {Wards.map((option) => (
+                        <MenuItem key={option._id} value={option._id}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  {/* <TextField
                   sx={{ m: 0, }}
                   fullWidth
                   focused
@@ -185,42 +199,42 @@ export default function AddConsultant(props) {
                     </option>
                   ))}
                 </TextField> */}
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    id="contactNO"
+                    label="Contact Number"
+                    name="contactNO"
+                    autoComplete="Contact-Number"
+                    value={values.phoneNumber}
+                    onChange={handleChange("phoneNumber")}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={values.email}
+                    onChange={handleChange('email')}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  id="contactNO"
-                  label="Contact Number"
-                  name="contactNO"
-                  autoComplete="Contact-Number"
-                  value={values.phoneNumber}
-                  onChange={handleChange("phoneNumber")}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={values.email}
-                  onChange={handleChange('email')}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              ADD
-            </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                ADD
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
 
     </>
   );

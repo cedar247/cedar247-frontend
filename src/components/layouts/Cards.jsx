@@ -21,48 +21,50 @@ const bull = (
     </Box>
 );
 
-const card = (
-    <React.Fragment>
 
-        <CardContent>
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                <OtherHousesIcon sx={{ fontSize: 30 }} />
-            </Avatar>
-            <Typography variant="h5" component="div">
-                Dental & Oral
-            </Typography>
-            <Divider color="primary" />
-            <Box component="div" sx={{ display: 'inline' }}><PersonIcon sx={{ fontSize: 35 }}/></Box>
-            <Box component="div" sx={{ display: 'inline' }}>            <Typography fontSize={18} component="div">
-               5 Doctors
-            </Typography></Box> 
-            <Divider   />
-            <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-            </Typography>
-            <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-            </Typography>
-        </CardContent>
-        <CardActions>
-
-            <Button variant="contained" fullWidth >View</Button>
-            <Button variant="outlined" fullWidth>Edit</Button>
-        </CardActions>
-    </React.Fragment>
-);
-
-export default function OutlinedCard() {
+export default function OutlinedCard(props) {
     return (
         <Box sx={{ minWidth: 200, minHeight: 200 }}>
             <div style={{
                 boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
                 borderRadius: '10px'
-            }}><Card variant="outlined" elevation={24} > {card}</Card></div>
+            }}><Card variant="outlined" elevation={24} >
+
+
+
+                    <React.Fragment>
+
+                        <CardContent>
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                <OtherHousesIcon sx={{ fontSize: 30 }} />
+                            </Avatar>
+                            <Typography variant="h5" component="div">
+                               {props.name}
+                            </Typography>
+                            <Divider color="primary" />
+                            <Box component="div" sx={{ display: 'inline' }}><PersonIcon sx={{ fontSize: 35 }} /></Box>
+                            <Box component="div" sx={{ display: 'inline' }}>            <Typography fontSize={18} component="div">
+                                {props.num} Doctors
+                            </Typography></Box>
+                            <Divider />
+                            {/* <Typography variant="body2">
+                               {props.id}
+                                <br />
+                                {'"a benevolent smile"'}
+                            </Typography>
+                            <Typography variant="body2">
+                                well meaning and kindly.
+                                <br />
+                                {'"a benevolent smile"'}
+                            </Typography> */}
+                        </CardContent>
+                        <CardActions>
+
+                            <Button variant="contained" fullWidth >View</Button>
+                            <Button variant="outlined" fullWidth>Edit</Button>
+                        </CardActions>
+                    </React.Fragment>
+                </Card></div>
 
         </Box>
     );
