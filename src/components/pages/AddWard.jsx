@@ -125,7 +125,7 @@ export default function AddWard() {
                         <WardDetails wardDetails={wardDetails} handleChange={handleChange} handleShiftChange={handleShiftChange} handleDoctorCategories={handleDoctorCategories} doctorCategories={doctorCategories}/>
                         {/* <Constraints/> */}
                         <Box textAlign='center'>
-                            <Link to="/set-constraints">
+                            <Link to="/set-constraints" style={{textDecoration: 'none'}}>
                                 <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Next
                                 </Button>

@@ -13,7 +13,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import AddHomeIcon from '@mui/icons-material/AddHome';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid} from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -23,6 +23,7 @@ import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
 import ChangePassword from '../../pages/ChangePassword.jsx';
 import CustomizedDialogs from '../../layouts/Dialog.jsx';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     paper: {
@@ -113,14 +114,16 @@ export default function SideBar(props) {
                                             </Avatar>
                                         </ListItemAvatar>
                                         {/* <ListItemText primary=""/> */}
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            Create Schedule
-                                        </Button>
+                                        <Link to="/create-schedule" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                Create Schedule
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                     <Divider variant="inset" color="secondary" />
                                     <ListItem>
@@ -130,14 +133,16 @@ export default function SideBar(props) {
                                             </Avatar>
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            View Doctors
-                                        </Button>
+                                        <Link to="/view-doctors" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                View Doctors
+                                            </Button>
+                                        </Link>
                                     </ListItem>
 
                                     <ListItem>
@@ -147,14 +152,16 @@ export default function SideBar(props) {
                                             </Avatar>
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            Set Deadline
-                                        </Button>
+                                        <Link to="/set-deadline" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                Set Deadline
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                     <ListItem sx={{ mt: 3, mb: 2 }}>
                                         <ListItemAvatar>
