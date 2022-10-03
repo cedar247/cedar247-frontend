@@ -13,14 +13,20 @@ test("render category", async () => {
     expect(textElement).toBeInTheDocument();
 });
 
-// test("render contact", async () => {
-//     render(<Doctor contactNumber="0761112220"/>);
-//     const textElement = screen.getByDisplayValue("Contact:  0761112220")
-//     expect(textElement).toBeInTheDocument();
-// });
+test("render contact", async () => {
+    render(<Doctor contactNumber="0761112220"/>);
+    const textElement = screen.getByText("0761112220")
+    expect(textElement).toBeInTheDocument();
+});
 
 test("render ward Number", async () => {
-    render(<Doctor category={1}/>);
-    const textElement = screen.getByText("Ward Number: 1")
+    render(<Doctor wardNumber={1}/>);
+    const textElement = screen.getByText("1")
+    expect(textElement).toBeInTheDocument();
+});
+
+test("render wardName", async () => {
+    render(<Doctor wardName="ICU"/>);
+    const textElement = screen.getByText("ICU")
     expect(textElement).toBeInTheDocument();
 });
