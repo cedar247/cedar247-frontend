@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './components/pages/Signin';
-import PersistentDrawerLeft from './components/pages/Persistant';
+import AdminDashboard from './components/pages/Persistant';
 import AddWard from './components/pages/AddWard';
 import CreateSchedule from './components/pages/CreateSchedule';
 import SetDeadline from './components/pages/SetDeadline.jsx';
@@ -27,6 +27,7 @@ const theme = createTheme({
     fontFamily: 'Quicksand'
   }
 })
+
 
 function App() {
   return (
