@@ -1,19 +1,10 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import * as React from "react";
 // import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import LoginForm from "../pages/Signin";
-import Login from "../pages/login";
-import SignUp from "../pages/login";
 import AddConsultant from "./AddConsultant";
-import Avatar from '@mui/material/Avatar';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import AddDoctor from "./AddDoctor";
 
 export default function PopUp(props) {
