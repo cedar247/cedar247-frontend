@@ -38,36 +38,31 @@ export default function Shift(props) {
                 }}
                 onChange={(e) => props.handleShiftChange(e, props.index, "name")}
             />
-            {/* <Box pt={2}>
-                <Typography>
-                    Duration:
-                </Typography>
-            </Box> */}
 
-                <TextField 
-                    id="outlined-basic" 
-                    label="Start" 
-                    variant="outlined" 
-                    color='secondary' 
-                    type="time"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    InputProps={{
-                        className: classes.field
-                    }}
-                    onChange={(e) => props.handleShiftChange(e, props.index, "startTime")}
-                />
-                <TextField 
-                    id="outlined-basic" 
-                    label="End" 
-                    variant="outlined" 
-                    color='secondary' 
-                    type="time"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={(e) => props.handleShiftChange(e, props.index, "endTime")}
+            <TextField 
+                id="outlined-basic" 
+                label="Start" 
+                variant="outlined" 
+                color='secondary' 
+                type="time"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                InputProps={{
+                    className: classes.field
+                }}
+                onChange={(e) => props.handleShiftChange(e, props.index, "startTime")}
+            />
+            <TextField 
+                id="outlined-basic" 
+                label="End" 
+                variant="outlined" 
+                color='secondary' 
+                type="time"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(e) => props.handleShiftChange(e, props.index, "endTime")}
                 />
         </Box>
     )

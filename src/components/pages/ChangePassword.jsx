@@ -10,6 +10,8 @@ import * as Yup from 'yup'
 import Header from '../common/doctor/Header';
 import SideBar from "../common/doctor/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
+import DoctorService from "../../services/API/DoctorService";
+
 
 const drawerWidth = 240;
 
@@ -41,6 +43,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 export default function ChangePassword() {
     const [open, setOpen] = React.useState(false);
+    const id = ""
 
     const paperStyle = { padding: '0 15px 40px 15px', width: 250, }
     const btnStyle = { marginTop: 10 }
@@ -63,10 +66,17 @@ export default function ChangePassword() {
         .matches(passwordRegExp,"Password must have one upper, lower case, number, special symbol").required('Required'),
         confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password not matches").required('Required')
     })
-    const onSubmit = (values, props) => {
+    const onSubmit = async (values, props) => {
+        console.log({id,...values});
         alert("Are you sure you wants to change the password")
-        props.resetForm()
-        // alert(JSON.stringify(values), null, 2)
+        try {
+            const response = await DoctorService.changePassword({id,...values});
+
+            console.log(response);
+
+        } catch (error) {
+            console.log(error);
+        }
         // props.resetForm()
     }
 
@@ -76,11 +86,11 @@ export default function ChangePassword() {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {true} chanpass ={false} defreq ={true}/>
                 <Main open={open} >
                     <Grid align = "center" style ={{paddingTop:"100px"}} > 
-                        <Paper style={paperStyle} paddingTop ={1000} style ={{width:"50%",height:"50%", padding:"20px" }}>
-                            <Grid align='center'>
+                        <Paper style={paperStyle} style ={{width:"50%",height:"50%", padding:"20px" }}>
+                            <Grid align='center' >
                                 <Typography variant='caption' ><h3 align="center" >Change Password</h3></Typography>
                             </Grid>
                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
