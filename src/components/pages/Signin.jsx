@@ -24,8 +24,9 @@ import { toast } from "react-toastify";
 import MuiAlert from '@mui/material/Alert';
 import { useState, useEffect } from "react";
 import validator from 'validator';
-// import { ButtonBase } from "@mui/material";
-// import ButtonAppBar from "./Appbar1";
+import "../../App.css";
+import AuthService from '../../services/authentication';
+// const bcrypt = require('bcryptjs');
 
 
 export default function LoginForm() {
