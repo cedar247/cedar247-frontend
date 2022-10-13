@@ -36,7 +36,7 @@ function App() {
         <Router>
           <Routes>
             <Route exact path="/" element={<LoginForm/>}></Route>
-            <Route path="/wards" element={<PersistentDrawerLeft/>}></Route>
+            {/* <Route path="/wards" element={<PersistentDrawerLeft/>}></Route> */}
             <Route path="/add-wards" element={<AddWard/>}></Route>
             <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
             <Route path="/set-deadline" element={<SetDeadline/>}></Route>

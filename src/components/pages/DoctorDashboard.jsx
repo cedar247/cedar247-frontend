@@ -28,7 +28,7 @@ import Calendar from '../layouts/DoctorCalendar.jsx';
 import Header from '../common/doctor/Header';
 import SideBar from "../common/doctor/SideBar";
 import PopUp from '../layouts/DoctorPopups';
-
+import DoctorService from "../../services/API/DoctorService";
 
 const useStyles = makeStyles({
     paper: {
@@ -67,6 +67,24 @@ export default function DoctorDashboard() {
     const [Option, setOption] = React.useState(0);
 
     const id = "6334249bebcfbf785191df1d";
+    const [shifts, setShifts] = React.useState([]);
+
+    React.useEffect(() => {
+        
+        async function handleGetShifts(){
+            
+            try {
+                    const response = await DoctorService.getShifts({id:id});
+                    console.log(response);
+                    if(response.data) {
+                        setShifts(response.data)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+    
+    handleGetShifts();},[id]);
 
     const handledefinerequirements = () => {
         setPopOpen(true);
@@ -96,7 +114,7 @@ export default function DoctorDashboard() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true} handledefinerequirements = {handledefinerequirements} handleChangePassword= {handleChangePassword} />
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar  id = {id} windowHeight = {windowHeight} />
-                    <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} />
+                    <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
                 </Main>
             </Box>
         </div>
