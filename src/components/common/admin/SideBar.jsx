@@ -16,6 +16,7 @@ import AddHomeIcon from '@mui/icons-material/AddHome';
 import { Button, Grid } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     paper: {
@@ -91,14 +92,16 @@ export default function SideBar(props) {
                                                 <AddHomeIcon color="success" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            WARD
-                                        </Button>
+                                        <Link to="/add-wards" style={{textDecoration: 'none'}} fullWidth>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 , pl: 5, pr:5}}
+                                            >
+                                                WARD
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                     <Divider variant="inset" color="secondary" />
                                     <ListItem>

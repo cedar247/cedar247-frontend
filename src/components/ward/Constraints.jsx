@@ -7,7 +7,16 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import Vacation from "./Vacation";
 
-export default function Constraints({ shifts }) {
+export default function Constraints({ 
+    shifts, 
+    setMaxLeaves, 
+    setNumConsecutiveGroupShifts,
+    numConsecutiveGroupShifts,
+    casualtyDay,
+    setCasualtyDay,
+    shiftTypes,
+    setShiftTypes
+}) {
     // const [shifts, setShifts] = useState([
     //     {
     //         _id: '1',
@@ -28,8 +37,8 @@ export default function Constraints({ shifts }) {
     //         endTime: '08:00'
     //     }
     // ]); // need to get from database
-    const [shiftTypes, setShiftTypes] = useState({});
-    const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
+    // const [shiftTypes, setShiftTypes] = useState({});
+    // const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
 
     useEffect(() => {
         getShifts();
@@ -40,7 +49,7 @@ export default function Constraints({ shifts }) {
     }
     const createShiftGroups = () => {
         let arr = []
-        for (let i = 0; i < numOfConsecutiveGroups; i++) {
+        for (let i = 0; i < numConsecutiveGroupShifts; i++) {
           arr.push(<Shifts shifts={shifts}/>)
         }
         return(<div>
@@ -48,14 +57,17 @@ export default function Constraints({ shifts }) {
             </div>)
     }
 
-    const [casualtyDay, setCasualtyDay] = useState("");
-
     const handleCasualtyDay = (e) => {
         setCasualtyDay(e.target.value);
     }
 
-    const handleShiftTypes = (event) => {
-        setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
+    const handleShiftTypes = (event, index) => {
+        // setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
+        let CPshifTypes = [...shiftTypes];
+        let shiftType = {...CPshifTypes[index]}
+        shiftType.checked = event.target.value;
+        CPshifTypes[index] = shiftType;
+        setShiftTypes(CPshifTypes)
     };
 
     return (
@@ -67,6 +79,7 @@ export default function Constraints({ shifts }) {
                 variant="outlined" 
                 color='secondary' 
                 type="number"
+                onChange={setMaxLeaves}
             />
 
             <TextField 
@@ -75,7 +88,7 @@ export default function Constraints({ shifts }) {
                 variant="outlined" 
                 color='secondary' 
                 type="number"
-                onChange={(e)=>setNumOfConsecutiveGroups(e.target.value)}
+                onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
             />
 
             {createShiftGroups()}
@@ -88,14 +101,14 @@ export default function Constraints({ shifts }) {
             <FormGroup>
                 {
                     shifts.map(
-                        shift => (
+                        (shift, index, arr) => (
                             <Box key={shift._id}>
                                 <FormControlLabel
                                     key={shift._id}
                                     control={
                                     <Checkbox
-                                        checked={shiftTypes.morning}
-                                        onChange={handleShiftTypes}
+                                        checked={shiftTypes[index].checked}
+                                        onChange={(e) => handleShiftTypes(e, index)}
                                         name={shift.name}
                                         color="secondary"
                                         key={shift._id}
@@ -109,35 +122,7 @@ export default function Constraints({ shifts }) {
                         )
                     )
                     
-                }   
-
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.evening}
-                        onChange={handleShiftTypes}
-                        name="evening"
-                        color="secondary"
-                    />
-                    }
-                    label="Evening"
-                />
-
-                <Vacation />
-
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.night}
-                        onChange={handleShiftTypes}
-                        name="night"
-                        color="secondary"
-                    />
-                    }
-                    label="Night"
-                />
-
-                <Vacation />
+                } 
 
         </FormGroup>
 

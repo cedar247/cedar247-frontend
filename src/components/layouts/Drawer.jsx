@@ -3,7 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import { makeStyles } from "@material-ui/core/styles";
 import '../../index.css';
-
+//components to style the page
 const useStyles = makeStyles({
     paper: {
         background: "#f5f5f5"
@@ -11,9 +11,11 @@ const useStyles = makeStyles({
 });
 
 
-const drawerWidth = 240;
+const drawerWidth = 240;// width of the drawer
+// to control the main transistion of the admin dash  board
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
+         //controlls the transition
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
@@ -31,9 +33,12 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
 );
 
+
+// controlls the side bar of the page
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
+    //controlls the transition
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,

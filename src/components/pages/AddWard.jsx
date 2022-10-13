@@ -9,7 +9,8 @@ import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import adminService from "../../services/API/AdminService";
-import { useNavigate } from 'react-router-dom'    
+import { useNavigate } from 'react-router-dom' 
+import { toast } from "react-toastify";   
 
 const drawerWidth = 240;
 
@@ -81,6 +82,12 @@ export default function AddWard() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(wardDetails.name === "" || wardDetails.number === "" || shifts === "") {
+            toast.warning("Fill All Fields", {
+                toastId: "1"
+            })
+        }
+
         try {
             const response = await adminService.addWard({...wardDetails, doctorCategories, shifts});
             if(response.status === 201) {
@@ -88,6 +95,9 @@ export default function AddWard() {
                 //     pathname: '/set-constraints',
                 //     state: response.data.wardId
                 // })
+                toast.success("ward has been successfully added", {
+                    toastId: "1"
+                })
                 navigate('/set-constraints')
             }
         } catch(error) {
@@ -116,6 +126,7 @@ export default function AddWard() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Add Ward
                     </Typography>
@@ -125,7 +136,7 @@ export default function AddWard() {
                         <WardDetails wardDetails={wardDetails} handleChange={handleChange} handleShiftChange={handleShiftChange} handleDoctorCategories={handleDoctorCategories} doctorCategories={doctorCategories}/>
                         {/* <Constraints/> */}
                         <Box textAlign='center'>
-                            <Link to="/set-constraints">
+                            <Link to="/set-constraints" style={{textDecoration: 'none'}}>
                                 <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Next
                                 </Button>

@@ -37,11 +37,11 @@ export default function Doctor(props) {
                     </Typography>
 
                     <Typography  color="primary" gutterBottom>
-                        Contact: {props.contactNumber}
+                        Contact: <span>{props.contactNumber}</span>
                     </Typography>
 
                     <Typography className={classes.pos} color="textSecondary">
-                        Ward Number: {props.wardNumber}
+                        Ward Number: <span>{props.wardNumber}</span>
                     </Typography>
 
                     <Typography variant="body2" component="p">

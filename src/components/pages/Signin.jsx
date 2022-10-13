@@ -1,46 +1,41 @@
-import React from "react";
-// import SubmitButton from "./SubmitButton";
-// import UserStore from "../stores/UserStore";
-import "../../App.css";
-// import background from '../images/background.jpg'
-import Avatar from '@mui/material/Avatar';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Button from "@mui/material/Button";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Box from '@mui/material/Box';
-// import {warningToast} from "./common/Toasts";
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AlertTitle from '@mui/material/AlertTitle';
-import { toast } from "react-toastify";
 import MuiAlert from '@mui/material/Alert';
-import { useState, useEffect } from "react";
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from "@mui/material/Button";
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import Link from '@mui/material/Link';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Typography from '@mui/material/Typography';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import validator from 'validator';
-// import { ButtonBase } from "@mui/material";
-// import ButtonAppBar from "./Appbar1";
+import "../../App.css";
+import AuthService from '../../services/authentication';
+const bcrypt = require('bcryptjs');
 
 
 export default function LoginForm() {
-
+    //to validate email
     const [emailError, setEmailError] = useState('')
+    //to aleart a invalid email
     const [emailAlert, setAlert] = React.useState(false);
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
+    // to store the values from the form
     const [values, setValues] = React.useState({
         email: "",
         password: "",
         showPassword: false
     });
-
+    // validates the email
     const validateEmail = (e) => {
         setAlert({
             emailAlert: true
@@ -57,13 +52,10 @@ export default function LoginForm() {
     }
 
 
-
+// sets value for the attributes in the form
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
-
-
-
 
     const handleSubmit = async (e) => {
 
@@ -78,18 +70,32 @@ export default function LoginForm() {
         else {
             console.log(`${values.email}`)
             e.preventDefault();
-            console.log("submitted")
 
-            // try {
-            //   const response = await AdminService.addDoctor(values);
-            //   console.log(response);
-            //   if(response.data.msg =="Success"){
-            //     toast.success("New Cosultant Added",{
-            //       toastId: "1"})
-            //   }
-            // } catch (error) {
-            //   console.log(error)
-            // }
+            console.log("submitted")
+            try {
+                // to login the user
+                const response = await AuthService.DoLogin(values);
+                console.log(response);// for dubugging purpose
+                if(response.data.status == "Failed"){
+                    toast.warn("Incorrect Email or Password", {
+                        toastId: "1"
+                    })
+                }
+                else if(response.data.status == "ok"){
+                    toast.success("Success", {
+                        toastId: "1"
+                    })
+                    window.location.href = "/wards"
+                }else{
+                    toast.warn("Incorrect Email or Password", {
+                        toastId: "1"
+                    })
+                }
+                console.log(bcrypt.compareSync('Password@123', response.data.userid.password));
+                // setWards(response.data);
+              } catch (error) {
+                console.log(error)
+              }
         }
 
     };
@@ -102,66 +108,16 @@ export default function LoginForm() {
         console.log(this.state.open);
 
     };
-
+// to enable show password
     const handleClickShowPassword = () => {
         setValues({ ...values, ["showPassword"]: !values.showPassword });
     };
 
+    //to enable handle mouse down
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
-
-    // async doLogin() {
-    //     if (!this.state.email) {
-    //         warningToast("Please enter email");
-    //         return;
-    //     }
-    //     if (!this.state.password) {
-    //         warningToast("Please enter password");
-    //         return;
-    //     }
-
-    //     this.setState({
-    //         buttonDisabled: true,
-    //     });
-
-    //     try {
-    //         let res = await fetch("/auth/login", {
-    //             method: "post",
-    //             headers: {
-    //                 "Accept": "application/json",
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 email: this.state.email,
-    //                 password: this.state.password,
-    //             }),
-    //             credentials: "include",
-    //         });
-
-    //         let result = await res.json();
-
-    //         if (result && result.success) {
-    //             console.log("SUCCESSFULLY RECEIVED THE RESULT");
-    //             UserStore.isLoggedIn = true;
-    //             UserStore.email = result.email;
-    //             UserStore.role = result.role;
-    //             window.location.href = "/";
-    //         } else if (result && result.success === false) {
-    //             console.log("NOT SUCCESSFULLY RECEIVED THE RESULT");
-    //             this.handleOpen();
-    //             this.resetForm();
-
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //         this.resetForm();
-    //         // this.handleOpen();
-    //     }
-    // }
-
-    // document.body.style.backgroundImage = `url(${background})`;
     return (
         <>
         
