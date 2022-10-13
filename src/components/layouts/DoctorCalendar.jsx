@@ -13,7 +13,7 @@ import {
     Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import DoctorService from "../../services/API/DoctorService";
-import { appointments, resourcesData, doctordetais} from "../pages/dummy_data.js";
+import { appointments, resourcesData} from "../pages/dummy_data.js";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -26,21 +26,21 @@ import Checkbox from '@mui/material/Checkbox';
         const [calendar, setCalendar] = React.useState([]);
         const [doctors, setDoctors] = React.useState([]);
 
-        const id = "6334249bebcfbf785191df1d";
+        const id = "633ab0f123be88c950fb8a89";
 
         const [windowHeight]= React.useState(props.windowHeight);
 
         React.useEffect(() => {
             async function loadData(){
                 try {
-                    console.log(appointments);
+                    // console.log(appointments);
                     const response = await DoctorService.changeclendar({id:id, showAllDoctors:false});
                     console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
-                    console.log(resourcesData);
-                    console.log(response.data[1]);
-                    console.log(formatData(response.data[0]))
+                    // console.log(resourcesData);
+                    // console.log(response.data[1]);
+                    // console.log(formatData(response.data[0]))
                 } catch (error) {
                     console.log(error);
                 }
@@ -56,7 +56,7 @@ import Checkbox from '@mui/material/Checkbox';
             const endTime = data[i]["endTime"].split(":");
             const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]))
 
-            if (data[i]["title"] == "night"){
+            if (data[i]["title"] === "night"){
                 endDate.setDate(endDate.getDate()+ 1)            
             }
 
@@ -75,7 +75,7 @@ import Checkbox from '@mui/material/Checkbox';
         const handleShowHide = async (event) =>{
             // event.preventDefault();
             setShowAllDoctors(!showAllDoctors);
-            console.log(!showAllDoctors);
+            // console.log(!showAllDoctors);
             console.log("changed");
     
             try {
@@ -99,7 +99,7 @@ import Checkbox from '@mui/material/Checkbox';
                 <FormGroup >
                         <FormControlLabel control={<Checkbox onChange ={handleShowHide}  />} style={{ marginLeft: '10px', paddingTop: '10px' }} label="Display All doctors Schedule" />
                     </FormGroup>
-                <Scheduler data={calendar} height = {windowHeight} >
+                <Scheduler data={calendar} height = {windowHeight} label='schedule' >
                     <ViewState />
                     <EditingState/>
                     <MonthView height = {windowHeight} />
@@ -119,6 +119,7 @@ import Checkbox from '@mui/material/Checkbox';
                     <DateNavigator />
                     <AppointmentTooltip
                         showCloseButton
+                        // showOpenButton
                     />
                 </Scheduler>
             </Paper>

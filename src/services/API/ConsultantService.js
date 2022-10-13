@@ -16,10 +16,15 @@ const getDoctorCategories = () => {
     return axios.get(APIEndpoint + "/consultant/get-categories");
 }
 
+const createSchedule = (requirements) => {
+    return axios.post(APIEndpoint + "/consultant/create-schedule", requirements);
+}
+
 const consulantService = {
     setDeadline,
     getDoctors,
-    getDoctorCategories
+    getDoctorCategories,
+    createSchedule
 };
 
 export default consulantService;

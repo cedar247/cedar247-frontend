@@ -22,6 +22,7 @@ export default function MonthPicker({ values, handleChange }) {
                 variant='h6'
                 component='p'
                 gutterBottom
+                color="primary"
             >
                 Schedule Month:
             </Typography>
