@@ -67,12 +67,32 @@ export default function SetConstraint() {
                 for(let i = 0; i < shiftsGot.length; i++){
                     types.push({
                         id: shiftsGot[i]._id,
-                        checked: true
+                        checked: true,
+                        vacation: 0
                     })
                 }
+                console.log(types)
                 setShiftTypes(types)
             }
         } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("submitted")
+        try {
+            const response = await adminService.setConstraints({
+                maxLeaves,
+                numConsecutiveGroupShifts,
+                consecutiveGroups,
+                specialShifts,
+                casualtyDay,
+                casualtyDayShifts,
+                shiftTypes
+            })
+        } catch(error) {
             console.log(error)
         }
     }
@@ -117,7 +137,7 @@ export default function SetConstraint() {
                             setShiftTypes={setShiftTypes}
                         />
                         <Box textAlign='center'>
-                            <Button variant="contained" color="primary" type='submit'>
+                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Add Ward
                             </Button>
                         </Box>

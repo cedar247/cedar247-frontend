@@ -13,6 +13,7 @@ import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/test';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PersistentDrawerLeft from './components/pages/Persistant.jsx'
 
 const theme = createTheme({
   palette: {

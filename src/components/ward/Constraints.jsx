@@ -6,6 +6,16 @@ import Shifts from './Shifts';
 import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import Vacation from "./Vacation";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    field: {
+        "&&": {
+            
+        }
+    }
+})
 
 export default function Constraints({ 
     shifts, 
@@ -17,44 +27,15 @@ export default function Constraints({
     shiftTypes,
     setShiftTypes
 }) {
-    // const [shifts, setShifts] = useState([
-    //     {
-    //         _id: '1',
-    //         name: 'morning',
-    //         startTime: '08:00',
-    //         endTime: '13:00'
-    //     },
-    //     {
-    //         _id: '2',
-    //         name: 'evening',
-    //         startTime: '13:00',
-    //         endTime: '19:00'
-    //     },
-    //     {
-    //         _id: '3',
-    //         name: 'night',
-    //         startTime: '19:00',
-    //         endTime: '08:00'
-    //     }
-    // ]); // need to get from database
-    // const [shiftTypes, setShiftTypes] = useState({});
-    // const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
 
-    useEffect(() => {
-        getShifts();
-    }, []);
-
-    const getShifts = async () => {
-        
-    }
     const createShiftGroups = () => {
         let arr = []
         for (let i = 0; i < numConsecutiveGroupShifts; i++) {
-          arr.push(<Shifts shifts={shifts}/>)
+          arr.push(<Grid key={i} item md={4} sm={6} xs={12} p={2}><Shifts shifts={shifts}/></Grid>)
         }
-        return(<div>
+        return(<Grid container spacing={3} mt={2} mb={2}>
             {arr.map(shifts=>shifts)}
-            </div>)
+            </Grid>)
     }
 
     const handleCasualtyDay = (e) => {
@@ -65,7 +46,7 @@ export default function Constraints({
         // setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
         let CPshifTypes = [...shiftTypes];
         let shiftType = {...CPshifTypes[index]}
-        shiftType.checked = event.target.value;
+        shiftType.checked = event.target.checked;
         CPshifTypes[index] = shiftType;
         setShiftTypes(CPshifTypes)
     };
@@ -73,29 +54,40 @@ export default function Constraints({
     return (
         <Box>
 
-            <TextField 
-                id="outlined-basic" 
-                label="Maximum number of leaves per month:" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                onChange={setMaxLeaves}
-            />
+            <Grid container spacing={3} mt={2} mb={2}>
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Maximum number of leaves per month:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={setMaxLeaves}
+                        fullWidth={true}
+                    />
+                </Grid>
 
-            <TextField 
-                id="outlined-basic" 
-                label="How many consecutive groups of shifts:" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
-            />
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="How many consecutive groups of shifts:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
+                        fullWidth={true}
+                        InputProps={{ inputProps: { min: 0, max: 5 } }}
+                    />
+                </Grid>
+            </Grid>
 
             {createShiftGroups()}
 
-            <Typography>
-                What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
-            </Typography>
+            <Box mt={4}>
+                <Typography>
+                    What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
+                </Typography>
+            </Box>
 
 
             <FormGroup>
@@ -117,7 +109,7 @@ export default function Constraints({
                                     label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
                                 />
 
-                                <Vacation/>
+                                <Vacation shiftTypes={shiftTypes} setShiftTypes={setShiftTypes} index={index}/>
                             </Box>
                         )
                     )

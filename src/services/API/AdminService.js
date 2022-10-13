@@ -43,10 +43,12 @@ const DoLogin = (details) => {
 }; 
 
 
-
-
 const getShifts = () => {
     return axios.get(APIEndpoint+ "/admin/get-shifts")
+}
+
+const setConstraints = (constraints) => {
+    return axios.post(APIEndpoint + "/admin/set-constraints", constraints)
 }
 
 
@@ -61,6 +63,7 @@ const adminService = {
     getDoctorTypes,
     addUser,
     DoLogin,
+    setConstraints
 }
 
 export default adminService;
