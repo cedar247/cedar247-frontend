@@ -93,9 +93,9 @@ export default function LoginForm() {
                 }
                 console.log(bcrypt.compareSync('Password@123', response.data.userid.password));
                 // setWards(response.data);
-              } catch (error) {
+            } catch (error) {
                 console.log(error)
-              }
+            }
         }
 
     };

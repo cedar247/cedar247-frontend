@@ -52,7 +52,7 @@ export default function PopUp(props) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogContent dividers={scroll === "paper"}>
-            {props.Option == 1 ? <Defnerequirements /> : <></>}
+            {props.Option == 1 ? <Defnerequirements shifts = {props.shifts} /> : <></>}
             {props.Option == 2 ? <DoctorChangePassword /> : <></>}
         </DialogContent>
         <DialogActions>
