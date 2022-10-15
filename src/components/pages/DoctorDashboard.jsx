@@ -94,6 +94,10 @@ export default function DoctorDashboard() {
         setPopOpen(true);
         setOption(2);
     }
+    const handleRequestExchangeShifts = () => {
+        setPopOpen(true);
+        setOption(3);
+    }
     const handleClosePop = () => {
         setPopOpen(false);
     }
@@ -107,11 +111,20 @@ export default function DoctorDashboard() {
         setOpen(false);
     };
     return (
-        <div className='DashBody' >
+        <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true} handledefinerequirements = {handledefinerequirements} handleChangePassword= {handleChangePassword} />
+                <SideBar 
+                    handleDrawerClose={handleDrawerClose} 
+                    open={open} 
+                    home = {false} 
+                    chanpass ={true} 
+                    defreq ={true} 
+                    handledefinerequirements = {handledefinerequirements} 
+                    handleChangePassword= {handleChangePassword} 
+                    handleRequestExchangeShifts ={handleRequestExchangeShifts}
+                />
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar  id = {id} windowHeight = {windowHeight} />
                     <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
