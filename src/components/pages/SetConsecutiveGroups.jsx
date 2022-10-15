@@ -4,13 +4,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
 import SideBar from '../common/admin/SideBar';
 import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
 import { Navigate, useLocation } from 'react-router-dom';
 import adminService from '../../services/API/AdminService';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
+import ConsecutiveShifts from '../ward/ConsecutiveShifts';
+import { Grid } from '@mui/material';
 
 
 const drawerWidth = 240;
@@ -47,28 +47,90 @@ export default function SetConsecutiveGroups() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
+    const [numConsecGroups, setNumConsecGroups] = useState(0);
+    const [consecGroups, setConsecGroups] = useState([])
 
     useEffect(() => {
-            getShifts();
+            getDetails();
     }, []);
     
 
-    const getShifts = async () => {
+    const getDetails = async () => {
         try {
             const response = await adminService.getShifts();
-            if(response.data) {
+            const consecutiveGroupsResponse = await adminService.getNumConsecGroups();
+            if(response.data && consecutiveGroupsResponse.data) {
                 const shiftsGot = response.data;
                 setShifts(shiftsGot)
-                
+
+                const numConsec = consecutiveGroupsResponse.data.numConsecGroups;
+                setNumConsecGroups(numConsec)
+
+                const consecGroupsShifts = []
+                for(let i = 0; i < numConsec; i++) {
+                    const shiftGroups = []
+
+                    for(let j = 0; j < shiftsGot.length; j++) {
+                        shiftGroups.push({
+                            id: shiftsGot[j]._id,
+                            checked: true
+                        })
+                    }
+
+                    consecGroupsShifts.push(shiftGroups)
+                }
+                setConsecGroups(consecGroupsShifts)
             }
+
         } catch (error) {
             console.log(error)
         }
     }
 
+    const handleConsecutiveShifts = (e, innerIndex, outerIndex) => {
+        let cpConsecGroups = [...consecGroups]
+        let consecGroup = [...cpConsecGroups[outerIndex]]
+        consecGroup[innerIndex].checked = e.target.checked
+        cpConsecGroups[outerIndex] = consecGroup
+        setConsecGroups(cpConsecGroups)
+    }
+
+    const createGroups = () => {
+        let arr  = []
+        for(let i = 0; i < numConsecGroups; i++){
+            arr.push(
+                <Grid key={i} item md={4} sm={6} xs={12}>
+                    <ConsecutiveShifts 
+                        shifts={shifts}
+                        handleConsecutiveShifts={handleConsecutiveShifts}
+                        outerIndex={i}
+                        consecutiveGroups={consecGroups}
+                    />
+                </Grid>
+            )
+        }
+
+        return(
+            <Grid container spacing={3} mt={2} mb={2}>
+                {arr.map(shiftGroup=>shiftGroup)}
+            </Grid>
+        )
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
+        try {
+            const response = await adminService.setConsecGroups(consecGroups)
+            
+            if(response.status === 201) {
+                toast.success("Consecutive groups successfully added", {
+                    toastId: "1"
+                })
+            }
+        } catch(error) {
+            console.log(error)
+        }
     }
     
 
@@ -93,13 +155,14 @@ export default function SetConsecutiveGroups() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
-                        Constraints
+                        Consecutive Groups
                     </Typography>
 
                     {/* content of the main is here */}
                     <form action="">
-                        
+                        {createGroups()}
                         <Box textAlign='center'>
                             <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Add Ward
