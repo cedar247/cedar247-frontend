@@ -8,6 +8,7 @@ import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} 
 import Vacation from "./Vacation";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import ConsecutiveShifts from "./ConsecutiveShifts";
 
 const useStyles = makeStyles({
     field: {
@@ -25,13 +26,26 @@ export default function Constraints({
     casualtyDay,
     setCasualtyDay,
     shiftTypes,
-    setShiftTypes
+    setShiftTypes,
+    maxLeaves,
+    casualtyDayShifts,
+    setCasualtyDayShifts,
+    consecutiveGroups,
+    setConsecutiveGroups
 }) {
 
     const createShiftGroups = () => {
         let arr = []
         for (let i = 0; i < numConsecutiveGroupShifts; i++) {
-          arr.push(<Grid key={i} item md={4} sm={6} xs={12} p={2}><Shifts shifts={shifts}/></Grid>)
+          arr.push(
+          <Grid key={i} item md={4} sm={6} xs={12} p={2}>
+                <ConsecutiveShifts 
+                    shifts={shifts} 
+                    handleConsecutiveShifts={handleConsecutiveShifts} 
+                    outerIndex={i} 
+                    consecutiveGroups={consecutiveGroups}
+                />
+            </Grid>)
         }
         return(<Grid container spacing={3} mt={2} mb={2}>
             {arr.map(shifts=>shifts)}
@@ -40,6 +54,16 @@ export default function Constraints({
 
     const handleCasualtyDay = (e) => {
         setCasualtyDay(e.target.value);
+    }
+
+    const handleConsecutiveShifts = (event, innerIndex, outerIndex) => {
+        let cpConsecutiveGroups = [...consecutiveGroups]
+        let group = [...cpConsecutiveGroups[outerIndex]]
+        let shift = {...group[innerIndex]}
+        shift.checked = event.target.checked
+        group[innerIndex] = shift
+        cpConsecutiveGroups[outerIndex] = group
+        setConsecutiveGroups(cpConsecutiveGroups)
     }
 
     const handleShiftTypes = (event, index) => {
@@ -62,8 +86,9 @@ export default function Constraints({
                         variant="outlined" 
                         color='secondary' 
                         type="number"
-                        onChange={setMaxLeaves}
+                        onChange={(e) => setMaxLeaves(e.target.value)}
                         fullWidth={true}
+                        value={maxLeaves}
                     />
                 </Grid>
 
@@ -81,7 +106,7 @@ export default function Constraints({
                 </Grid>
             </Grid>
 
-            {createShiftGroups()}
+            {/* {createShiftGroups()} */}
 
             <Box mt={4}>
                 <Typography>
@@ -143,7 +168,8 @@ export default function Constraints({
         <Typography>
             Shifts that all doctors must available:
         </Typography>
-        <Shifts/>
+        {/* casualty day shifts */}
+        <Shifts shifts={shifts} shiftTypes={casualtyDayShifts} setShiftTypes={setCasualtyDayShifts} />
 
         </Box>
     )

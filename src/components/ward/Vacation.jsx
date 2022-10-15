@@ -21,7 +21,7 @@ export default function Vacation({shiftTypes, setShiftTypes, index}) {
                     value={shiftTypes[index].vacation}
                     onChange={handleChange}
                 >
-                    <MenuItem value="">
+                    <MenuItem value={0}>
                         <em>None</em>
                     </MenuItem>
                     <MenuItem value={1}>1 day</MenuItem>

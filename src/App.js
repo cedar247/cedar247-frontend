@@ -13,7 +13,8 @@ import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/test';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PersistentDrawerLeft from './components/pages/Persistant.jsx'
+import PersistentDrawerLeft from './components/pages/Persistant.jsx';
+import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
 
 const theme = createTheme({
   palette: {
@@ -46,6 +47,7 @@ function App() {
             <Route path="/Popup" element={<PopUp />}></Route>
             <Route path="/changepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
+            <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>
