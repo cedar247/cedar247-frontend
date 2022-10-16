@@ -14,104 +14,203 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import DoctorService from "../../services/API/DoctorService";
 
 export default function RequestExchangeShifts() {
-    const [fromDate, setFromDate] = React.useState("");
-    const [toDate, setToDate] = React.useState("");
+    const [fromDate, setFromDate] = React.useState(dayjs());
+    const [toDate, setToDate] = React.useState(dayjs());
+    const [selectedOneDate,setSelectedOneDate] = React.useState(false);
     const [hide, setHide] = React.useState(true);
+    const [hideDoctor, setHideDoctor] = React.useState(true);
     const [fromShift, setFromShift] = React.useState("");
     const [toShift, setToShift] = React.useState("");
-    const [errors, setErrors] = React.useState([]);
+    const [doctor, setDoctor] = React.useState("");
     const [fromShifts, setFromShifts] = React.useState([]);
     const [toShifts, setToShifts] = React.useState([]);
+    const [doctors, setDoctors] = React.useState([]);
+    const [errors, setErrors] = React.useState([]);
+    const [shifts, setShifts] = React.useState([]);
     const id = "633ab0f123be88c950fb8a89";
 
     React.useEffect(() => {
         console.log("load page")
-        console.log(fromShifts)
+        // console.log(fromShifts)
     });
 
     const handleFromDate = (value) => {
-        // console.log(value)
+        console.log(value,"value1", toDate , fromDate )
         setFromDate(value);
-        if(toDate != ""){
-            getShiftData()
+        if(selectedOneDate){
+            getShiftData(value, toDate);
         }
+        setSelectedOneDate(true);
     };
 
     const handleToDate = (value) => {
+        console.log(value,"value1", toDate , fromDate )
         setToDate(value);
-        if(fromDate != ""){
-            getShiftData()
+        if(selectedOneDate){
+            getShiftData(fromDate, value);
         }
+        setSelectedOneDate(true);
     };
 
     const handleFromShift = (event) => {
         setFromShift(event.target.value);
+        if(toShift != ""){
+            getDoctorData(event.target.value , toShift)
+        }
     };
 
     const handleToShift = (event) => {
+        console.log(fromShift,event.target.value, "handletoshift")
         setToShift(event.target.value);
+        if(fromShift != ""){
+            getDoctorData(fromShift ,event.target.value)
+        }
     };
 
-    const renderFromShiftLabels = () => {
-        console.log(fromShifts)
-        return fromShifts.map((shift, index) => {
-            return(
-                <MenuItem key = {index} value={shift._id}>
-                    {shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
-                </MenuItem>
-            );
-        });
+    const handleDoctor = (event) => {
+        setDoctor(event.target.value);
     };
 
-    const renderToShiftLabels = () => {
-        console.log(toShifts)
-        return toShifts.map((shift, index) => {
-            return(
-                <MenuItem key = {index} value={shift._id}>
-                    {shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
-                </MenuItem>
-            );
-        });
-    };
+    const handleSubmit = async () => {
+        const values = {
+            id: id,
+            fromShiftofSchedule: fromShift,
+            toShiftofSchedule: toShift,
+            doctor: doctor
+        }
+        try {
+            const response = await DoctorService.setSwappingShifts(values);
+            if(response.data == "Successfull"){
+                toast.success("Successfull!!!",{toastId: "1"})
+                setHideDoctor(true);
+                setHide(true);
+            }
+        }catch (error) {
+            console.log(error)
+            if(error.response.data.error == "swapping requiest is exists"){
+                toast.error("swapping requiest is exists",{toastId: "1"})
+            }
+            toast.error("Something went wrong! \nTry again.",{toastId: "1"})
+        }
+    }
 
-    const getShiftData = async () => {
+    const getDoctorData = (shift1,shift2) =>{
+        const existingShiftDoctors = []
+        const exchangeShiftDoctors = []
+        console.log(shift1,shift2, "inside getDoctorData")
+
+        for (let i = 0; i < fromShifts.length; i++) {
+            if (fromShifts[i].id == shift1){
+                for (let j = 0; j < fromShifts[i]["doctors"].length; j++) {
+                    const doctor = fromShifts[i]["doctors"][j];
+                    if(!existingShiftDoctors.includes(doctor)){
+                        existingShiftDoctors.push(doctor)
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < toShifts.length; i++) {
+            if (toShifts[i].id == shift2){
+                for (let j = 0; j < toShifts[i]["doctors"].length; j++) {
+                    console.log(toShifts[i]["doctors"])
+                    const doctor = toShifts[i]["doctors"][j];
+                    if(!exchangeShiftDoctors.includes(doctor) && !existingShiftDoctors.includes(doctor)){
+                        console.log(doctor)
+                        exchangeShiftDoctors.push(doctor);
+                    }
+                }
+            }
+        }
+
+        if(exchangeShiftDoctors.length == 0){
+                toast.error("No Doctor found!!!. \nSelect another  shift!!!",{toastId: "1"})
+                setHideDoctor(true);
+        }else{
+            console.log(exchangeShiftDoctors);
+            setDoctors(exchangeShiftDoctors);
+            setHideDoctor(false);
+            console.log(doctors);
+        }
+    }
+
+    const getShiftData = async (date1,date2) => {
         // console.log(fromShift,"added")
         if(errors.length == 0 ){
             const values = {
                 id: id,
-                fromDate: fromDate,
-                toDate: toDate,
+                fromDate: date1,
+                toDate: date2,
                 // fromShift: fromShift,
             };
             console.log(values);
             try {
                 const response = await DoctorService.getDoctorShifts(values);
                 console.log(response.data,"pass1");
-
+                setShifts(response.data)
                 const shitsForExchange =[];
                 for (let i = 0; i < response.data[0].length; i++) {
-                    shitsForExchange.push(response.data[0][i]["shift"])
+                    shitsForExchange.push(response.data[0][i])
                 }
                 console.log(shitsForExchange,"pass2");
                 setFromShifts(shitsForExchange);
 
                 const shitstoExchange =[];
                 for (let i = 0; i < response.data[1].length; i++) {
-                    shitstoExchange.push(response.data[1][i]["shift"])
+                    shitstoExchange.push(response.data[1][i])
                 }
                 console.log(shitstoExchange,"pass3");
                 setToShifts(shitstoExchange);
-                setHide(false)
+                setHideDoctor(true);
+                setHide(false);
+                setToShift("");
+                setFromShift("");
+                setDoctor("");
             }catch (error) {
                 console.log(error.response.data.error == "no shift Of Schedule")
-                toast.error("No swap found!!!",{toastId: "1"})
+                toast.error("No swapping option found!!!",{toastId: "1"})
                 setHide(true)
+                setHideDoctor(true)
             }
         }
     };
 
+    const renderFromShiftLabels = () => {
+        console.log(fromShifts,"fromShifts")
+        return fromShifts.map((shift, index) => {
+            return(
+                <MenuItem key = {index} value={shift.id}>
+                    {shift["shift"].name + " ( " + shift["shift"].startTime + " - " + shift["shift"].endTime + " )"}
+                </MenuItem>
+            );
+        });
+    };
+
+    const renderToShiftLabels = () => {
+        console.log(toShifts,"toShifts")
+        return toShifts.map((shift, index) => {
+            return(
+                <MenuItem key = {index} value={shift.id}>
+                    {shift["shift"].name + " ( " + shift["shift"].startTime + " - " + shift["shift"].endTime + " )"}
+                </MenuItem>
+            );
+        });
+    };
+
+    const renderDoctorLabels = () => {
+        console.log(doctors,"doctors")
+        return doctors.map((doctor, index) => {
+            return(
+                <MenuItem key = {index} value={doctor.id}>
+                    {doctor.name}
+                </MenuItem>
+            );
+        });
+    };
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Typography variant='caption' ><h1 align="center" >Swapping Shift Form</h1></Typography>
             <Stack
                 sx={{ m: 3 }}
                 direction={{ xs: "column", sm: "row" }}
@@ -120,7 +219,7 @@ export default function RequestExchangeShifts() {
                 <DatePicker
                     // disablePast
                     label="Select Exchange From Date"
-                    openTo="year"
+                    openTo="day"
                     views={["year", "month", "day"]}
                     value={fromDate}
                     onChange={(newValue) =>
@@ -130,7 +229,7 @@ export default function RequestExchangeShifts() {
                 <DatePicker
                     // disablePast
                     label="Select Exchange to Date"
-                    openTo="year"
+                    openTo="day"
                     views={["year", "month", "day"]}
                     value={toDate}
                     onChange={(newValue) =>
@@ -183,14 +282,39 @@ export default function RequestExchangeShifts() {
                     </Select>
                 </FormControl>
             </Stack>
-            {/* <Button
+            <Stack
+                sx={{ m: 3 }}
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 1, sm: 2, md: 8 }}
+            >
+                <FormControl sx={{ minWidth: 200 }}>
+                    <InputLabel id="Select_doctor_inputlable">
+                        Select Doctor
+                    </InputLabel>
+                    <Select
+                    labelId = "Select_Doctor_1"
+                    id = "Select_Doctor"
+                    value = {doctor}
+                    onChange = {handleDoctor}
+                    autoWidth
+                    label= "Select Doctor"
+                    disabled ={hideDoctor}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        {renderDoctorLabels()}
+                    </Select>
+                </FormControl>
+                <Button
                     type="submit"
                     variant="contained"
-                    onClick={handleAdd}
+                    onClick={handleSubmit}
                     color="primary"
                 >
-                    Confirm Dates
-                </Button> */}
+                    Add Swapping Request
+                </Button>
+            </Stack>
         </LocalizationProvider>
     );
 }

@@ -22,7 +22,12 @@ const getShifts = (details) => {
 
 const getDoctorShifts = (details) => {
     return axios.post(APIEndpoint + "/doctor/getDoctorShifts", details);
+};
+
+const setSwappingShifts = (details) => {
+    return axios.post(APIEndpoint + "/doctor/setSwappingShifts", details);
 }; 
+
 
 export default {
     defineRequirements,
@@ -30,4 +35,5 @@ export default {
     changePassword,
     getShifts,
     getDoctorShifts,
+    setSwappingShifts,
 }
