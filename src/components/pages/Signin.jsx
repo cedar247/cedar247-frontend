@@ -18,6 +18,10 @@ import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
+import Alert from '@mui/material/Alert';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { fontGrid } from '@mui/material/styles/cssUtils';
+import { fontSize } from '@mui/system';
 const bcrypt = require('bcryptjs');
 
 
@@ -26,6 +30,7 @@ export default function LoginForm() {
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
     const [emailAlert, setAlert] = React.useState(false);
+    const [submitted, setSubmitted] = useState(false);
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
@@ -52,13 +57,13 @@ export default function LoginForm() {
     }
 
 
-// sets value for the attributes in the form
+    // sets value for the attributes in the form
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
     const handleSubmit = async (e) => {
-
+        setSubmitted(true)
         if (values.email === "" || values.password === "") {
             toast.info("Fill All Fields", {
                 toastId: "1"
@@ -76,17 +81,17 @@ export default function LoginForm() {
                 // to login the user
                 const response = await AuthService.DoLogin(values);
                 console.log(response);// for dubugging purpose
-                if(response.data.status == "Failed"){
+                if (response.data.status == "Failed") {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
                     })
                 }
-                else if(response.data.status == "ok"){
+                else if (response.data.status == "ok") {
                     toast.success("Success", {
                         toastId: "1"
                     })
                     window.location.href = "/wards"
-                }else{
+                } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
                     })
@@ -108,7 +113,7 @@ export default function LoginForm() {
         console.log(this.state.open);
 
     };
-// to enable show password
+    // to enable show password
     const handleClickShowPassword = () => {
         setValues({ ...values, ["showPassword"]: !values.showPassword });
     };
@@ -120,7 +125,7 @@ export default function LoginForm() {
 
     return (
         <>
-        
+
             {/* <ButtonAppBar/> */}
             <div className="container text-center bg-white bg-opacity-75 p-3" style={{
                 width: "340px", height: "auto", marginTop: "10rem", padding: '25px'
@@ -153,12 +158,15 @@ export default function LoginForm() {
                         startAdornment={<InputAdornment position="start"> <MailOutlineIcon
                             sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></InputAdornment>}
                     />
+
                     {emailError}
+                    {submitted && values.email === "" ? <p style={{ color: 'red' }}>Email is Required !!!!!</p> : ""}
                 </FormControl>
 
                 <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
                     <OutlinedInput
+
                         id="outlined-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password ? values.password : ""}
@@ -178,6 +186,7 @@ export default function LoginForm() {
                         }
                         label="Password*"
                     />
+                    {submitted && values.password === "" ? <div><p style={{ color: 'red' }}> Password is Required !!!!!</p></div> : ""}
                 </FormControl>
                 <Button
                     type="submit"
