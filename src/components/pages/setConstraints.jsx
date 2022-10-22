@@ -7,8 +7,10 @@ import { styled, useTheme } from '@mui/material/styles';
 import WardDetails from '../ward/WardDetails';
 import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import adminService from '../../services/API/AdminService';
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'
 
 
 const drawerWidth = 240;
@@ -42,10 +44,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function SetConstraint() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
-    const [maxLeaves, setMaxLeaves] = useState(0);
-    const [numConsecutiveGroupShifts, setNumConsecutiveGroupShifts] = useState(0);
+    const [maxLeaves, setMaxLeaves] = useState('');
+    const [numConsecutiveGroupShifts, setNumConsecutiveGroupShifts] = useState('');
     const [consecutiveGroups, setConsecutiveGroups] = useState([]);
     const [specialShifts, setSpecialShifts] = useState([]);
     const [casualtyDay, setCasualtyDay] = useState('');
@@ -64,17 +67,59 @@ export default function SetConstraint() {
                 const shiftsGot = response.data;
                 setShifts(shiftsGot)
                 const types = []
+                const casualtyDShifts = []
                 for(let i = 0; i < shiftsGot.length; i++){
                     types.push({
+                        id: shiftsGot[i]._id,
+                        checked: true,
+                        vacation: 0
+                    })
+
+                    casualtyDShifts.push({
                         id: shiftsGot[i]._id,
                         checked: true
                     })
                 }
+                
                 setShiftTypes(types)
+                setCasualtyDayShifts(casualtyDShifts)
             }
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if(maxLeaves === "" || numConsecutiveGroupShifts === "" || casualtyDay === "" || casualtyDayShifts === [] || shiftTypes === []) {
+            toast.warning("Fill All Fields", {
+                toastId: "1"
+            })
+        }
+
+        else {
+            try {
+                const response = await adminService.setConstraints({
+                    maxLeaves,
+                    numConsecutiveGroupShifts,
+                    casualtyDay,
+                    casualtyDayShifts,
+                    shiftTypes
+                })
+
+                if(response.status === 201) {
+                    toast.success("Constraints has been successfully set", {
+                        toastId: "1"
+                    })
+
+                    navigate('/set-consecutive-groups')
+                }
+            } catch(error) {
+                console.log(error)
+            }
+        }
+        
     }
     
 
@@ -115,10 +160,15 @@ export default function SetConstraint() {
                             setCasualtyDay={setCasualtyDay}
                             shiftTypes={shiftTypes}
                             setShiftTypes={setShiftTypes}
+                            maxLeaves={maxLeaves}
+                            casualtyDayShifts={casualtyDayShifts}
+                            setCasualtyDayShifts={setCasualtyDayShifts}
+                            consecutiveGroups={consecutiveGroups}
+                            setConsecutiveGroups={setConsecutiveGroups}
                         />
                         <Box textAlign='center'>
-                            <Button variant="contained" color="primary" type='submit'>
-                                Add Ward
+                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
+                                Next
                             </Button>
                         </Box>
                     </form>
