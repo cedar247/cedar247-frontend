@@ -13,7 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
@@ -22,10 +22,17 @@ import Alert from '@mui/material/Alert';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { fontGrid } from '@mui/material/styles/cssUtils';
 import { fontSize } from '@mui/system';
-const bcrypt = require('bcryptjs');
+
 
 
 export default function LoginForm() {
+
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+        if(token){
+            localStorage.removeItem('token')
+        }
+      }, []);
     //to validate email
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
@@ -90,13 +97,15 @@ export default function LoginForm() {
                     toast.success("Success", {
                         toastId: "1"
                     })
+                    localStorage.setItem('token',response.data.token)
                     window.location.href = "/wards"
                 } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
                     })
                 }
-                console.log(bcrypt.compareSync('Password@123', response.data.userid.password));
+                // console.log(bcrypt.compareSync('Password@123', response.data.userid.password));
+                console.log(response.data.token);
                 // setWards(response.data);
             } catch (error) {
                 console.log(error)
