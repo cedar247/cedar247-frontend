@@ -22,7 +22,7 @@ import Alert from '@mui/material/Alert';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { fontGrid } from '@mui/material/styles/cssUtils';
 import { fontSize } from '@mui/system';
-
+import jwtDecode from 'jwt-decode'
 
 
 export default function LoginForm() {
@@ -30,6 +30,8 @@ export default function LoginForm() {
     useEffect(() => {
         const token  = localStorage.getItem('token');
         if(token){
+            const user = jwtDecode(token)
+            console.log(user.type)
             localStorage.removeItem('token')
         }
       }, []);
@@ -98,7 +100,10 @@ export default function LoginForm() {
                         toastId: "1"
                     })
                     localStorage.setItem('token',response.data.token)
-                    window.location.href = "/wards"
+                    if (response.data.userid.type == 'Admin'){
+                        window.location.href = "/wards"
+                    }
+                    
                 } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"

@@ -26,7 +26,8 @@ import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
 import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
-import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
 
 
 
@@ -39,21 +40,34 @@ const useStyles = makeStyles({
 
 
 export default function AdminDashboard() {
-    
+    const [user, setUser] = React.useState("");
     useEffect(() => {
         const token  = localStorage.getItem('token');
         if(token){
-            const user = jwt.decode(token)
+            const user = jwtDecode(token)
             if(!user){
                 localStorage.removeItem('token')
                 window.location.href = "/"
             }
             else if(user){
-                console.log(user)
+                if(user.type ==='Admin'){
+                    getAllWards();
+                    setUser("Admin")
+                     
+                }else{
+                    setUser("NONE")
+                }
+                
             }
-            getAllWards();
+        }else{
+            setUser("")
         }
       }, []);
+    //   useEffect(() => {
+        
+    //         getAllWards();
+        
+    //   }, []);
     const handleLogout= async (e) => {
         localStorage.removeItem('token')
         window.location.href = "/"
@@ -112,7 +126,8 @@ export default function AdminDashboard() {
         setOption(0);
     };
     // document.body.style.backgroundImage = `url(${Back2})`;
-    return (
+
+    const Adminpage = 
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
@@ -289,5 +304,11 @@ export default function AdminDashboard() {
                 </Main>
             </Box>
         </div>
-    );
+        return(
+            <>
+            {user != "" && user == "Admin" ? Adminpage :<> <AccessDenied></AccessDenied> </> }
+            </>
+        )
+
+
 }
