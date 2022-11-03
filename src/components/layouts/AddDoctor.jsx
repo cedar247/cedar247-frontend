@@ -51,8 +51,8 @@ export default function AddDoctor(props) {
     try {
       //fetches the data of wards 
       const response = await AdminService.getWards();
-      console.log(response);
-      console.log(response.data);
+      // console.log(response);
+      // console.log(response.data);
       //sets the ward names with id in the wards array
       setWards(response.data);
     } catch (error) {
@@ -67,7 +67,7 @@ export default function AddDoctor(props) {
       //fetches the data from the backend
       const response = await AdminService.getDoctorTypes();
       //for debugging purpose
-      console.log(response);
+      // console.log(response);
       console.log(response.data);
       //sets the doctor types in the array
       setmodels(response.data);
@@ -101,8 +101,8 @@ export default function AddDoctor(props) {
 //to handle the submin
   const onSubmit = async (e) => {
     //to check the access of the .env file
-    console.log(process.env.REACT_APP_DEFAULT_PASSWORD);
-    console.log(models);
+    // console.log(process.env.REACT_APP_DEFAULT_PASSWORD);
+    // console.log(models);
     //to check whether the fields are empty or not
     if (values.WardID === "" || values.name === "" || values.email === "" || values.phoneNumber === "" || (values.NewCategory === "" && values.category==="") ){
       e.preventDefault();// to prevent page refresh
