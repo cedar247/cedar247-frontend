@@ -27,14 +27,14 @@ import jwtDecode from 'jwt-decode'
 
 export default function LoginForm() {
 
-    useEffect(() => {
-        const token  = localStorage.getItem('token');
-        if(token){
-            const user = jwtDecode(token)
-            console.log(user.type)
-            localStorage.removeItem('token')
-        }
-      }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         const user = jwtDecode(token)
+    //         console.log(user.type)
+    //         localStorage.removeItem('token')
+    //     }
+    // }, []);
     //to validate email
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
@@ -99,11 +99,20 @@ export default function LoginForm() {
                     toast.success("Success", {
                         toastId: "1"
                     })
-                    localStorage.setItem('token',response.data.token)
-                    if (response.data.userid.type == 'Admin'){
+                    const token = localStorage.getItem('token');
+                    if (token) {
+                        const user = jwtDecode(token)
+                        console.log(user.type)
+                        localStorage.removeItem('token')
+                    }
+                    localStorage.setItem('token', response.data.token)
+                    if (response.data.userid.type == 'Admin') {
                         window.location.href = "/wards"
                     }
-                    
+                    if (response.data.userid.type == 'DOCTOR') {
+                        window.location.href = "/DoctorDashboard"
+                    }
+
                 } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
