@@ -20,11 +20,16 @@ const createSchedule = (requirements) => {
     return axios.post(APIEndpoint + "/consultant/create-schedule", requirements);
 }
 
+const  viewCalendar = (details) => {
+    return axios.post(APIEndpoint + "/consultant/viewCalendar", details);
+}; 
+
 const consulantService = {
     setDeadline,
     getDoctors,
     getDoctorCategories,
-    createSchedule
+    createSchedule,
+    viewCalendar,
 };
 
 export default consulantService;
