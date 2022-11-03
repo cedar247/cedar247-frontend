@@ -17,7 +17,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
 import PasswordIcon from '@mui/icons-material/Password';
-import HomeIcon from '@mui/icons-material/Home';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 const useStyles = makeStyles({
     paper: {
@@ -46,9 +46,9 @@ export default function SideBar(props) {
     const     handleClickChangePassword    = () =>{
         props.handleChangePassword();
     }
-    // const handleClickHome    = () =>{
-    //     // <Redirect to = "/DoctorDashboard"/>
-    // }
+    const handleClickRequestExchangeShifts = () =>{
+        props.handleRequestExchangeShifts();
+    }
     return (
             <Drawer
                 sx={{
@@ -112,7 +112,24 @@ export default function SideBar(props) {
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="secondary" sx={{ ...(!props.defreq && { display: 'none' }) }} />
+                                <Divider variant="inset" color="primary" sx={{ ...(!props.defreq && { display: 'none' }) }} />
+                                <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <SwapHorizIcon color="primary" sx={{ fontSize: 30 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Button
+                                            onClick={handleClickRequestExchangeShifts}
+                                            variant="contained"
+                                            fullWidth
+                                            color="primary"
+                                        > Request to Exchange Shift
+                                        </Button>
+                                    </div>
+                                </ListItem>
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
@@ -129,30 +146,11 @@ export default function SideBar(props) {
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="secondary" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
-                                {/* <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
-                                    <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <HomeIcon color="primary" sx={{ fontSize: 30 }} />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <div  className= " mt: 3 mb: 2" >
-                                        <Button
-                                            onClick={handleClickHome}
-                                            variant="contained"
-                                            fullWidth
-                                            color="primary"
-                                        > Home
-                                        </Button>
-                                    </div>
-                                </ListItem> */}
                             </div>
                         </List>
                     </Box>
+                    <Divider color="secondary" />
 
-                    <Divider />
-
-                    <Divider />
                     <div className='settings'>
                     <List>
                         <Button>
