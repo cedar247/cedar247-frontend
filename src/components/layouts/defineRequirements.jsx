@@ -109,8 +109,8 @@ export default function Defnerequirements(props) {
                 console.log(error);
             }
         }else{
-            for(let i = 0; i < shiftTypes.length; i++){
-                toast.error(shiftTypes[i],{toastId: i.toString()})
+            for(let i = 0; i < errors.length; i++){
+                toast.error(errors[i],{toastId: i.toString()})
             }
         }
         setErrors([])

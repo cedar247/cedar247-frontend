@@ -26,6 +26,9 @@ import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
 import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
+
 
 
 //to style the page
@@ -37,6 +40,38 @@ const useStyles = makeStyles({
 
 
 export default function AdminDashboard() {
+    const [user, setUser] = React.useState("");
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+        if(token){
+            const user = jwtDecode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if(user){
+                if(user.type ==='Admin'){
+                    getAllWards();
+                    setUser("Admin")
+                     
+                }else{
+                    setUser("NONE")
+                }
+                
+            }
+        }else{
+            setUser("")
+        }
+      }, []);
+    //   useEffect(() => {
+        
+    //         getAllWards();
+        
+    //   }, []);
+    const handleLogout= async (e) => {
+        localStorage.removeItem('token')
+        window.location.href = "/"
+        }
     //to keep the details of the ward
     const [Wards, setWards] = useState([]);
     //to save the classes
@@ -49,9 +84,6 @@ export default function AdminDashboard() {
     const [openPop, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
     // fetches all details of the ward
-    useEffect(() => {
-        getAllWards();
-    }, []);
 
     const getAllWards = async () => {
         try {
@@ -94,7 +126,8 @@ export default function AdminDashboard() {
         setOption(0);
     };
     // document.body.style.backgroundImage = `url(${Back2})`;
-    return (
+
+    const Adminpage = 
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
@@ -122,7 +155,7 @@ export default function AdminDashboard() {
                                 flexDirection: 'row-reverse'
                             }}
                         >
-                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
+                            <Button color="inherit" onClick={handleLogout}>   <Divider orientation="vertical" flexItem>
                                 <Typography variant="h6" component="div">
                                     LOGOUT
                                 </Typography>
@@ -271,5 +304,11 @@ export default function AdminDashboard() {
                 </Main>
             </Box>
         </div>
-    );
+        return(
+            <>
+            {user != "" && user == "Admin" ? Adminpage :<> <AccessDenied></AccessDenied> </> }
+            </>
+        )
+
+
 }

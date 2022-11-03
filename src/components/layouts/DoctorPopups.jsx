@@ -16,6 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import DoctorChangePassword from "./DoctorChangePassword";
 import Defnerequirements from "./defineRequirements";
+import RequestExchangeShifts from "./RequestExchangeShifts";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -51,9 +52,11 @@ export default function PopUp(props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogContent dividers={scroll === "paper"}>
+        <DialogContent height= {10} dividers={scroll === "paper"}>
             {props.Option == 1 ? <Defnerequirements shifts = {props.shifts} /> : <></>}
             {props.Option == 2 ? <DoctorChangePassword /> : <></>}
+            {props.Option == 3 ? <RequestExchangeShifts /> : <></>}
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
