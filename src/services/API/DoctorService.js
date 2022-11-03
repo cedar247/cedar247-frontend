@@ -16,8 +16,13 @@ const changePassword = (details) => {
     return axios.post(APIEndpoint + "/doctor/changePassword", details);
 }; 
 
+const getShifts = (details) => {
+    return axios.post(APIEndpoint + "/doctor/getShifts", details);
+}; 
+
 export default {
     defineRequirements,
     changeclendar,
     changePassword,
+    getShifts,
 }

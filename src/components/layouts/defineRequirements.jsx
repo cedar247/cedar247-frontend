@@ -18,7 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { toast } from "react-toastify";
 import DoctorService from "../../services/API/DoctorService";
-
+import ShiftItem from "./ShiftItem"
 const theme = createTheme();
 
 const useStyles = makeStyles({
@@ -27,77 +27,93 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Defnerequirements() {
+export default function Defnerequirements(props) {
     const [open, setOpen] = React.useState(false);
     const [date, setDate] = React.useState('');
-    const [morning, setMorning] = React.useState(false);
-    const [evening, setEvening] = React.useState(false);
-    const [night, setNight] = React.useState(false);
-    const id = "633ab0f123be88c950fb8a89"; //doctor user id
-    // const shifts ={
-    //     {id: "", startTime: "",endTime: "",}, //shiftid
-    //     {id: "", startTime: "",endTime: "",}, //shiftid
-    //     {id: "", startTime: "",endTime: "",}, //shiftid
-    // }
-    // const [values, setValues] = React.useState({
-    //     date: "",
-    //     morning: '',
-    //     evening: '',
-    //     night: '',
-    // });
+    const [shifts, setShifts] = React.useState([]);
+    const [shiftTypes, setShiftTypes] = React.useState([]);
+    const [errors,setErrors] = React.useState([]);
 
-    // const handleChange = (prop) => (event) => {
-    //     if(prop == "morning"){
-    //         setValues({ ...values, [prop]: event.target.checked });
-    //         console.log(event.target.checked);
-    //     }if(prop == "enening"){
-    //         setValues({ ...values, [prop]: event.target.checked });
-    //     }if(prop == "night"){
-    //         setValues({ ...values, [prop]: event.target.checked });
-    //     }else{
-    //     setValues({ ...values, [prop]: event.target.value });
-    //     }
-    // };
+    const id = "633ab0f123be88c950fb8a89"; //doctor user id
 
     const handleDate = (event) =>{
             setDate(event.target.value);
     }
-    const handleMorning = (event) =>{
-        setMorning(event.target.checked);
-    }
-    const handleEvening = (event) =>{
-        setEvening(event.target.checked);
-    }
-    const handleNight = (event) =>{
-        setNight(event.target.checked);
-    }
+
+    React.useEffect(() => {
+        const handleGetShifts = async () => {
+            try {
+                const shiftsGot = props.shifts;
+                setShifts(shiftsGot)
+                const types = []
+                for(let i = 0; i < shiftsGot.length; i++){
+                    types.push({
+                        id: shiftsGot[i]._id,
+                        checked: false,
+                    })
+                }
+                console.log(types)
+                setShiftTypes(types)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        handleGetShifts();},[id]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("submitted");
-        const values ={
-            id:id,
-            date:date,
-            morning:morning,
-            evening:evening,
-            night:night,
-        }
-        console.log(values);
-        try {
-            const response = await DoctorService.defineRequirements(values);
-            if(response.status === 200){
-                // e.preventDefault();
-                toast.success("Requirement is added",{
-                    toastId: "1"})
-            }else{
-                toast.error("Please try again",{
-                    toastId: "1"})
-            }
-            console.log(response);
 
-        } catch (error) {
-            console.log(error);
+        console.log("submitted");
+        console.log(shiftTypes);
+
+        e.preventDefault();
+        if (date == ""){
+            errors.push("Set a Date")
+            console.log(errors);
         }
+
+        let checkedCount = 0
+        for(let i = 0; i < shiftTypes.length; i++){
+            if (shiftTypes[i].checked == true){
+                checkedCount = checkedCount + 1
+            }
+        }
+
+        if(checkedCount == 0){
+            errors.push("Set leaving Shift")
+            console.log(errors);
+        }
+
+        if (errors.length == 0){
+            try {
+                const values ={
+                    id:id,
+                    date:date,
+                    shiftTypes:shiftTypes,
+                }
+                const response = await DoctorService.defineRequirements(values);
+                if(response.status === 200){
+                    // e.preventDefault();
+                    toast.success("Requirement is added",{toastId: "1"})
+                }else{
+                    toast.error("Please try again",{toastId: "1"})
+                }
+
+                setDate('')
+                let CPshifTypes = [...shiftTypes];
+                for(let i = 0; i < CPshifTypes.length; i++){
+                    CPshifTypes[i].checked = false;
+                }
+                setShiftTypes(CPshifTypes);
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
+            for(let i = 0; i < shiftTypes.length; i++){
+                toast.error(shiftTypes[i],{toastId: i.toString()})
+            }
+        }
+        setErrors([])
     };
 
     // const paperStyle = { padding: '0px',}
@@ -136,42 +152,11 @@ export default function Defnerequirements() {
                         onChange={handleDate}
                     />
                     <div style={{align: "center", width:'100%' }}>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        id="morning"
-                                        value={morning}
-                                        onChange={handleMorning}
-                                    />
-                                }
-                                label="(8 am -1 pm)"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        id="evening"
-                                        value={evening}
-                                        onChange={handleEvening}
-                                    />
-                                }
-                                label="(1 pm - 7 pm)"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        id="night"
-                                        value={night}
-                                        onChange={handleNight}
-                                    />
-                                }
-                                label="(7 pm - 8 am)"
-                            />
-                        </FormGroup>
+                        <ShiftItem 
+                            shifts={shifts} 
+                            shiftTypes={shiftTypes}
+                            setShiftTypes={setShiftTypes}
+                        />
                         <Button
                             type="submit"
                             style={{ margineTop: "10px" }}
