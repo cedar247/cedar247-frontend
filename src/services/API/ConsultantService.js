@@ -24,12 +24,21 @@ const  viewCalendar = (details) => {
     return axios.post(APIEndpoint + "/consultant/viewCalendar", details);
 }; 
 
+const getRequests = (details) => {
+    return axios.post(APIEndpoint + "/consultant/getRequests", details);
+}; 
+
+const setRequestResponse = (details) => {
+    return axios.post(APIEndpoint + "/consultant/setRequestResponse", details);
+};
 const consulantService = {
     setDeadline,
     getDoctors,
     getDoctorCategories,
     createSchedule,
-    viewCalendar,
+    viewCalendar,,
+    getRequests,
+    setRequestResponse,
 };
 
 export default consulantService;
