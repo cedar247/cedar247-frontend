@@ -40,14 +40,10 @@ const consulantService = {
     getDoctors,
     getDoctorCategories,
     createSchedule,
-<<<<<<< HEAD
     changePassword,
     viewCalendar,
-=======
-    viewCalendar,,
     getRequests,
     setRequestResponse,
->>>>>>> 1e066f800e877e50f481b0b84e3cca329faff393
 };
 
 export default consulantService;
