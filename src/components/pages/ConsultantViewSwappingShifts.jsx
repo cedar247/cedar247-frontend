@@ -29,7 +29,8 @@ import CustomizedDialogs from '../layouts/Dialog.jsx';
 import AppViewSwappingShifts from "../common/consultant/appViewSwappingShifts";
 import PopUp from '../layouts/DoctorPopups';
 import ConsultantService from "../../services/API/ConsultantService";
-import {ConsultantRecievedCards} from "../layouts/requestCards";
+import ConsultantResponededSwapshifts from '../layouts/consultantResponededSwapshifts.jsx';
+import ConsultantRecievedSwapshifts from '../layouts/consultantRecievedSwapshifts.jsx';
 
 const useStyles = makeStyles({
     paper: {
@@ -47,7 +48,9 @@ export default function ConsultantViewSwappingShifts() {
     const [hideSent, setHideSent] = React.useState(0);
     const [hideRecieved, setHideRecieved] = React.useState(0);
     const [option, setOption] = React.useState(0);
-    const [fromRequests, setFromRequests] = React.useState([]);
+    const [Reqests, setRequests] = React.useState([]);
+    const [acceptedReqests, setAcceptedRequests] = React.useState([]);
+    const [rejectedReqests, setRejectedRequests] = React.useState([]);
     // const id = "633ab0f123be88c950fb8a89";
     const id = "633ab54a9fd528b9532b8d59"
     const [shifts, setShifts] = React.useState([]);
@@ -60,7 +63,9 @@ export default function ConsultantViewSwappingShifts() {
                     const response = await ConsultantService.getRequests({id:id,refresh:refresh});
                     console.log(response);
                     if(response.data) {
-                        setFromRequests(response.data[0])
+                        setRequests(response.data[0]);
+                        setAcceptedRequests(response.data[1]);
+                        setRejectedRequests(response.data[2]);
                     }
                 } catch (error) {
                     console.log(error);
@@ -78,31 +83,14 @@ export default function ConsultantViewSwappingShifts() {
         setRefresh(true)
 
     }
-
     const displayRequests = ()=> {
-        <div>
-            <h2 style={{width: "auto", height: "auto", textAlign: "center"}}>Recievd Requests</h2>
-            <Grid container spacing={5}>
-                {Array.from(fromRequests).map((request, index, arr) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
-                        <ConsultantRecievedCards
-                            key = {index}
-                            // name={request}
-                            requestId={request.id}
-                            name={request.name}
-                            fromDate={request.fromDate}
-                            fromShiftName={request.fromShiftName}
-                            fromShift={request.fromShift}
-                            toDate={request.toDate}
-                            toShiftName={request.toShiftName}
-                            toShift={request.toShift}
-                            status = {request.status}
-                            refresh = {handleRefresh}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
+        if (option == 0) {
+            return  <ConsultantRecievedSwapshifts refresh = {handleRefresh} recievedRequests = {Reqests}/>
+        }else if (option == 1){
+            return <ConsultantResponededSwapshifts  respondedRequests = {acceptedReqests}/>
+        }else{
+            return <ConsultantResponededSwapshifts  respondedRequests = {rejectedReqests}/>
+        }
     }
 
     return (

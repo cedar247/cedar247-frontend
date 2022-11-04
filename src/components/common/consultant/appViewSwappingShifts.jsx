@@ -15,9 +15,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {Link, Routes, Route, useNavigate} from 'react-router-dom';
 
 
-const pages = ["Sent", "received"];
+const pages = ["recived", "accepted", "rejected"];
 
-export default function AppViewSwappingShifts(props) {
+export default function AppBarExchangeRequest(props) {
     const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,10 +35,13 @@ export default function AppViewSwappingShifts(props) {
         console.log(event)
         if(event == 0){
             props.setOption(event)
-            console.log("sent")
+            console.log("recieved")
+        }else if (event == 1){
+            props.setOption(event)
+            console.log("accepted")
         }else{
             props.setOption(event)
-            console.log("recieved")
+            console.log("rejected")
         }
     };
 
@@ -64,6 +67,53 @@ export default function AppViewSwappingShifts(props) {
                         Exchange shifts
                     </Typography>
 
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "flex", md: "none" },
+                        }}
+                    >
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "left",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "left",
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: "block", md: "none" },
+                            }}
+                        >
+                            {pages.map((page, index, arr) => (
+                                <MenuItem
+                                    key={page}
+                                    value = {index}
+                                    onClick={(e)=>handleOption(index)}
+                                >
+                                    <Typography textAlign="center">
+                                        {page}
+                                    </Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
                     <Typography
                         variant="h5"
                         noWrap
@@ -74,8 +124,8 @@ export default function AppViewSwappingShifts(props) {
                             mr: 2,
                             display: { xs: "flex", md: "none" },
                             flexGrow: 1,
+                            fontSize:15,
                             fontFamily: "monospace",
-                            fontSize: 15,
                             fontWeight: 700,
                             letterSpacing: ".3rem",
                             color: "inherit",
@@ -84,6 +134,23 @@ export default function AppViewSwappingShifts(props) {
                     >
                         Exchange shifts
                     </Typography>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", md: "flex" },
+                        }}
+                    >
+                        {pages.map((page, index, arr) => (
+                            <Button
+                                key={page}
+                                value = {index}
+                                onClick={(e) => handleOption(index)}
+                                sx={{ my: 2, color: "white", display: "block" }}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box>
 
                     <Box
                             sx={{
@@ -93,7 +160,7 @@ export default function AppViewSwappingShifts(props) {
                                 flexDirection: 'row-reverse'
                             }}
                         >
-                            <Button color="inherit" onClick={() => navigate('/DoctorDashboard')}>   <Divider orientation="vertical" flexItem>
+                            <Button color="inherit" onClick={() => navigate('/ConsultantDashboard')}>   <Divider orientation="vertical" flexItem>
                             <Typography variant="h6" component="div" >
                                 BACK
                             </Typography>

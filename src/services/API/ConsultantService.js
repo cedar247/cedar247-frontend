@@ -20,11 +20,20 @@ const createSchedule = (requirements) => {
     return axios.post(APIEndpoint + "/consultant/create-schedule", requirements);
 }
 
+const getRequests = (details) => {
+    return axios.post(APIEndpoint + "/consultant/getRequests", details);
+}; 
+
+const setRequestResponse = (details) => {
+    return axios.post(APIEndpoint + "/consultant/setRequestResponse", details);
+};
 const consulantService = {
     setDeadline,
     getDoctors,
     getDoctorCategories,
-    createSchedule
+    createSchedule,
+    getRequests,
+    setRequestResponse,
 };
 
 export default consulantService;
