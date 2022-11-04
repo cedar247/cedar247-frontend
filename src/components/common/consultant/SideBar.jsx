@@ -19,11 +19,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CreateIcon from '@mui/icons-material/Create';
 import GroupsIcon from '@mui/icons-material/Groups';
+import SyncLockSharpIcon from '@mui/icons-material/SyncLockSharp';
+import PreviewSharpIcon from '@mui/icons-material/PreviewSharp';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import PasswordIcon from '@mui/icons-material/Password';
 import ChangePassword from '../../pages/ChangePassword.jsx';
 import CustomizedDialogs from '../../layouts/Dialog.jsx';
 import { Link } from "react-router-dom";
+import { blue} from "@mui/material/colors";
 
 const useStyles = makeStyles({
     paper: {
@@ -146,7 +149,24 @@ export default function SideBar(props) {
                                             </Button>
                                         </Link>
                                     </ListItem>
-
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
+                                        <Link to="/ConsultantViewSwappingShifts" style={{textDecoration: 'none'}}>
+                                        <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ bgcolor: blue[800], mt: 3, mb: 2 }}
+                                            >
+                                                View Exchange Shifts
+                                            </Button>
+                                        </Link>
+                                    </ListItem>
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
@@ -168,7 +188,7 @@ export default function SideBar(props) {
                                     <ListItem>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
+                                            <SyncLockSharpIcon color="primary" sx={{ fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
