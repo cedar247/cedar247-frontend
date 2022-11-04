@@ -13,11 +13,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
-import PasswordIcon from '@mui/icons-material/Password';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import SyncLockSharpIcon from '@mui/icons-material/SyncLockSharp';
+import PreviewSharpIcon from '@mui/icons-material/PreviewSharp';
+import TransferWithinAStationSharpIcon from '@mui/icons-material/TransferWithinAStationSharp';
+import { Link } from "react-router-dom";
+import { indigo, blue, green, purple } from "@mui/material/colors";
+
 
 const useStyles = makeStyles({
     paper: {
@@ -99,49 +103,65 @@ export default function SideBar(props) {
                                 <ListItem sx={{ mr: 2, ...(!props.defreq && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <AddBoxIcon color="success" sx={{ fontSize: 30 }} />
+                                            <LibraryAddIcon sx={{ color: blue[800], fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
-                                        <Button
+                                        <Button sx={{ bgcolor: blue[800] }}
                                             onClick={handleClickDefineRequirements}
                                             variant="contained"
                                             fullWidth
-                                            color="success"
                                         > Define Requirements
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="primary" sx={{ ...(!props.defreq && { display: 'none' }) }} />
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.defreq && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <SwapHorizIcon color="primary" sx={{ fontSize: 30 }} />
+                                            <TransferWithinAStationSharpIcon sx={{color: indigo[700], fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
-                                        <Button
+                                    <Button sx={{ bgcolor: blue[800] }}
                                             onClick={handleClickRequestExchangeShifts}
                                             variant="contained"
                                             fullWidth
-                                            color="primary"
                                         > Request to Exchange Shift
                                         </Button>
                                     </div>
                                 </ListItem>
                                 <Divider variant="inset" color="blue" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
+                                <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
+                                        <Link to="/viewExchangeShifts" style={{textDecoration: 'none'}}>
+                                        <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ bgcolor: blue[800], mt: 3, mb: 2 }}
+                                            >
+                                                View Exchange Shifts
+                                            </Button>
+                                        </Link>
+                                </ListItem>
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
+                                            <SyncLockSharpIcon color="secondary" sx={{ color: blue[800], fontSize: 30 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
-                                        <Button
+                                    <Button sx={{ bgcolor: blue[800] }}
                                             onClick={handleClickChangePassword}
                                             variant="contained"
                                             fullWidth
-                                            color="secondary"
                                         > Change password
                                         </Button>
                                     </div>
