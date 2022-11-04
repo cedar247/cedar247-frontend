@@ -2,12 +2,12 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Calendar from '../pages/Calendar.jsx';
+import Calendar from '../layouts/ConsultantClendar.jsx';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
 
 const windowHeight = window.innerHeight-200;
-const drawerWidth = 280;
+const drawerWidth = 240;
 // console.log(windowHeight);
 // console.log(windowWidth);
 
