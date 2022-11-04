@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Calendar from '../layouts/ConsultantClendar.jsx';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
+import PopUp from '../layouts/ConsultantPopups';
 
 const windowHeight = window.innerHeight-200;
 const drawerWidth = 240;
@@ -34,6 +35,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 export default function ConsultantDashboard() {
     const [open, setOpen] = React.useState(false);
+    const [popOpen, setPopOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -42,15 +44,25 @@ export default function ConsultantDashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const handleClosePop = () => {
+        setPopOpen(false);
+    };
+
+    const handleChangePassword = () => {
+        setPopOpen(true);
+    };
+
     // document.body.style.backgroundImage = `url(${Back2})`;
     return (
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} handleChangePassword={handleChangePassword} />
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar windowHeight = {windowHeight} />
+                    <PopUp opener={popOpen} closer={handleClosePop}/>
                 </Main>
             </Box>
         </div>

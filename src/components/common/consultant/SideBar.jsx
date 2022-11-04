@@ -45,7 +45,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SideBar(props) {
     const classes = useStyles();
     const theme = useTheme();
-
+    const     handleClickChangePassword    = () =>{
+        props.handleChangePassword();
+    }
     return (
         <Drawer
                     sx={{
@@ -163,14 +165,22 @@ export default function SideBar(props) {
                                             </Button>
                                         </Link>
                                     </ListItem>
-                                    <ListItem sx={{ mt: 3, mb: 2 }}>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
-                                    </ListItem>
+                                    <ListItem>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Button
+                                            onClick={handleClickChangePassword}
+                                            variant="contained"
+                                            fullWidth
+                                            color="primary"
+                                        > Change password
+                                        </Button>
+                                    </div>
+                                </ListItem>
                                 </div>
                             </List>
                         </Box>

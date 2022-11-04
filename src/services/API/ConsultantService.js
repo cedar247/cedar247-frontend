@@ -20,6 +20,10 @@ const createSchedule = (requirements) => {
     return axios.post(APIEndpoint + "/consultant/create-schedule", requirements);
 }
 
+const changePassword = (details) => {
+    return axios.post(APIEndpoint + "/consultant/changePassword", details);
+}; 
+
 const  viewCalendar = (details) => {
     return axios.post(APIEndpoint + "/consultant/viewCalendar", details);
 }; 
@@ -29,6 +33,7 @@ const consulantService = {
     getDoctors,
     getDoctorCategories,
     createSchedule,
+    changePassword,
     viewCalendar,
 };
 
