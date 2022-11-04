@@ -43,12 +43,21 @@ const DoLogin = (details) => {
 }; 
 
 
-
-
 const getShifts = () => {
     return axios.get(APIEndpoint+ "/admin/get-shifts")
 }
 
+const setConstraints = (constraints) => {
+    return axios.post(APIEndpoint + "/admin/set-constraints", constraints)
+}
+
+const getNumConsecGroups = () => {
+    return axios.get(APIEndpoint + "/admin/get-num-consec-groups")
+}
+
+const setConsecGroups = (consecGroups) => {
+    return axios.post(APIEndpoint + "/admin/set-consec-groups", consecGroups)
+}
 
 const adminService = {
     addWard,
@@ -61,6 +70,9 @@ const adminService = {
     getDoctorTypes,
     addUser,
     DoLogin,
+    setConstraints,
+    getNumConsecGroups,
+    setConsecGroups
 }
 
 export default adminService;

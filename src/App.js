@@ -16,6 +16,8 @@ import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/test';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PersistentDrawerLeft from './components/pages/Persistant.jsx';
+import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
 
 const theme = createTheme({
   palette: {
@@ -39,7 +41,7 @@ function App() {
         <Router>
           <Routes>
             <Route exact path="/" element={<LoginForm/>}></Route>
-            {/* <Route path="/wards" element={<PersistentDrawerLeft/>}></Route> */}
+            <Route path="/wards" element={<AdminDashboard/>}></Route>
             <Route path="/add-wards" element={<AddWard/>}></Route>
             <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
             <Route path="/set-deadline" element={<SetDeadline/>}></Route>
@@ -50,6 +52,7 @@ function App() {
             <Route path="/changepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
+            <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>
             <Route path='/ConsultantViewSwappingShifts' element={<ConsultantViewSwappingShifts/>}></Route>
           </Routes>
         </Router>
