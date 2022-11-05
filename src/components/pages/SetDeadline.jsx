@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
@@ -11,6 +11,8 @@ import ShiftDetails from "../schedule/ShiftDetails";
 import MonthPicker from "../schedule/MonthPicker";
 import ConsultantService from "../../services/API/ConsultantService";
 import { toast } from "react-toastify";
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
 
 const drawerWidth = 240;
 
@@ -50,6 +52,28 @@ export default function SetDeadline() {
         year: "",
         deadline: ""
     });
+    const [user, setUser] = React.useState("");
+
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+            if(token){
+                const user = jwtDecode(token)
+                if(!user){
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if(user){
+                    if(user.type ==='CONSULTANT'){
+                        setUser("CONSULTANT")
+                    }else{
+                        setUser("NONE")
+                    }
+                    
+                }
+            }else{
+                setUser("")
+            }
+    }, []);
 
 
     const handleChange = (prop) => (event) => {
@@ -66,7 +90,8 @@ export default function SetDeadline() {
         }
 
         try {
-            const response = await ConsultantService.setDeadline(values);
+            const token = localStorage.getItem('token');
+            const response = await ConsultantService.setDeadline(values, token);
     
             if(response.status === 201) {
                 toast.success("Deadline has been set successfully!", {
@@ -86,7 +111,7 @@ export default function SetDeadline() {
         setOpen(false);
     };
 
-    return (
+    const setDeadlinePage =
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -131,5 +156,10 @@ export default function SetDeadline() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user != "" && user === "CONSULTANT" ? setDeadlinePage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }
