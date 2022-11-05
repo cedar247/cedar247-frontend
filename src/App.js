@@ -9,6 +9,7 @@ import DoctorsView from './components/pages/DoctorsView';
 import ConsultantDashboard from './components/pages/ConsultantDashboard';
 import DoctorDashboard from './components/pages/DoctorDashboard';
 import ViewExchangeShifts from './components/pages/viewExchangeShifts';
+import ConsultantViewSwappingShifts from './components/pages/ConsultantViewSwappingShifts';
 import Persistant from './components/pages/Persistant';
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
@@ -54,6 +55,7 @@ function App() {
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
             <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>
+            <Route path='/ConsultantViewSwappingShifts' element={<ConsultantViewSwappingShifts/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>

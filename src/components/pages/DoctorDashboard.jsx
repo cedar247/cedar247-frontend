@@ -75,7 +75,7 @@ export default function DoctorDashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [openPop, setPopOpen] = React.useState(false);
+    const [popOpen, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
 
     // const id = "6334249bebcfbf785191df1d";
@@ -154,7 +154,7 @@ export default function DoctorDashboard() {
                 />
             <Main open={open} style={{ paddingTop: '100px' }}>
                 <Calendar id={id} windowHeight={windowHeight} />
-                <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
+                <PopUp opener={popOpen} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
             </Main>
         </Box>
     </div>

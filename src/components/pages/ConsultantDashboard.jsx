@@ -8,6 +8,8 @@ import SideBar from "../common/consultant/SideBar";
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
 import { useEffect, useState } from "react";
+import PopUp from '../layouts/ConsultantPopups';
+
 const windowHeight = window.innerHeight-200;
 const drawerWidth = 240;
 // console.log(windowHeight);
@@ -62,6 +64,7 @@ export default function ConsultantDashboard() {
         }
     }, []);
     const [open, setOpen] = React.useState(false);
+    const [popOpen, setPopOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -70,19 +73,34 @@ export default function ConsultantDashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
     const handleLogout = async (e) => {
         localStorage.removeItem('token')
         window.location.href = "/"
     }
+
+
+    const handleClosePop = () => {
+        setPopOpen(false);
+    };
+
+    const handleChangePassword = () => {
+        setPopOpen(true);
+    };
+
+
     // document.body.style.backgroundImage = `url(${Back2})`;
     const consultantpage = 
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
+
                 <Header handleDrawerOpen={handleDrawerOpen} open={open} handlelogout={handleLogout}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} handleChangePassword={handleChangePassword} />
+
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar windowHeight = {windowHeight} />
+                    <PopUp opener={popOpen} closer={handleClosePop}/>
                 </Main>
             </Box>
         </div>
