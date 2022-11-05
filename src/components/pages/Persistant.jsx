@@ -24,10 +24,11 @@ import { useEffect, useState } from "react";
 import '../../index.css';
 import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
-import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
+import { DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
+import Header from '../common/admin/Header';
 
 
 
@@ -103,6 +104,10 @@ export default function AdminDashboard() {
         setPopOpen(true);
         setOption(1);
     }
+    const handleWard = () => {
+        setPopOpen(true);
+        setOption(3);
+    }
     // handles the opening of the popup for doctor
     const handleDoctor = () => {
         setPopOpen(true);
@@ -132,38 +137,7 @@ export default function AdminDashboard() {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 {/* appBar component of the page */}
-                <AppBar position="fixed" open={open}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h5" component="div">
-                            ADMIN
-                        </Typography>
-
-                        <Box
-                            sx={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: 'row-reverse'
-                            }}
-                        >
-                            <Button color="inherit" onClick={handleLogout}>   <Divider orientation="vertical" flexItem>
-                                <Typography variant="h6" component="div">
-                                    LOGOUT
-                                </Typography>
-                            </Divider><LogoutIcon /></Button>
-                        </Box>
-
-                    </Toolbar>
-                </AppBar>
+                <Header handleDrawerOpen={handleDrawerOpen} handlelogout={handleLogout} open={open} />
 
 
                 {/* Side bar component of the page */}
@@ -224,6 +198,7 @@ export default function AdminDashboard() {
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
+                                            onClick={handleWard}
 
                                         >
                                             WARD
