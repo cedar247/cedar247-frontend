@@ -4,20 +4,42 @@ const axios = require('axios');
 
 const APIEndpoint = config.DOMAIN_NAME + "/api";
 
-const setDeadline = (details) => {
-    return axios.post(APIEndpoint + "/consultant/set-deadline", details);
+const setDeadline = (details, token) => {
+    return axios.post(
+        APIEndpoint + "/consultant/set-deadline",
+        details,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    );
 }; 
 
-const getDoctors = () => {
-    return axios.get(APIEndpoint + "/consultant/doctors")
+const getDoctors = (token) => {
+    return axios.get(
+        APIEndpoint + "/consultant/doctors",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 };
 
-const getDoctorCategories = () => {
-    return axios.get(APIEndpoint + "/consultant/get-categories");
+const getDoctorCategories = (token) => {
+    return axios.get(
+        APIEndpoint + "/consultant/get-categories",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    );
 }
 
-const createSchedule = (requirements) => {
-    return axios.post(APIEndpoint + "/consultant/create-schedule", requirements);
+const createSchedule = (requirements, token) => {
+    return axios.post(
+        APIEndpoint + "/consultant/create-schedule", 
+        requirements,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    );
 }
 
 const changePassword = (details) => {
