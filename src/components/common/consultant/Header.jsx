@@ -65,7 +65,7 @@ export default function Header(props) {
                         >
 
 
-                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
+                            <Button color="inherit" onClick={props.handlelogout}>   <Divider orientation="vertical" flexItem>
                             <Typography variant="h6" component="div">
                                 LOGOUT
                             </Typography>

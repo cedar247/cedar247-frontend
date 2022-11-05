@@ -6,6 +6,7 @@ import * as React from "react";
 // import DialogContentText from "@mui/material/DialogContentText";
 import AddConsultant from "./AddConsultant";
 import AddDoctor from "./AddDoctor";
+import AddWard from "./AddWards";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -44,6 +45,7 @@ export default function PopUp(props) {
         <DialogContent dividers={scroll === "paper"}>
             {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
             {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
+            {props.Option == 3 ? <AddWard/> : <></>}
             {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
         </DialogContent>
         <DialogActions>

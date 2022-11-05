@@ -112,6 +112,9 @@ export default function LoginForm() {
                     if (response.data.userid.type == 'DOCTOR') {
                         window.location.href = "/DoctorDashboard"
                     }
+                    if (response.data.userid.type == 'CONSULTANT') {
+                        window.location.href = "/ConsultantDashboard"
+                    }
 
                 } else {
                     toast.warn("Incorrect Email or Password", {
