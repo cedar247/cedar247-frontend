@@ -32,6 +32,8 @@ import SideBar from "../common/doctor/SideBar";
 import AppBarExchangeRequest from "../common/doctor/appBarExchangeRequest";
 import PopUp from '../layouts/DoctorPopups';
 import DoctorService from "../../services/API/DoctorService";
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
 
 const useStyles = makeStyles({
     paper: {
@@ -43,7 +45,6 @@ const dummy1 = ["He HE","Imhi Imhi","62344"];
 const dummy2 = ["ABCD","abcd","1234"];
 const drawerWidth = 240;
 const windowHeight = window.innerHeight-200;
-const id = "633ab54a9fd528b9532b8d59"
 
 export default function ViewExchangeShifts() {
     const classes = useStyles();
@@ -53,32 +54,55 @@ export default function ViewExchangeShifts() {
     const [option, setOption] = React.useState(0);
     const [toRequests, setToRequests] = React.useState([]);
     const [fromRequests, setFromRequests] = React.useState([]);
+    const [user, setUser] = React.useState("");
+    const [id, setID] = React.useState("");
     // const id = "633ab0f123be88c950fb8a89";
-    const id = "633ab54a9fd528b9532b8d59"
+    // const id = "633ab54a9fd528b9532b8d59"
     const [shifts, setShifts] = React.useState([]);
     const [refresh, setRefresh] = React.useState(false);
 
     React.useEffect(() => {
-        async function handleGetRequests(){
-        
-            try {
-                    const response = await DoctorService.getRequests({id:id,refresh:refresh});
-                    console.log(response);
-                    if(response.data) {
-                        setToRequests(response.data[1])
-                        setFromRequests(response.data[0])
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-
         if (refresh){
             setRefresh(false)
         }
-        handleGetRequests();
+
+        const token = localStorage.getItem('token');
+            if (token) {
+                const user = jwtDecode(token)
+                console.log(user)
+                if (!user) {
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if (user) {
+                    if (user.type === "DOCTOR") {
+                        setUser("DOCTOR");
+                        setID(user._id);
+                        handleGetRequests();
+                    } else {
+                        setUser("NONE")
+                    }
+                }
+            } else {
+                setUser("")
+            }
+
     },[id, refresh]);
     
+    async function handleGetRequests(){
+        try {
+                const response = await DoctorService.getRequests({id:id,refresh:refresh});
+                console.log(response);
+                if(response.data) {
+                    setToRequests(response.data[1])
+                    setFromRequests(response.data[0])
+                }
+            } catch (error) {
+                console.log(error);
+            }
+            
+        }
+
     const handleRefresh = () => {
         console.log("setrefresh")
         setRefresh(true)
@@ -94,17 +118,21 @@ export default function ViewExchangeShifts() {
         }
     }
 
+    const viewExchangePage = <div>
+                                <Box sx={{ display: 'flex' }}>
+                                    <CssBaseline />
+                                    <AppBarExchangeRequest setOption ={setOption} />
+                                </Box>
+                                <Box>
+                                    <div>
+                                        {displayRequests()}
+                                    </div>
+                                </Box>
+                            </div>
+
     return (
-        <div>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBarExchangeRequest setOption ={setOption} />
-            </Box>
-            <Box>
-                <div>
-                    {displayRequests()}
-                </div>
-            </Box>
-        </div>
-    );
+        <>
+            {user != "" && user == "DOCTOR" ? viewExchangePage : <> <AccessDenied></AccessDenied> </>}
+        </>
+    )
 }

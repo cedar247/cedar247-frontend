@@ -31,6 +31,8 @@ import PopUp from '../layouts/DoctorPopups';
 import ConsultantService from "../../services/API/ConsultantService";
 import ConsultantResponededSwapshifts from '../layouts/consultantResponededSwapshifts.jsx';
 import ConsultantRecievedSwapshifts from '../layouts/consultantRecievedSwapshifts.jsx';
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
 
 const useStyles = makeStyles({
     paper: {
@@ -52,30 +54,37 @@ export default function ConsultantViewSwappingShifts() {
     const [acceptedReqests, setAcceptedRequests] = React.useState([]);
     const [rejectedReqests, setRejectedRequests] = React.useState([]);
     // const id = "633ab0f123be88c950fb8a89";
-    const id = "633ab54a9fd528b9532b8d59"
+    const [user, setUser] = React.useState("");
+    const [id, setID] = React.useState("");
     const [shifts, setShifts] = React.useState([]);
     const [refresh, setRefresh] = React.useState(false);
 
     React.useEffect(() => {
-        async function handleGetRequests(){
-        
-            try {
-                    const response = await ConsultantService.getRequests({id:id,refresh:refresh});
-                    console.log(response);
-                    if(response.data) {
-                        setRequests(response.data[0]);
-                        setAcceptedRequests(response.data[1]);
-                        setRejectedRequests(response.data[2]);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-
         if (refresh){
             setRefresh(false)
         }
-        handleGetRequests();
+
+        const token = localStorage.getItem('token');
+        if (token) {
+            const user = jwtDecode(token)
+            if (!user) {
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if (user) {
+                if (user.type === "CONSULTANT") {
+                    setUser("CONSULTANT");
+                    setID(user._id);
+                    handleGetRequests();
+                } else {
+                    setUser("NONE")
+                }
+
+            }
+        } else {
+            setUser("")
+        }
+
     },[id, refresh]);
     
     const handleRefresh = () => {
@@ -83,6 +92,22 @@ export default function ConsultantViewSwappingShifts() {
         setRefresh(true)
 
     }
+
+    async function handleGetRequests(){
+        try {
+                const response = await ConsultantService.getRequests({id:id,refresh:refresh});
+                console.log(response);
+                if(response.data) {
+                    setRequests(response.data[0]);
+                    setAcceptedRequests(response.data[1]);
+                    setRejectedRequests(response.data[2]);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
     const displayRequests = ()=> {
         if (option == 0) {
             return  <ConsultantRecievedSwapshifts refresh = {handleRefresh} recievedRequests = {Reqests}/>
@@ -92,18 +117,20 @@ export default function ConsultantViewSwappingShifts() {
             return <ConsultantResponededSwapshifts  respondedRequests = {rejectedReqests}/>
         }
     }
-
+    const vieveSwappingShiftsPage = <div>
+                                    <Box sx={{ display: 'flex' }}>
+                                        <CssBaseline />
+                                        <AppViewSwappingShifts setOption ={setOption} />
+                                    </Box>
+                                    <Box>
+                                        <div>
+                                            {displayRequests()}
+                                        </div>
+                                    </Box>
+                                </div>
     return (
-        <div>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppViewSwappingShifts setOption ={setOption} />
-            </Box>
-            <Box>
-                <div>
-                    {displayRequests()}
-                </div>
-            </Box>
-        </div>
+        <>
+            {user != "" && user == "CONSULTANT" ? vieveSwappingShiftsPage : <> <AccessDenied></AccessDenied> </>}
+        </>
     );
 }
