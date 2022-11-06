@@ -26,7 +26,7 @@ import Checkbox from '@mui/material/Checkbox';
         const [calendar, setCalendar] = React.useState([]);
         const [doctors, setDoctors] = React.useState([]);
 
-        const id = "633ab0f123be88c950fb8a89";
+        const id = props.id;
 
         const [windowHeight]= React.useState(props.windowHeight);
 

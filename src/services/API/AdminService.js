@@ -31,8 +31,13 @@ const getAllWards = () => {
     return axios.get(APIEndpoint + "/admin/getAll");
 }; 
 
-const addWard = (ward) => {
-    return axios.post(APIEndpoint + "/admin/add-ward", ward);
+const addWard = (ward, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/add-ward", ward,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+        );
 }
 const getDoctorTypes = () => {
     return axios.get(APIEndpoint + "/admin/getDoctorTypes");
@@ -43,20 +48,42 @@ const DoLogin = (details) => {
 }; 
 
 
-const getShifts = () => {
-    return axios.get(APIEndpoint+ "/admin/get-shifts")
+const getShifts = (token) => {
+    return axios.get(
+        APIEndpoint+ "/admin/get-shifts",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
-const setConstraints = (constraints) => {
-    return axios.post(APIEndpoint + "/admin/set-constraints", constraints)
+const setConstraints = (constraints, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/set-constraints",
+        constraints,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
-const getNumConsecGroups = () => {
-    return axios.get(APIEndpoint + "/admin/get-num-consec-groups")
+const getNumConsecGroups = (token) => {
+    return axios.get(
+        APIEndpoint + "/admin/get-num-consec-groups",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
-const setConsecGroups = (consecGroups) => {
-    return axios.post(APIEndpoint + "/admin/set-consec-groups", consecGroups)
+const setConsecGroups = (consecGroups, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/set-consec-groups", 
+        consecGroups,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
 const adminService = {

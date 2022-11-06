@@ -13,6 +13,7 @@ import {
     Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import consulantService from '../../services/API/ConsultantService';
+import jwtDecode from "jwt-decode";
 
 
 /* eslint-disable-next-line react/no-multi-comp */
@@ -21,7 +22,7 @@ import consulantService from '../../services/API/ConsultantService';
         const [calendar, setCalendar] = React.useState([]);
         const [doctors, setDoctors] = React.useState([]);
 
-        const id = "633ab0f123be88c950fb8a89";
+        // const id = "633ab0f123be88c950fb8a89";
 
         const [windowHeight]= React.useState(props.windowHeight);
 
@@ -29,6 +30,9 @@ import consulantService from '../../services/API/ConsultantService';
             async function loadData(){
                 try {
                     // console.log(appointments);
+                    const token = localStorage.getItem('token') // get token from local storage
+                    const user  = jwtDecode(token)
+                    const id = user._id
                     const response = await consulantService.viewCalendar({id:id, showAllDoctors:true});
                     console.log(response);
                     setCalendar(formatData(response.data[0]));
@@ -41,7 +45,7 @@ import consulantService from '../../services/API/ConsultantService';
                 }
             }
 
-        loadData();},[id]);
+        loadData();},[]);
 
         const formatData = (data) =>{
             const formatedData = [];

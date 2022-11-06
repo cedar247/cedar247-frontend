@@ -99,7 +99,7 @@ export default function ConsultantDashboard() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open} handleChangePassword={handleChangePassword} />
 
                 <Main open={open} style={{paddingTop: '100px' }}>
-                    <Calendar windowHeight = {windowHeight} />
+                    <Calendar id = {id} windowHeight = {windowHeight} />
                     <PopUp opener={popOpen} closer={handleClosePop}/>
                 </Main>
             </Box>

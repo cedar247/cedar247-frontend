@@ -11,6 +11,9 @@ import ShiftDetails from "../schedule/ShiftDetails";
 import adminService from '../../services/API/AdminService';
 import consulantService from '../../services/API/ConsultantService';
 import { toast } from "react-toastify";
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
+import { useNavigate } from 'react-router-dom' 
 
 const drawerWidth = 240;
 
@@ -43,20 +46,43 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function CreateSchedule() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
     const [doctorCategories, setDoctorCategories] = useState([]);
     const [requirements, setRequirements] = useState([])
+    const [user, setUser] = React.useState("");
    
     useEffect(() => {
+        // get the token and identify user type
+        const token  = localStorage.getItem('token');
+        if(token){
+            const user = jwtDecode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if(user){
+                if(user.type ==='CONSULTANT'){
+                    setUser("CONSULTANT")
+                }else{
+                    setUser("NONE")
+                }
+                
+            }
+        }else{
+            setUser("")
+        }
+
         getShifts();
         getDoctorCategories();
     }, []);
     
 
-    const getShifts = async () => {
+    const getShifts = async (token) => {
         try {
-            const response = await adminService.getShifts();
+            const token  = localStorage.getItem('token'); // get token
+            const response = await adminService.getShifts(token);
             if(response.data) {
                 setShifts(response.data)
                 const data = response.data;
@@ -77,7 +103,8 @@ export default function CreateSchedule() {
 
     const getDoctorCategories = async () => {
         try {
-            const response = await consulantService.getDoctorCategories();
+            const token  = localStorage.getItem('token'); // get token
+            const response = await consulantService.getDoctorCategories(token);
             if(response.data) {
                 setDoctorCategories(response.data)
             }
@@ -118,11 +145,13 @@ export default function CreateSchedule() {
         //     })
         
         try {
-            const response = await consulantService.createSchedule(requirements);
+            const token = localStorage.getItem('token')
+            const response = await consulantService.createSchedule(requirements, token);
             if(response.status === 201) {
                 toast.success("Schedule created successfully!!", {
                     toastId: "1"
                 })
+                navigate('/ConsultantDashboard')
             }
             console.log(response)
         } catch(error) {
@@ -141,7 +170,7 @@ export default function CreateSchedule() {
         setOpen(false);
     };
 
-    return (
+    const CreateSchedulePage =
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -192,5 +221,10 @@ export default function CreateSchedule() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user != "" && user === "CONSULTANT" ? CreateSchedulePage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

@@ -11,7 +11,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import adminService from '../../services/API/AdminService';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
-
+import jwtDecode from 'jwt-decode';
+import AccessDenied from './AccessDenied';
 
 const drawerWidth = 240;
 
@@ -54,15 +55,36 @@ export default function SetConstraint() {
     const [casualtyDay, setCasualtyDay] = useState('');
     const [casualtyDayShifts, setCasualtyDayShifts] = useState([]);
     const [shiftTypes, setShiftTypes] = useState([]);
+    const [user, setUser] = React.useState("");
 
     useEffect(() => {
-            getShifts();
+        getShifts();
     }, []);
     
 
     const getShifts = async () => {
         try {
-            const response = await adminService.getShifts();
+            // get token
+            const token  = localStorage.getItem('token');
+            if(token){
+                const user = jwtDecode(token)
+                if(!user){
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if(user){
+                    if(user.type ==='Admin'){
+                        setUser("Admin")
+                    }else{
+                        setUser("NONE")
+                    }
+                    
+                }
+            }else{
+                setUser("")
+            }
+
+            const response = await adminService.getShifts(token);
             if(response.data) {
                 const shiftsGot = response.data;
                 setShifts(shiftsGot)
@@ -92,7 +114,13 @@ export default function SetConstraint() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if(maxLeaves === "" || numConsecutiveGroupShifts === "" || casualtyDay === "" || casualtyDayShifts === [] || shiftTypes === []) {
+        // if(maxLeaves === "" || numConsecutiveGroupShifts === "" || casualtyDay === "" || casualtyDayShifts === [] || shiftTypes === []) {
+        //     toast.warning("Fill All Fields", {
+        //         toastId: "1"
+        //     })
+        // }
+
+        if(maxLeaves === "" || numConsecutiveGroupShifts === "" || shiftTypes === []) {
             toast.warning("Fill All Fields", {
                 toastId: "1"
             })
@@ -100,13 +128,14 @@ export default function SetConstraint() {
 
         else {
             try {
+                const token = localStorage.getItem('token') // get the token from localstorage
                 const response = await adminService.setConstraints({
                     maxLeaves,
                     numConsecutiveGroupShifts,
                     casualtyDay,
                     casualtyDayShifts,
                     shiftTypes
-                })
+                }, token)
 
                 if(response.status === 201) {
                     toast.success("Constraints has been successfully set", {
@@ -131,7 +160,7 @@ export default function SetConstraint() {
         setOpen(false);
     };
 
-    return (
+    const setConstraintPage = 
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -175,5 +204,10 @@ export default function SetConstraint() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return(
+        <>
+        {user != "" && user == "Admin" ? setConstraintPage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

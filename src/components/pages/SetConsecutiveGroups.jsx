@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
 import ConsecutiveShifts from '../ward/ConsecutiveShifts';
 import { Grid } from '@mui/material';
-
+import jwtDecode from 'jwt-decode';
+import AccessDenied from './AccessDenied';
 
 const drawerWidth = 240;
 
@@ -48,7 +49,8 @@ export default function SetConsecutiveGroups() {
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
     const [numConsecGroups, setNumConsecGroups] = useState(0);
-    const [consecGroups, setConsecGroups] = useState([])
+    const [consecGroups, setConsecGroups] = useState([]);
+    const [user, setUser] = React.useState("");
 
     useEffect(() => {
             getDetails();
@@ -57,8 +59,28 @@ export default function SetConsecutiveGroups() {
 
     const getDetails = async () => {
         try {
-            const response = await adminService.getShifts();
-            const consecutiveGroupsResponse = await adminService.getNumConsecGroups();
+            // get token
+            const token  = localStorage.getItem('token');
+            if(token){
+                const user = jwtDecode(token)
+                if(!user){
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if(user){
+                    if(user.type ==='Admin'){
+                        setUser("Admin")
+                    }else{
+                        setUser("NONE")
+                    }
+                    
+                }
+            }else{
+                setUser("")
+            }
+
+            const response = await adminService.getShifts(token);
+            const consecutiveGroupsResponse = await adminService.getNumConsecGroups(token);
             if(response.data && consecutiveGroupsResponse.data) {
                 const shiftsGot = response.data;
                 setShifts(shiftsGot)
@@ -121,12 +143,15 @@ export default function SetConsecutiveGroups() {
         e.preventDefault();
 
         try {
-            const response = await adminService.setConsecGroups(consecGroups)
+            const token = localStorage.getItem('token')
+            const response = await adminService.setConsecGroups(consecGroups, token)
             
             if(response.status === 201) {
                 toast.success("Consecutive groups successfully added", {
                     toastId: "1"
                 })
+
+                navigate('/wards')
             }
         } catch(error) {
             console.log(error)
@@ -142,7 +167,7 @@ export default function SetConsecutiveGroups() {
         setOpen(false);
     };
 
-    return (
+    const setConsecutiveGroupsPage = 
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -172,5 +197,10 @@ export default function SetConsecutiveGroups() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user != "" && user == "Admin" ? setConsecutiveGroupsPage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

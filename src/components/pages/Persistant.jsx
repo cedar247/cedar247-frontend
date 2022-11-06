@@ -29,6 +29,7 @@ import PopUp from '../layouts/Popup';
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
 import Header from '../common/admin/Header';
+import { Link } from "react-router-dom";
 
 
 
@@ -192,17 +193,19 @@ export default function AdminDashboard() {
                                                 <AddHomeIcon color="success" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <Button
-                                            color="success"
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                            onClick={handleWard}
+                                        <Link to="/add-wards" style={{textDecoration: 'none'}} fullWidth>
+                                            <Button
+                                                color="success"
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 , pl: 5, pr:5}}
+                                                // onClick={handleWard}
 
-                                        >
-                                            WARD
-                                        </Button>
+                                            >
+                                                WARD
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                     <Divider variant="inset" color="secondary" />
                                     <ListItem>
