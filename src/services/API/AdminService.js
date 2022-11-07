@@ -31,6 +31,14 @@ const getAllWards = () => {
     return axios.get(APIEndpoint + "/admin/getAll");
 }; 
 
+const getAllDocs = (_id) => {
+    console.log("All doc in controller");
+    return axios.post(APIEndpoint + "/admin/getAllDocs",_id);
+}; 
+const getAllCons = (_id) => {
+    console.log("All doc in controller");
+    return axios.post(APIEndpoint + "/admin/getAllCons",_id);
+}; 
 const addWard = (ward, token) => {
     return axios.post(
         APIEndpoint + "/admin/add-ward", ward,
@@ -39,10 +47,15 @@ const addWard = (ward, token) => {
         }
         );
 }
-const getDoctorTypes = () => {
-    return axios.get(APIEndpoint + "/admin/getDoctorTypes");
+const getDoctorTypes = (values) => {
+    console.log(values);
+    return axios.post(APIEndpoint + "/admin/getDoctorTypes",values);
 }; 
 
+const DeleteWard =  (id) => {
+    console.log(id);
+    return axios.post(APIEndpoint + "/admin/DeleteWard",id);
+}; 
 const DoLogin = (details) => {
     return axios.post(APIEndpoint + "/admin/dologin",details);
 }; 
@@ -99,7 +112,10 @@ const adminService = {
     DoLogin,
     setConstraints,
     getNumConsecGroups,
-    setConsecGroups
+    setConsecGroups,
+    getAllDocs,
+    getAllCons,
+    DeleteWard
 }
 
 export default adminService;

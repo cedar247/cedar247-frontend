@@ -39,11 +39,12 @@ export default function AddDoctor(props) {
   //use effects to fetch wards and doctor types while rendering
   useEffect(() => {
     getAllWards();
-    getDoctorTypes();
   }, []);
+
 // to set the value for the wards (ID)
   const handleChange3 = (event) => {
     setValues({ ...values, ["WardID"]: event.target.value });
+    getDoctorTypes();
   };
 
   // to fetch all details of the wards
@@ -62,10 +63,11 @@ export default function AddDoctor(props) {
   };
 
   //to fetch the doctor types from the backend
-  const getDoctorTypes = async () => {
+  const getDoctorTypes = async (event) => {
+    
     try {
       //fetches the data from the backend
-      const response = await AdminService.getDoctorTypes();
+      const response = await AdminService.getDoctorTypes(values);
       //for debugging purpose
       // console.log(response);
       console.log(response.data);
