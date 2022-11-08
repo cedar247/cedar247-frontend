@@ -286,8 +286,8 @@ function RecievedCards(props) {
                         <Divider />
                     </CardContent>
                     <CardActions>
-                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleAccept()} variant="contained" color="error" fullWidth >Accept</Button>
-                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleReject()} variant="contained" color="success" fullWidth>Rejct</Button>
+                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleAccept()} variant="contained" color="success" fullWidth >Accept</Button>
+                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleReject()} variant="contained" color="error" fullWidth>Rejct</Button>
                     </CardActions>
                 </React.Fragment>
             </Card></div>
@@ -456,8 +456,8 @@ function ConsultantRecievedCards(props) {
                         <Divider />
                     </CardContent>
                     <CardActions>
-                        <Button disabled = { disabled } onClick = {(e)=>handleAccept()} variant="contained" color="error" fullWidth >Accept</Button>
-                        <Button disabled = { disabled } onClick = {(e)=>handleReject()} variant="contained" color="success" fullWidth>Rejct</Button>
+                        <Button disabled = { disabled } onClick = {(e)=>handleAccept()} variant="contained" color="success" fullWidth >Accept</Button>
+                        <Button disabled = { disabled } onClick = {(e)=>handleReject()} variant="contained" color="error" fullWidth>Rejct</Button>
                     </CardActions>
                 </React.Fragment>
             </Card></div>
