@@ -78,7 +78,7 @@ export default function ViewExchangeShifts() {
                     if (user.type === "DOCTOR") {
                         setUser("DOCTOR");
                         setID(user._id);
-                        handleGetRequests();
+                        handleGetRequests(user._id);
                     } else {
                         setUser("NONE")
                     }
@@ -89,9 +89,9 @@ export default function ViewExchangeShifts() {
 
     },[id, refresh]);
     
-    async function handleGetRequests(){
+    async function handleGetRequests(userId){
         try {
-                const response = await DoctorService.getRequests({id:id,refresh:refresh});
+                const response = await DoctorService.getRequests({id:userId,refresh:refresh});
                 console.log(response);
                 if(response.data) {
                     setToRequests(response.data[1])
