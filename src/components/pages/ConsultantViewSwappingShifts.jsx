@@ -75,7 +75,7 @@ export default function ConsultantViewSwappingShifts() {
                 if (user.type === "CONSULTANT") {
                     setUser("CONSULTANT");
                     setID(user._id);
-                    handleGetRequests();
+                    handleGetRequests(user._id);
                 } else {
                     setUser("NONE")
                 }
@@ -93,9 +93,9 @@ export default function ConsultantViewSwappingShifts() {
 
     }
 
-    async function handleGetRequests(){
+    async function handleGetRequests(userId){
         try {
-                const response = await ConsultantService.getRequests({id:id,refresh:refresh});
+                const response = await ConsultantService.getRequests({id:userId,refresh:refresh});
                 console.log(response);
                 if(response.data) {
                     setRequests(response.data[0]);
