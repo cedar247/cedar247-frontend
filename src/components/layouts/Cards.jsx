@@ -14,6 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import PopUp from './Popup';
 import AdminService from '../../services/API/AdminService';
 import { toast } from "react-toastify";
+import ConfirmDialog from './ConfirmDialog';
 
 //to style the page with bullet
 const bull = (
@@ -27,8 +28,14 @@ const bull = (
 
 //card componet is to have the details of the wards
 export default function OutlinedCard(props) {
-
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+        
+    }
+    const handleClose = () => {
+        setOpen(false);
+      };
     const timeFunction = ()=> {
         toast.success("Deleted", {
             toastId: "1"
@@ -55,6 +62,7 @@ export default function OutlinedCard(props) {
         setwardID({
             wardID:props.ward._id
         })
+        handleClose();
             try {
               //fetches the data of wards 
               const response = await AdminService.DeleteWard(values);
@@ -98,10 +106,12 @@ export default function OutlinedCard(props) {
                         </CardContent>
                         <CardActions>
                             <Button variant="contained" fullWidth onClick={handleView}>View</Button>
-                            <Button variant="outlined" color="error" onClick={DeleteWard} fullWidth> Delete </Button>
+                            <Button color="error" variant="outlined" onClick={handleOpen} fullWidth> Delete </Button>
                         </CardActions>
                     </React.Fragment>
-                </Card></div>
+                </Card>
+                <ConfirmDialog open = {open} handleDelete = {DeleteWard} handleClose={handleClose}/>
+                </div>
 
         </Box> </>
     );

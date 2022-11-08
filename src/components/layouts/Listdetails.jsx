@@ -102,7 +102,7 @@ export default function WardDetailList(props) {
             >
                 <ListItemButton onClick={handleClick}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        {/* <InboxIcon /> */}
                     </ListItemIcon>
                     <ListItemText primary="Doctor Categories" />
                     {open ? <ExpandLess /> : <ExpandMore />}
@@ -118,7 +118,7 @@ export default function WardDetailList(props) {
             >
                 <ListItemButton onClick={handleClick2}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        {/* <InboxIcon /> */}
                     </ListItemIcon>
                     <ListItemText primary="Doctors" />
                     {open2 ? <ExpandLess /> : <ExpandMore />}
@@ -135,7 +135,7 @@ export default function WardDetailList(props) {
             >
                 <ListItemButton onClick={handleClick3}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        {/* <InboxIcon /> */}
                     </ListItemIcon>
                     <ListItemText primary="Consultants" />
                     {open3 ? <ExpandLess /> : <ExpandMore />}
