@@ -19,6 +19,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersistentDrawerLeft from './components/pages/Persistant.jsx';
 import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
+import { LandingPage } from './components/pages/LandingPage';
 
 const theme = createTheme({
   palette: {
@@ -41,7 +42,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Routes>
-            <Route exact path="/" element={<LoginForm/>}></Route>
+            <Route exact path="/" element={<LandingPage/>}></Route>
+            <Route exact path="/signIn" element={<LoginForm/>}></Route>
             <Route path="/wards" element={<AdminDashboard/>}></Route>
             <Route path="/add-wards" element={<AddWard/>}></Route>
             <Route path="/create-schedule" element={<CreateSchedule/>}></Route>
@@ -60,7 +62,7 @@ function App() {
         </Router>
       </ThemeProvider>
       <ToastContainer
-        position="top-right"
+        position="top-center"
         autoClose={2500}
         hideProgressBar={false}
         theme="colored"

@@ -40,7 +40,7 @@ export default function Peoples(props) {
             >
                 <ListItemAvatar>
                     <Avatar>
-                    <DeleteIcon />
+                    {/* <DeleteIcon /> */}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={index} />
@@ -55,7 +55,7 @@ const Doctornames =
         <ListItem>
             <ListItemAvatar>
                 <Avatar>
-                <DeleteIcon />
+                {/* <DeleteIcon /> */}
                 </Avatar>
             </ListItemAvatar>
             <ListItemText primary={index.name} />
@@ -68,7 +68,7 @@ const NO_one_Added =  <List>
     <ListItem>
         <ListItemAvatar>
             <Avatar>
-            <DeleteIcon />
+            {/* <DeleteIcon /> */}
             </Avatar>
         </ListItemAvatar>
         <ListItemText primary="NO ONE ADDED" />
@@ -80,7 +80,7 @@ const Consultantnames =
             <ListItem >
                 <ListItemAvatar >
                     <Avatar>
-                    <DeleteIcon />
+                    {/* <DeleteIcon /> */}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={index.name} />
