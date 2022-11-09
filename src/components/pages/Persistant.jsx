@@ -98,7 +98,6 @@ export default function AdminDashboard() {
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                {/* appBar component of the page */}
                 <AppBar position="fixed" open={open}>
                     <Toolbar>
                         <IconButton

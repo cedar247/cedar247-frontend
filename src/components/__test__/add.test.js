@@ -35,19 +35,19 @@ test('renders learn react link', () => {
 
 
 //to check admin dashboard redering
-test('renders learn react link', () => {
-    render(<AdminDashboard />);
-    const textElement = screen.getByText("MENU");
-    expect(textElement).toBeInTheDocument();
-  });
+// test('renders learn react link', () => {
+//     render(<AdminDashboard />);
+//     const textElement = screen.getByText("MENU");
+//     expect(textElement).toBeInTheDocument();
+//   });
   
 
-  // to check admin dashboard
-  test('renders learn react link', () => {
-    render(<AdminDashboard />);
-    const textElement = screen.getByText("Settings");
-    expect(textElement).toBeInTheDocument();
-  });
+//   // to check admin dashboard
+//   test('renders learn react link', () => {
+//     render(<AdminDashboard />);
+//     const textElement = screen.getByText("Settings");
+//     expect(textElement).toBeInTheDocument();
+//   });
   
 
 
