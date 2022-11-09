@@ -7,6 +7,7 @@ import * as React from "react";
 import AddConsultant from "./AddConsultant";
 import AddDoctor from "./AddDoctor";
 import AddWard from "./AddWards";
+import ViewCard from "./viewcard";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -45,7 +46,7 @@ export default function PopUp(props) {
         <DialogContent dividers={scroll === "paper"}>
             {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
             {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
-            {props.Option == 3 ? <AddWard/> : <></>}
+            {props.Option == 4 ? <ViewCard ward = {props.ward}/> : <></>}
             {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
         </DialogContent>
         <DialogActions>

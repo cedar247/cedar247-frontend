@@ -25,5 +25,6 @@ yarn-error.log*
 # config
 .env
 package-lock.json
+
 src/config.json
 cypress.config.js

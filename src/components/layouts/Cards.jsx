@@ -11,6 +11,10 @@ import CardHeader from '@mui/material/CardHeader';
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import { Divider } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import PopUp from './Popup';
+import AdminService from '../../services/API/AdminService';
+import { toast } from "react-toastify";
+import ConfirmDialog from './ConfirmDialog';
 
 //to style the page with bullet
 const bull = (
@@ -24,7 +28,60 @@ const bull = (
 
 //card componet is to have the details of the wards
 export default function OutlinedCard(props) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+        
+    }
+    const handleClose = () => {
+        setOpen(false);
+      };
+    const timeFunction = ()=> {
+        toast.success("Deleted", {
+            toastId: "1"
+        })
+        setTimeout(function(){ window.location.reload(false); }, 1500);
+       }
+    const [values, setwardID] = React.useState({
+        wardID: props.ward._id
+    });
+    
+    const [openPop, setPopOpen] = React.useState(false);
+    const [Option, setOption] = React.useState(0);
+    const handleCloseAddWard = () => {
+        setPopOpen(false);
+    }
+    const SetDefaultOption = () => {
+        setOption(0);
+    };
+    const handleView = () => {
+        setPopOpen(true);
+        setOption(4);
+    }
+    const DeleteWard = async () => {
+        setwardID({
+            wardID:props.ward._id
+        })
+        handleClose();
+            try {
+              //fetches the data of wards 
+              const response = await AdminService.DeleteWard(values);
+              if(response.statusText=='OK'){
+                timeFunction()
+              };
+            //   console.log(response.data);
+              //sets the ward names with id in the wards array
+            } catch (error) {
+              console.log(error)
+            }
+        
+          };
+    
     return (
+        <>
+        
+        <PopUp opener={openPop} closer={handleCloseAddWard} DefaultOption={SetDefaultOption} Option={Option} ward = {props.ward} />
+       
         <Box sx={{ minWidth: 200, minHeight: 200 }}>
             <div style={{
                 boxShadow: '0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)',
@@ -48,12 +105,14 @@ export default function OutlinedCard(props) {
                             <Divider />
                         </CardContent>
                         <CardActions>
-                            <Button variant="contained" fullWidth >View</Button>
-                            <Button variant="outlined" fullWidth>Edit</Button>
+                            <Button variant="contained" fullWidth onClick={handleView}>View</Button>
+                            <Button color="error" variant="outlined" onClick={handleOpen} fullWidth> Delete </Button>
                         </CardActions>
                     </React.Fragment>
-                </Card></div>
+                </Card>
+                <ConfirmDialog open = {open} handleDelete = {DeleteWard} handleClose={handleClose}/>
+                </div>
 
-        </Box>
+        </Box> </>
     );
 }

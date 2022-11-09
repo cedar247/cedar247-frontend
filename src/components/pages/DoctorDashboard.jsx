@@ -57,8 +57,7 @@ export default function DoctorDashboard() {
                 if (user.type === "DOCTOR") {
                     setUser("DOCTOR");
                     setID(user._id);
-                    handleGetShifts()
-
+                    handleGetShifts(user._id)
                 } else {
                     setUser("NONE")
                 }
@@ -82,10 +81,10 @@ export default function DoctorDashboard() {
     const [shifts, setShifts] = React.useState([]);
 
 
-    const handleGetShifts = async () => {
+    const handleGetShifts = async (userid) => {
 
         try {
-            const response = await DoctorService.getShifts({ id: id });
+            const response = await DoctorService.getShifts({ id: userid });
             console.log(response);
             if (response.data) {
                 setShifts(response.data)
