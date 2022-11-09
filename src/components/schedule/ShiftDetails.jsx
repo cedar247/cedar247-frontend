@@ -9,41 +9,32 @@ export default function ShiftDetails(props) {
         >
             <Typography
                 variant='h6' 
-                component='p'   
+                component='p'  
+                color='error' 
             >
                 {props.shiftName}:
             </Typography>
 
-            <TextField 
-                id="outlined-basic" 
-                label="Senior Registrar" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                fullWidth
-                margin='normal'
-        
-            />
-
-            <TextField 
-                id="outlined-basic" 
-                label="Registrar" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                fullWidth
-                margin='normal'
-            />
-
-            <TextField 
-                id="outlined-basic" 
-                label="Senior Home Office" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                fullWidth
-                margin='normal'
-            />
+            {
+                props.doctorCategories.map(
+                    (doctorCategory, index, arr)  =>  
+                        (
+                        <TextField 
+                            id="outlined-basic" 
+                            label={doctorCategory} 
+                            variant="outlined" 
+                            color='secondary' 
+                            type="number"
+                            fullWidth
+                            margin='normal'
+                            key={index}
+                            onChange={e => props.handleRequirements(props.id, props.index, e, doctorCategory)}
+                            InputProps={{ inputProps: {min: 0} }}
+                        />
+                        )
+                )
+            }
+            
         </Grid>
     )
 }

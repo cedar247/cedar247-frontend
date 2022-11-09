@@ -8,47 +8,23 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
-export default function WardDetails() {
+export default function WardDetails({ wardDetails, handleChange, handleShiftChange, handleDoctorCategories, doctorCategories}) {
     const [ numOfShifts, setNumOfShifts ] = useState(0);
-    const [ doctorCategories, setDoctorCategories ] = useState({
-        checkedSeniorRegistrar: true,
-        checkedRegistrar: true,
-        checkedSeniorHO: true,
-        checkedHO: true,
-        checkedMO: true
-    });
-
-    // const [shiftArray,setShiftArray]=useState([]);
-
-    // const handleShifts = (e) => setNumOfShifts(e.target.value){
-    //     const Shifts = () => {
-    //         return (<>{Array.from(Array(numOfShifts), (e, i) => {
-    //             return <Shift key={i}>{i}</Shift>
-    //         })}</>)
-    //     }
-    // }
-
-    const [ i, setI ] = useState(0);
-
-    const handleCategories = (event) => {
-        setDoctorCategories({ ...doctorCategories, [event.target.name]: event.target.checked });
-      };
-      console.log("shifts",numOfShifts)
 
       const createShifts = () => {
         let arr = []
         for (let i = 0; i < numOfShifts; i++) {
-          arr.push(<Shift/>)
+          arr.push(<Grid key={i} item md={4} sm={6} xs={12}><Shift key={i} index={i} wardDetails={wardDetails} handleShiftChange={handleShiftChange}/></Grid>)
         }
-        return(<div>
+        return(<Grid container spacing={3} mt={2} mb={2}>
             {arr.map(shift=>shift)}
-            </div>)
+            </Grid>)
       }
 
     return (
         <Box>
             <Grid container >
-                <Grid item md={6} sm={12} xs={12}>
+                <Grid item md={6} sm={12} xs={12} pr={2}>
                     <TextField 
                         id="outlined-basic" 
                         label="Name of the Ward" 
@@ -56,6 +32,7 @@ export default function WardDetails() {
                         color='secondary'
                         fullWidth
                         margin='normal'
+                        onChange={ handleChange("name") }
                     />
                 </Grid>
 
@@ -68,6 +45,7 @@ export default function WardDetails() {
                         type="number"
                         fullWidth
                         margin='normal'
+                        onChange={ handleChange("number") }
                     />
                 </Grid>
             </Grid>
@@ -92,20 +70,21 @@ export default function WardDetails() {
             <Typography
                 variant='h6'
                 component='p'
+                color='primary'
             >
                 Doctor catergories: *need to select at least one type
             </Typography>
 
-            <Box>
+            <Box style={{ "paddingLeft": "100px" }}>
 
                 <FormGroup>
 
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={doctorCategories.checkedSeniorRegistrar}
-                            onChange={handleCategories}
-                            name="checkedSeniorRegistrar"
+                            checked={doctorCategories["Senior Registrar"]}
+                            onChange={handleDoctorCategories}
+                            name="Senior Registrar"
                             color="secondary"
                         />
                         }
@@ -115,9 +94,9 @@ export default function WardDetails() {
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={doctorCategories.checkedRegistrar}
-                            onChange={handleCategories}
-                            name="checkedRegistrar"
+                            checked={doctorCategories["Registrar"]}
+                            onChange={handleDoctorCategories}
+                            name="Registrar"
                             color="secondary"
                         />
                         }
@@ -127,9 +106,9 @@ export default function WardDetails() {
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={doctorCategories.checkedSeniorHO}
-                            onChange={handleCategories}
-                            name="checkedSeniorHO"
+                            checked={doctorCategories["Senior Home Officer"]}
+                            onChange={handleDoctorCategories}
+                            name="Senior Home Officer"
                             color="secondary"
                         />
                         }
@@ -139,9 +118,9 @@ export default function WardDetails() {
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={doctorCategories.checkedHO}
-                            onChange={handleCategories}
-                            name="checkedHO"
+                            checked={doctorCategories["Home Officer"]}
+                            onChange={handleDoctorCategories}
+                            name="Home Officer"
                             color="secondary"
                         />
                         }
@@ -151,9 +130,9 @@ export default function WardDetails() {
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={doctorCategories.checkedMO}
-                            onChange={handleCategories}
-                            name="checkedMO"
+                            checked={doctorCategories["Medical Officer"]}
+                            onChange={handleDoctorCategories}
+                            name="Medical Officer"
                             color="secondary"
                         />
                         }

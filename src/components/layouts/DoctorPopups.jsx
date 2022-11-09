@@ -1,11 +1,21 @@
+import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import * as React from "react";
 // import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import LoginForm from "../pages/Signin";
+import Login from "../pages/login";
+import SignUp from "../pages/login";
 import AddConsultant from "./AddConsultant";
-import AddDoctor from "./AddDoctor";
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import DoctorChangePassword from "./DoctorChangePassword";
+import Defnerequirements from "./defineRequirements";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +29,7 @@ export default function PopUp(props) {
   const handleClose = () => {
     setOpen(false);
     props.closer();
-    props.SetDefaultOption();
+    props.DefaultOption();
   };
 
   const descriptionElementRef = React.useRef(null);
@@ -42,9 +52,8 @@ export default function PopUp(props) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogContent dividers={scroll === "paper"}>
-            {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
-            {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
-            {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
+            {props.Option == 1 ? <Defnerequirements /> : <></>}
+            {props.Option == 2 ? <DoctorChangePassword /> : <></>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -32,18 +32,20 @@ export default function Doctor(props) {
                         {props.name}
                     </Typography>
 
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    <Typography className={classes.title} color="textSecondary">
                         {props.category}
                     </Typography>
 
-                    
+                    <Typography  color="primary" gutterBottom>
+                        Contact: <span>{props.contactNumber}</span>
+                    </Typography>
 
                     <Typography className={classes.pos} color="textSecondary">
-                        Ward Number: {props.wardNumber}
+                        Ward Number: <span>{props.wardNumber}</span>
                     </Typography>
 
                     <Typography variant="body2" component="p">
-                        {props.wardName} Ward
+                        {props.wardName}
                     </Typography>
                 </CardContent>
 

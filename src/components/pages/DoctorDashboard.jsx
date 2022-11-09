@@ -24,12 +24,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChangePassword from '../pages/ChangePassword.jsx';
 import CustomizedDialogs from '../layouts/Dialog.jsx';
-import Calendar from '../pages/Calendar.jsx';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Calendar from '../layouts/DoctorCalendar.jsx';
 import Header from '../common/doctor/Header';
 import SideBar from "../common/doctor/SideBar";
+import PopUp from '../layouts/DoctorPopups';
+
 
 const useStyles = makeStyles({
     paper: {
@@ -64,168 +63,41 @@ export default function DoctorDashboard() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [showAllDoctors, setShowAllDoctors] = React.useState(false);
+    const [openPop, setPopOpen] = React.useState(false);
+    const [Option, setOption] = React.useState(0);
 
-    const handleShowHide = () =>{
-        setShowAllDoctors(!showAllDoctors);
+    const id = "6334249bebcfbf785191df1d";
+
+    const handledefinerequirements = () => {
+        setPopOpen(true);
+        setOption(1);
     }
-
+    const handleChangePassword = () => {
+        setPopOpen(true);
+        setOption(2);
+    }
+    const handleClosePop = () => {
+        setPopOpen(false);
+    }
+    const SetDefaultOption = () => {
+        setOption(0);
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    // document.body.style.backgroundImage = `url(${Back2})`;
     return (
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-<<<<<<< HEAD
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} home = {false} chanpass ={true} defreq ={true} handledefinerequirements = {handledefinerequirements} handleChangePassword= {handleChangePassword} />
                 <Main open={open} style={{paddingTop: '100px' }}>
-                    <FormGroup >
-                        <FormControlLabel control={<Checkbox onChange ={handleShowHide}  />} style={{paddingLeft: '50px', paddingTop: '10px', width:'350px' }} label="Display All doctors Schedule" />
-                    </FormGroup>
-                    <Calendar windowHeight = {windowHeight} />
+                    <Calendar  id = {id} windowHeight = {windowHeight} />
+                    <PopUp opener={openPop} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} />
                 </Main>
-=======
-                <AppBar position="fixed" open={open}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h5" component="div">
-                            DASHBOARD
-                        </Typography>
-
-                        <Box
-                            sx={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: 'row-reverse'
-                            }}
-                        >
-
-
-                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
-                            <Typography variant="h6" component="div">
-                                LOGOUT
-                            </Typography>
-                                </Divider><LogoutIcon /></Button>
-                        </Box>
-
-                    </Toolbar>
-                </AppBar>
-
-                <Drawer
-                    sx={{
-                        width: drawerWidth,
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            width: drawerWidth,
-                            boxSizing: 'border-box',
-                        },
-                    }}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                >
-                    <div className={classes.paper}>
-                        <DrawerHeader>
-                            <Typography variant="h6" component="div">
-                                MENU
-                            </Typography>
-                            <IconButton onClick={handleDrawerClose}>
-                                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                            </IconButton>
-                        </DrawerHeader>
-
-                        <div className='SideBody' >
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                }}
-                            >
-                            </Box>
-                        </div>
-
-                        <br></br>
-                        <br></br>
-                        <Divider color="primary" />
-                        <Box>
-                            <List
-                                sx={{
-                                    width: '100%',
-                                    maxWidth: 360,
-                                    bgcolor: 'background.paper',
-                                }}
-                            >
-                                <div className={classes.paper}>
-                                    <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <AddBoxIcon color="success" sx={{ fontSize: 30 }} />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color= "success"
-                                            sx={{ mt: 3, mb: 2, }}
-                                        >
-                                            Define Requirements
-                                        </Button>
-                                    </ListItem>
-                                    <Divider variant="inset" color="secondary" />
-                                    <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        {/* <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div> */}
-                                    </ListItem>
-                                </div>
-                            </List>
-                        </Box>
-
-                        <Divider />
-
-                        <Divider />
-                        <div className='settings'>
-                        <List>
-                            <Button>
-                                <ListItem>
-                                    {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
-                                    <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <AccountCircleIcon color="primary" sx={{ fontSize: 40 }} />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    Profile
-                                </ListItem>
-                            </Button>
-                        </List>
-                        </div>
-                    </div>
-                </Drawer>
-
-                {/* <Main open={open}>
-                </Main> */}
->>>>>>> main
             </Box>
         </div>
     );

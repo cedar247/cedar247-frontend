@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
@@ -8,6 +8,7 @@ import WardDetails from '../ward/WardDetails';
 import Constraints from '../ward/Constraints';
 import { Button, Typography, Grid } from '@material-ui/core';
 import Doctor from '../ward/Doctor';
+import consulantService from '../../services/API/ConsultantService';
 
 const drawerWidth = 240;
 
@@ -40,7 +41,21 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function DoctorsView() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [doctors, setDoctors] = useState([]);
+
+    useEffect(() => {
+        getDoctors();
+    }, []);
+
+    const getDoctors = async () => {
+        try {
+            const response = await consulantService.getDoctors();
+            setDoctors(response.data);
+        } catch (error) {
+
+        }
+    };
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -63,6 +78,7 @@ export default function DoctorsView() {
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Doctors
                     </Typography>
@@ -70,10 +86,12 @@ export default function DoctorsView() {
                     {/* content of the main is here */}
                     <form action="">
                         <Grid container spacing={3}>
-                            <Doctor name="L.B.H.M. Vijayarathna" category="Registrar" wardName="Cardiothoracic" wardNumber={1} />
-                            <Doctor name="D. M. Wickramasinghe" category="Senior Registrar" wardName="Cardiothoracic" wardNumber={1}/>
-                            <Doctor name="M. M. Pandigama" category="Senior Registrar" wardName="Cardiothoracic" wardNumber={2}/>
-                            <Doctor name="T.T. Maharaachchi" category="Senior Home Officer" wardName="Cardiothoracic" wardNumber={8}/>
+
+                            {
+                                doctors.map(
+                                    doctor => (<Doctor key={doctor._id} name={doctor.name} category={doctor.category} wardName={doctor.wardName} wardNumber={doctor.wardNumber} contactNumber={doctor.phoneNumber}/>)
+                                )
+                            }
                         </Grid>
                     </form>
                 </Main>

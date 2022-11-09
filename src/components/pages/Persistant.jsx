@@ -1,51 +1,34 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Button, Grid } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
-import InputAdornment from '@mui/material/InputAdornment';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import MenuIcon from '@mui/icons-material/Menu';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Button } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
-import WorkIcon from '@mui/icons-material/Work';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-// import ResponsiveGrid from './Gridss';
+import { useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import AddHomeIcon from '@mui/icons-material/AddHome';
-import { Add } from '@mui/icons-material';
-// import Divider from '@mui/material/Divider';
-import { green } from "@mui/material/colors";
-// import OutlinedCard from './Cards';
-// import Details from './Details';
-// import Back2 from './Back2.jpg'
 import { makeStyles } from "@material-ui/core/styles";
-import '../../index.css';
-import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useEffect, useState } from "react";
+import '../../index.css';
+import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
+import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
-import {Main ,AppBar ,DrawerHeader,drawerWidth} from '../layouts/Drawer'
 
+
+//to style the page
 const useStyles = makeStyles({
     paper: {
         background: "#f5f5f5"
@@ -53,31 +36,57 @@ const useStyles = makeStyles({
 });
 
 
-export default function PersistentDrawerLeft() {
-
+export default function AdminDashboard() {
+    //to keep the details of the ward
+    const [Wards, setWards] = useState([]);
+    //to save the classes
     const classes = useStyles();
+    //to stlye the page
     const theme = useTheme();
+    //to open the side navbar
     const [open, setOpen] = React.useState(false);
+    //to control the popup page )(opens the popup page)
     const [openPop, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
+    // fetches all details of the ward
+    useEffect(() => {
+        getAllWards();
+    }, []);
 
-    const handleConsultant = ()=>{
+    const getAllWards = async () => {
+        try {
+            const response = await AdminService.getAllWards();
+
+            console.log(response);
+            console.log(response.data);
+            //stores the details of the ward
+            setWards(response.data);
+        } catch (error) {
+            console.log(error)
+        }
+
+    };
+    // handles the opening of the popup for consultant
+    const handleConsultant = () => {
         setPopOpen(true);
         setOption(1);
     }
-    const handleDoctor = ()=>{
+    // handles the opening of the popup for doctor
+    const handleDoctor = () => {
         setPopOpen(true);
         setOption(2);
     }
-    const handleCloseAddWard = ()=>{
+    //to handle the close function of the add ward
+    const handleCloseAddWard = () => {
         setPopOpen(false);
     }
 
-
+    // to handle the side bar open
     const handleDrawerOpen = () => {
         setOpen(true);
     };
 
+    // to handle the side bar close
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -101,7 +110,7 @@ export default function PersistentDrawerLeft() {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h5" component="div">
-                            DASHBOARD
+                            ADMIN
                         </Typography>
 
                         <Box
@@ -112,18 +121,18 @@ export default function PersistentDrawerLeft() {
                                 flexDirection: 'row-reverse'
                             }}
                         >
-
-
                             <Button color="inherit">   <Divider orientation="vertical" flexItem>
-                            <Typography variant="h6" component="div">
-                                LOGOUT
-                            </Typography>
-                                </Divider><LogoutIcon /></Button>
+                                <Typography variant="h6" component="div">
+                                    LOGOUT
+                                </Typography>
+                            </Divider><LogoutIcon /></Button>
                         </Box>
 
                     </Toolbar>
                 </AppBar>
 
+
+                {/* Side bar component of the page */}
                 <Drawer
                     sx={{
                         width: drawerWidth,
@@ -154,8 +163,7 @@ export default function PersistentDrawerLeft() {
                                     alignItems: 'center',
                                 }}
                             >
-                                {/* <AccountBoxIcon color="primary" sx={{ fontSize: 100 }} /> */}
-                                {/* <Avatar sx={{ width: 150, height: 150, bgcolor:  "#f5f5f5" }}></Avatar> */}
+                               
                             </Box>
                         </div>
                         <br></br>
@@ -177,12 +185,12 @@ export default function PersistentDrawerLeft() {
                                             </Avatar>
                                         </ListItemAvatar>
                                         <Button
-                                        color="success"
+                                            color="success"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
-                                            
+
                                         >
                                             WARD
                                         </Button>
@@ -196,7 +204,7 @@ export default function PersistentDrawerLeft() {
                                         </ListItemAvatar>
                                         {/* <ListItemText primary=""/> */}
                                         <Button
-                                        color="primary"
+                                            color="primary"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
@@ -215,7 +223,7 @@ export default function PersistentDrawerLeft() {
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
                                         <Button
-                                        color="secondary"
+                                            color="secondary"
                                             type="submit"
                                             fullWidth
                                             variant="contained"
@@ -230,37 +238,23 @@ export default function PersistentDrawerLeft() {
                         </Box>
 
                         <Divider />
-                        {/* <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List> */}
-
                         <Divider />
                         <div className='settings'>
-                        <List>
-                            <ListItem>
-                                {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
-                                <ListItemAvatar>
-                                    <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                        <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                Settings
+                            <List>
+                                <ListItem>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    Settings
 
-                            </ListItem>
-                        </List>
+                                </ListItem>
+                            </List>
                         </div>
                     </div>
                 </Drawer>
-
+                {/* main component of the page */}
                 <Main open={open}>
                     <DrawerHeader />
                     <div className="container text-center"
@@ -269,8 +263,10 @@ export default function PersistentDrawerLeft() {
                         }}><h2>WARDS</h2></div>
                     {/* <ResponsiveGrid /> */}
                     {/* <OutlinedCard/> */}
-                    <Details/>
-                    <PopUp opener = {openPop} closer = {handleCloseAddWard} DefaultOption = {SetDefaultOption} Option = {Option}/>
+                    {/* details of the ward  */}
+                    <Details wards={Wards} />
+                    {/* send the props to pop up */}
+                    <PopUp opener={openPop} closer={handleCloseAddWard} DefaultOption={SetDefaultOption} Option={Option} />
                 </Main>
             </Box>
         </div>
