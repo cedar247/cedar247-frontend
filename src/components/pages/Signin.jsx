@@ -19,7 +19,6 @@ import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
 
-
 export default function LoginForm() {
 
     useEffect(() => {
