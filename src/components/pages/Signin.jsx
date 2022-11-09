@@ -18,10 +18,6 @@ import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
-import Alert from '@mui/material/Alert';
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import { fontGrid } from '@mui/material/styles/cssUtils';
-import { fontSize } from '@mui/system';
 
 
 
