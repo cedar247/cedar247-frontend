@@ -14,6 +14,7 @@ import AdminDashboard from '../pages/Persistant';
 // })
 
 // to check card
+
 test('renders a card and checks', () => {
   render(<OutlinedCard name={"Vinojith"} />);
   const textElement = screen.getByText("Vinojith");
