@@ -66,7 +66,7 @@ export default function DoctorChangePassword() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" label = "container">
                 <Typography variant='caption' ><h1 align="center" >Change Password</h1></Typography>
                 <CssBaseline />
                 <Box

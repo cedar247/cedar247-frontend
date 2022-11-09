@@ -1,20 +1,13 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import * as React from "react";
 // import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import LoginForm from "../pages/Signin";
-import Login from "../pages/login";
-import SignUp from "../pages/login";
 import AddConsultant from "./AddConsultant";
-import Avatar from '@mui/material/Avatar';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import AddDoctor from "./AddDoctor";
+import AddWard from "./AddWards";
+import ViewCard from "./viewcard";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -53,6 +46,8 @@ export default function PopUp(props) {
         <DialogContent dividers={scroll === "paper"}>
             {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
             {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
+            {props.Option == 4 ? <ViewCard ward = {props.ward}/> : <></>}
+            {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

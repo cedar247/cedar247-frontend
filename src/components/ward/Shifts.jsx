@@ -1,57 +1,42 @@
 import React, {useState} from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
-export default function Shifts({ shifts }) {
-    const [shiftTypes, setShiftTypes] = useState({
-        morning: true,
-        evening: true,
-        night: true
-    });
-
-    const handleShiftTypes = (event) => {
-        setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
-      };
+export default function Shifts({ shifts, shiftTypes, setShiftTypes }) {
+    const handleShiftTypes = (event, index) => {
+        let CPshifTypes = [...shiftTypes];
+        let shiftType = {...CPshifTypes[index]}
+        shiftType.checked = event.target.checked;
+        CPshifTypes[index] = shiftType;
+        setShiftTypes(CPshifTypes)
+    }
 
     return (
+
         <FormGroup>
-
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.morning}
-                        onChange={handleShiftTypes}
-                        name="morning"
-                        color="secondary"
-                    />
-                    }
-                    label="Morning"
-                />
-
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.evening}
-                        onChange={handleShiftTypes}
-                        name="evening"
-                        color="secondary"
-                    />
-                    }
-                    label="Evening"
-                />
-
-                <FormControlLabel
-                    control={
-                    <Checkbox
-                        checked={shiftTypes.night}
-                        onChange={handleShiftTypes}
-                        name="night"
-                        color="secondary"
-                    />
-                    }
-                    label="Night"
-                />
-
+                {
+                    shifts.map(
+                        (shift, index, arr) => (
+                            <Box key={shift._id}>
+                                <FormControlLabel
+                                    key={shift._id}
+                                    control={
+                                    <Checkbox
+                                        checked={shiftTypes[index].checked}
+                                        onChange={(e) => handleShiftTypes(e, index)}
+                                        name={shift.name}
+                                        color="secondary"
+                                        key={shift._id}
+                                    />
+                                    }
+                                    label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
+                                />
+                            </Box>
+                        )
+                    )
+                    
+                } 
 
         </FormGroup>
     )

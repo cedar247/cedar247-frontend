@@ -1,20 +1,22 @@
-import { Avatar, Box } from '@mui/material'
-import React from 'react'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { padding, textAlign } from '@mui/system';
 import Grid from '@mui/material/Grid';
+import React from 'react';
 import OutlinedCard from './Cards';
 
-export default function Details() {
+export default function Details(props) {
   return (
     <div>
-        <Grid container spacing = {5}   >
-        {Array.from(Array(6)).map((index) => (
-          <Grid item xs= {12} sm = {6} md = {3} key={index}>
-            <OutlinedCard/>
+      {/* returns a container */}
+      <Grid container spacing={5}   >
+        {Array.from(props.wards).map((index) => (
+          <Grid item xs={12} sm={6} md={3} key={index._id}>
+            <OutlinedCard name={index.name} 
+            num={index.doctors.length} 
+            id = {index._id}
+            ward = {index}
+            />
           </Grid>
         ))}
-        </Grid>
+      </Grid>
     </div>
   )
 }

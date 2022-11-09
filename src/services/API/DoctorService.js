@@ -16,8 +16,33 @@ const changePassword = (details) => {
     return axios.post(APIEndpoint + "/doctor/changePassword", details);
 }; 
 
+const getShifts = (details) => {
+    return axios.post(APIEndpoint + "/doctor/getShifts", details);
+}; 
+
+const getDoctorShifts = (details) => {
+    return axios.post(APIEndpoint + "/doctor/getDoctorShifts", details);
+};
+
+const setSwappingShifts = (details) => {
+    return axios.post(APIEndpoint + "/doctor/setSwappingShifts", details);
+}; 
+
+const getRequests = (details) => {
+    return axios.post(APIEndpoint + "/doctor/getRequests", details);
+}; 
+
+const setRequestResponse = (details) => {
+    return axios.post(APIEndpoint + "/doctor/setRequestResponse", details);
+}; 
+
 export default {
     defineRequirements,
     changeclendar,
     changePassword,
+    getShifts,
+    getDoctorShifts,
+    setSwappingShifts,
+    getRequests,
+    setRequestResponse,
 }

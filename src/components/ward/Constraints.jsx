@@ -6,6 +6,17 @@ import Shifts from './Shifts';
 import FormGroup from '@material-ui/core/FormGroup';
 import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import Vacation from "./Vacation";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import ConsecutiveShifts from "./ConsecutiveShifts";
+
+const useStyles = makeStyles({
+    field: {
+        "&&": {
+            
+        }
+    }
+})
 
 export default function Constraints({ 
     shifts, 
@@ -15,57 +26,51 @@ export default function Constraints({
     casualtyDay,
     setCasualtyDay,
     shiftTypes,
-    setShiftTypes
+    setShiftTypes,
+    maxLeaves,
+    casualtyDayShifts,
+    setCasualtyDayShifts,
+    consecutiveGroups,
+    setConsecutiveGroups
 }) {
-    // const [shifts, setShifts] = useState([
-    //     {
-    //         _id: '1',
-    //         name: 'morning',
-    //         startTime: '08:00',
-    //         endTime: '13:00'
-    //     },
-    //     {
-    //         _id: '2',
-    //         name: 'evening',
-    //         startTime: '13:00',
-    //         endTime: '19:00'
-    //     },
-    //     {
-    //         _id: '3',
-    //         name: 'night',
-    //         startTime: '19:00',
-    //         endTime: '08:00'
-    //     }
-    // ]); // need to get from database
-    // const [shiftTypes, setShiftTypes] = useState({});
-    // const [ numOfConsecutiveGroups, setNumOfConsecutiveGroups ] = useState(0);
 
-    useEffect(() => {
-        getShifts();
-    }, []);
-
-    const getShifts = async () => {
-        
-    }
     const createShiftGroups = () => {
         let arr = []
         for (let i = 0; i < numConsecutiveGroupShifts; i++) {
-          arr.push(<Shifts shifts={shifts}/>)
+          arr.push(
+          <Grid key={i} item md={4} sm={6} xs={12} p={2}>
+                <ConsecutiveShifts 
+                    shifts={shifts} 
+                    handleConsecutiveShifts={handleConsecutiveShifts} 
+                    outerIndex={i} 
+                    consecutiveGroups={consecutiveGroups}
+                />
+            </Grid>)
         }
-        return(<div>
+        return(<Grid container spacing={3} mt={2} mb={2}>
             {arr.map(shifts=>shifts)}
-            </div>)
+            </Grid>)
     }
 
     const handleCasualtyDay = (e) => {
         setCasualtyDay(e.target.value);
     }
 
+    const handleConsecutiveShifts = (event, innerIndex, outerIndex) => {
+        let cpConsecutiveGroups = [...consecutiveGroups]
+        let group = [...cpConsecutiveGroups[outerIndex]]
+        let shift = {...group[innerIndex]}
+        shift.checked = event.target.checked
+        group[innerIndex] = shift
+        cpConsecutiveGroups[outerIndex] = group
+        setConsecutiveGroups(cpConsecutiveGroups)
+    }
+
     const handleShiftTypes = (event, index) => {
         // setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
         let CPshifTypes = [...shiftTypes];
         let shiftType = {...CPshifTypes[index]}
-        shiftType.checked = event.target.value;
+        shiftType.checked = event.target.checked;
         CPshifTypes[index] = shiftType;
         setShiftTypes(CPshifTypes)
     };
@@ -73,29 +78,41 @@ export default function Constraints({
     return (
         <Box>
 
-            <TextField 
-                id="outlined-basic" 
-                label="Maximum number of leaves per month:" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                onChange={setMaxLeaves}
-            />
+            <Grid container spacing={3} mt={2} mb={2}>
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Maximum number of leaves per month:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={(e) => setMaxLeaves(e.target.value)}
+                        fullWidth={true}
+                        value={maxLeaves}
+                    />
+                </Grid>
 
-            <TextField 
-                id="outlined-basic" 
-                label="How many consecutive groups of shifts:" 
-                variant="outlined" 
-                color='secondary' 
-                type="number"
-                onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
-            />
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="How many consecutive groups of shifts:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
+                        fullWidth={true}
+                        InputProps={{ inputProps: { min: 0, max: 5 } }}
+                    />
+                </Grid>
+            </Grid>
 
-            {createShiftGroups()}
+            {/* {createShiftGroups()} */}
 
-            <Typography>
-                What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
-            </Typography>
+            <Box mt={4}>
+                <Typography>
+                    What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
+                </Typography>
+            </Box>
 
 
             <FormGroup>
@@ -117,7 +134,7 @@ export default function Constraints({
                                     label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
                                 />
 
-                                <Vacation/>
+                                <Vacation shiftTypes={shiftTypes} setShiftTypes={setShiftTypes} index={index}/>
                             </Box>
                         )
                     )
@@ -126,7 +143,7 @@ export default function Constraints({
 
         </FormGroup>
 
-        <FormControl variant="filled">
+        {/* <FormControl variant="filled">
             <InputLabel id="demo-simple-select-filled-label">Casualty Day:</InputLabel>
                 <Select
                     labelId="demo-simple-select-filled-label"
@@ -146,12 +163,13 @@ export default function Constraints({
                     <MenuItem value={"Saturday"}>Saturday</MenuItem>
                 </Select>
 
-        </FormControl>
+        </FormControl> */}
 
-        <Typography>
+        {/* <Typography>
             Shifts that all doctors must available:
-        </Typography>
-        <Shifts/>
+        </Typography> */}
+        {/* casualty day shifts */}
+        {/* <Shifts shifts={shifts} shiftTypes={casualtyDayShifts} setShiftTypes={setCasualtyDayShifts} /> */}
 
         </Box>
     )

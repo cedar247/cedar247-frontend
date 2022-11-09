@@ -13,6 +13,10 @@ const addDoctor = (details) => {
     return axios.post(APIEndpoint + "/admin/doctor", details);
 }; 
 
+const addUser = (details) => {
+    return axios.post(APIEndpoint + "/admin/user", details);
+}; 
+
 
 const getConsultants = () => {
     return axios.get(APIEndpoint + "/admin/getConsultants");
@@ -27,21 +31,91 @@ const getAllWards = () => {
     return axios.get(APIEndpoint + "/admin/getAll");
 }; 
 
-const addWard = (ward) => {
-    return axios.post(APIEndpoint + "/admin/add-ward", ward);
+const getAllDocs = (_id) => {
+    console.log("All doc in controller");
+    return axios.post(APIEndpoint + "/admin/getAllDocs",_id);
+}; 
+const getAllCons = (_id) => {
+    console.log("All doc in controller");
+    return axios.post(APIEndpoint + "/admin/getAllCons",_id);
+}; 
+const addWard = (ward, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/add-ward", ward,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+        );
+}
+const getDoctorTypes = (values) => {
+    console.log(values);
+    return axios.post(APIEndpoint + "/admin/getDoctorTypes",values);
+}; 
+
+const DeleteWard =  (id) => {
+    console.log(id);
+    return axios.post(APIEndpoint + "/admin/DeleteWard",id);
+}; 
+const DoLogin = (details) => {
+    return axios.post(APIEndpoint + "/admin/dologin",details);
+}; 
+
+
+const getShifts = (token) => {
+    return axios.get(
+        APIEndpoint+ "/admin/get-shifts",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
-const getShifts = () => {
-    return axios.get(APIEndpoint+ "/admin/get-shifts")
+const setConstraints = (constraints, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/set-constraints",
+        constraints,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
 }
 
+const getNumConsecGroups = (token) => {
+    return axios.get(
+        APIEndpoint + "/admin/get-num-consec-groups",
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
+}
+
+const setConsecGroups = (consecGroups, token) => {
+    return axios.post(
+        APIEndpoint + "/admin/set-consec-groups", 
+        consecGroups,
+        { 
+            headers: {"Authorization" : `Bearer ${token}`} 
+        }
+    )
+}
 
 const adminService = {
     addWard,
     getShifts,
     addConsultant,
     addDoctor,
-    getConsultants,getWards,getAllWards
+    getConsultants,
+    getWards,
+    getAllWards,
+    getDoctorTypes,
+    addUser,
+    DoLogin,
+    setConstraints,
+    getNumConsecGroups,
+    setConsecGroups,
+    getAllDocs,
+    getAllCons,
+    DeleteWard
 }
 
 export default adminService;

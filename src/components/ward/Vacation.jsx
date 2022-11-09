@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { InputLabel, Select, MenuItem, FormControl} from '@material-ui/core';
 
-export default function Vacation() {
+export default function Vacation({shiftTypes, setShiftTypes, index}) {
     const [days, setDays] = useState("");
     
     const handleChange = (e) => {
-        setDays(e.target.value);
+        let CPshifTypes = [...shiftTypes];
+        let shiftType = {...CPshifTypes[index]}
+        shiftType.vacation = e.target.value;
+        CPshifTypes[index] = shiftType;
+        setShiftTypes(CPshifTypes)
     };
 
     return (
@@ -14,10 +18,10 @@ export default function Vacation() {
                 <Select
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
-                    value={days}
+                    value={shiftTypes[index].vacation}
                     onChange={handleChange}
                 >
-                    <MenuItem value="">
+                    <MenuItem value={0}>
                         <em>None</em>
                     </MenuItem>
                     <MenuItem value={1}>1 day</MenuItem>

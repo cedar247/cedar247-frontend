@@ -10,18 +10,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 export default function WardDetails({ wardDetails, handleChange, handleShiftChange, handleDoctorCategories, doctorCategories}) {
     const [ numOfShifts, setNumOfShifts ] = useState(0);
-    // const [ doctorCategories, setDoctorCategories ] = useState({
-    //     checkedSeniorRegistrar: true,
-    //     checkedRegistrar: true,
-    //     checkedSeniorHO: true,
-    //     checkedHO: true,
-    //     checkedMO: true
-    // });
-
-    // const handleCategories = (event) => {
-    //     setDoctorCategories({ ...doctorCategories, [event.target.name]: event.target.checked });
-    //     handleDoctorCategories(doctorCategories);
-    //   };
 
       const createShifts = () => {
         let arr = []
