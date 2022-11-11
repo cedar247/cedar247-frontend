@@ -79,16 +79,16 @@ export default function DoctorChangePassword() {
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         {(props) => (
                             <Form noValidate>
-                                <Field as={TextField} name='email' label='Email' fullWidth
+                                <Field data-testid="email" as={TextField} name='email' label='Email' fullWidth
                                     error={props.errors.email && props.touched.email}
                                     helperText={<ErrorMessage name='email' />} required />
-                                <Field as={TextField} name='password' label='Password' type='password' fullWidth
+                                <Field data-testid="password" as={TextField} name='password' label='Password' type='password' fullWidth
                                     error={props.errors.password && props.touched.password}
                                     helperText={<ErrorMessage name='password' />} required />
-                                <Field as={TextField} name='confirmPassword' label='Confirm Password' type='password' fullWidth
+                                <Field  data-testid="confirm password" as={TextField} name='confirmPassword' label='Confirm Password' type='password' fullWidth
                                     error={props.errors.confirmPassword && props.touched.confirmPassword}
                                     helperText={<ErrorMessage name='confirmPassword' />} required />
-                                <Button type='submit' style={btnStyle} variant='contained'
+                                <Button  aria-label="submit" type='submit' style={btnStyle} variant='contained'
                                     color='primary'>Submit</Button>
                             </Form>
                         )}

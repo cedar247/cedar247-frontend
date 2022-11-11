@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Calendar from "../../components/layouts/DoctorCalendar";
+import Calendar from "../../layouts/DoctorCalendar";
 
 test("render calendar changing button", async() => {
     render(<Calendar />);

@@ -11,8 +11,8 @@ export default function RecievExchangeRequests(props) {
             <h2 style={{width: "auto", height: "auto", textAlign: "center"}}>Recievd Requests</h2>
             <Grid container spacing={5}>
                 {Array.from(props.fromRequests).map((request, index, arr) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
-                        <RecievedCards
+                    <Grid aria-label ="recievCards" item xs={12} sm={6} md={3} key={index}>
+                        <RecievedCards 
                             key = {index}
                             // name={request}
                             requestId={request.id}

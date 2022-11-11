@@ -218,7 +218,8 @@ export default function RequestExchangeShifts() {
                 spacing={{ xs: 1, sm: 2, md: 4 }}
             >
                 <DatePicker
-                    // disablePast
+                    inputProps={{'aria-label':'Exchange-From-Date'}}
+                    disablePast
                     label="Select Exchange From Date"
                     openTo="day"
                     views={["year", "month", "day"]}
@@ -228,7 +229,8 @@ export default function RequestExchangeShifts() {
                     renderInput={(params) => <TextField {...params} />}
                 />
                 <DatePicker
-                    // disablePast
+                    inputProps={{'aria-label':'Exchange-To-Date'}}
+                    disablePast
                     label="Select Exchange to Date"
                     openTo="day"
                     views={["year", "month", "day"]}
@@ -248,6 +250,7 @@ export default function RequestExchangeShifts() {
                         Select Exchange from Shift
                     </InputLabel>
                     <Select
+                        data-testid="ExchangeToShift"
                         labelId="Select_Doctor_label_1"
                         id="Select_Shift_From"
                         value={fromShift}
@@ -268,6 +271,7 @@ export default function RequestExchangeShifts() {
                         Select Exchange to Shift
                     </InputLabel>
                     <Select
+                        data-testid="ExchangeFromShift"
                         labelId="Select_Doctor_label_2"
                         id="Select_Shift_To"
                         value={toShift}
@@ -293,14 +297,15 @@ export default function RequestExchangeShifts() {
                         Select Doctor
                     </InputLabel>
                     <Select
-                    labelId = "Select_Doctor_1"
-                    id = "Select_Doctor"
-                    value = {doctor}
-                    onChange = {handleDoctor}
-                    autoWidth
-                    label= "Select Doctor"
-                    disabled ={hideDoctor}
-                    >
+                        data-testid="ExchangeWithDoctor"
+                        labelId = "Select_Doctor_1"
+                        id = "Select_Doctor"
+                        value = {doctor}
+                        onChange = {handleDoctor}
+                        autoWidth
+                        label= "Select Doctor"
+                        disabled ={hideDoctor}
+                        >
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
@@ -308,6 +313,7 @@ export default function RequestExchangeShifts() {
                     </Select>
                 </FormControl>
                 <Button
+                    aria-label= "submit"
                     type="submit"
                     variant="contained"
                     onClick={handleSubmit}

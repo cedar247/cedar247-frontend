@@ -141,6 +141,7 @@ export default function Defnerequirements(props) {
                 >
                 <form action="">
                     <TextField
+                        data-testid="date"
                         id="date"
                         label="date"
                         type="date"
@@ -158,6 +159,7 @@ export default function Defnerequirements(props) {
                             setShiftTypes={setShiftTypes}
                         />
                         <Button
+                            aria-label= "submit"
                             type="submit"
                             style={{ margineTop: "10px" }}
                             variant="contained"

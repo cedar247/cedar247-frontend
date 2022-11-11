@@ -72,7 +72,7 @@ export default function SideBar(props) {
                         <Typography variant="h6" component="div">
                             MENU
                         </Typography>
-                        <IconButton onClick={props.handleDrawerClose}>
+                        <IconButton aria-label = "btn-menue" onClick={props.handleDrawerClose}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
                     </DrawerHeader>
@@ -103,11 +103,12 @@ export default function SideBar(props) {
                                 <ListItem sx={{ mr: 2, ...(!props.defreq && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <LibraryAddIcon sx={{ color: blue[800], fontSize: 30 }} />
+                                            <LibraryAddIcon sx={{ color: blue[800], fontSize: 30 }} aria-label= "avatar-DefReq"/>
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
                                         <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-DefReq"
                                             onClick={handleClickDefineRequirements}
                                             variant="contained"
                                             fullWidth
@@ -119,11 +120,12 @@ export default function SideBar(props) {
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <TransferWithinAStationSharpIcon sx={{color: indigo[700], fontSize: 30 }} />
+                                            <TransferWithinAStationSharpIcon sx={{color: indigo[700], fontSize: 30 }} aria-label= "avatar-ExShift" />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
                                     <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-ExShift"
                                             onClick={handleClickRequestExchangeShifts}
                                             variant="contained"
                                             fullWidth
@@ -135,7 +137,7 @@ export default function SideBar(props) {
                                 <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} />
+                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} aria-label= "avatar-ViewExchange"/>
                                             </Avatar>
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
@@ -144,6 +146,7 @@ export default function SideBar(props) {
                                                 type="submit"
                                                 fullWidth
                                                 variant="contained"
+                                                aria-label = "btn-ViewExchange"
                                                 sx={{ bgcolor: blue[800], mt: 3, mb: 2 }}
                                             >
                                                 View Exchange Shifts
@@ -154,11 +157,12 @@ export default function SideBar(props) {
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <SyncLockSharpIcon color="secondary" sx={{ color: blue[800], fontSize: 30 }} />
+                                            <SyncLockSharpIcon color="secondary" sx={{ color: blue[800], fontSize: 30 }} aria-label= "avatar-chanPassword" />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
                                     <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-chanPassword"
                                             onClick={handleClickChangePassword}
                                             variant="contained"
                                             fullWidth
