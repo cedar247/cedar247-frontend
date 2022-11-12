@@ -87,7 +87,7 @@ export default function Constraints({
                         color='secondary' 
                         type="number"
                         onChange={(e) => setMaxLeaves(e.target.value)}
-                        fullWidth={true}
+                        fullWidth
                         value={maxLeaves}
                     />
                 </Grid>
@@ -100,7 +100,7 @@ export default function Constraints({
                         color='secondary' 
                         type="number"
                         onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
-                        fullWidth={true}
+                        fullWidth
                         InputProps={{ inputProps: { min: 0, max: 5 } }}
                     />
                 </Grid>
