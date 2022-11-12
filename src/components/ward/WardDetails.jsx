@@ -8,27 +8,39 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
-export default function WardDetails({ wardDetails, handleChange, handleShiftChange, handleDoctorCategories, doctorCategories}) {
+export default function WardDetails(
+    { 
+        wardDetails, 
+        handleChange, 
+        handleShiftChange, 
+        handleDoctorCategories, 
+        doctorCategories,
+        allShifts,
+        addShift,
+        shifts
+    }
+) {
     const [ numOfShifts, setNumOfShifts ] = useState(0);
 
       const createShifts = () => {
         let arr = []
         for (let i = 0; i < numOfShifts; i++) {
-          arr.push(<Grid key={i} item md={4} sm={6} xs={12}><Shift key={i} index={i} wardDetails={wardDetails} handleShiftChange={handleShiftChange}/></Grid>)
+          arr.push(<Grid key={i} item md={4} sm={6} xs={12}><Shift shifts={shifts} addShift={addShift} allShifts={allShifts} key={i} index={i} wardDetails={wardDetails} handleShiftChange={handleShiftChange}/></Grid>)
         }
         return(<Grid container spacing={3} mt={2} mb={2}>
             {arr.map(shift=>shift)}
             </Grid>)
       }
 
+    //   console.log("slfk", allShifts)
     return (
         <Box>
             <Grid container >
-                <Grid item md={6} sm={12} xs={12} pr={2}>
+                <Grid item md={12} sm={12} xs={12} >
                     <TextField 
                         id="outlined-basic" 
                         label="Name of the Ward" 
-                        variant="outlined" 
+                        variant="filled" 
                         color='secondary'
                         fullWidth
                         margin='normal'
@@ -36,11 +48,11 @@ export default function WardDetails({ wardDetails, handleChange, handleShiftChan
                     />
                 </Grid>
 
-                <Grid item md={6} sm={12} xs={12}>
+                <Grid item md={12} sm={12} xs={12}>
                     <TextField 
                         id="outlined-basic" 
                         label="Number of the Ward" 
-                        variant="outlined" 
+                        variant="filled" 
                         color='secondary' 
                         type="number"
                         fullWidth
@@ -52,13 +64,13 @@ export default function WardDetails({ wardDetails, handleChange, handleShiftChan
 
             <TextField 
                 id="outlined-basic" 
-                label="Number of the shifts" 
-                variant="outlined" 
+                label="Number of shifts" 
+                variant="filled" 
                 color='secondary' 
                 type="number"
                 onChange={(e)=>setNumOfShifts(e.target.value)}
                 fullWidth
-                margin='dense'
+                margin='normal'
                 
             />
 
@@ -71,6 +83,7 @@ export default function WardDetails({ wardDetails, handleChange, handleShiftChan
                 variant='h6'
                 component='p'
                 color='primary'
+                style={{ "marginTop": "20px"}}
             >
                 Doctor catergories: *need to select at least one type
             </Typography>
