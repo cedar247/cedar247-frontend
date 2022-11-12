@@ -143,7 +143,7 @@ export default function Constraints({
 
         </FormGroup>
 
-        <FormControl variant="filled">
+        {/* <FormControl variant="filled">
             <InputLabel id="demo-simple-select-filled-label">Casualty Day:</InputLabel>
                 <Select
                     labelId="demo-simple-select-filled-label"
@@ -163,13 +163,13 @@ export default function Constraints({
                     <MenuItem value={"Saturday"}>Saturday</MenuItem>
                 </Select>
 
-        </FormControl>
+        </FormControl> */}
 
-        <Typography>
+        {/* <Typography>
             Shifts that all doctors must available:
-        </Typography>
+        </Typography> */}
         {/* casualty day shifts */}
-        <Shifts shifts={shifts} shiftTypes={casualtyDayShifts} setShiftTypes={setCasualtyDayShifts} />
+        {/* <Shifts shifts={shifts} shiftTypes={casualtyDayShifts} setShiftTypes={setCasualtyDayShifts} /> */}
 
         </Box>
     )

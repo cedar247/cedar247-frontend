@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
@@ -10,7 +10,9 @@ import { Button, Typography } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import adminService from "../../services/API/AdminService";
 import { useNavigate } from 'react-router-dom' 
-import { toast } from "react-toastify";   
+import { toast } from "react-toastify";  
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
 
 const drawerWidth = 240;
 
@@ -50,6 +52,28 @@ export default function AddWard() {
         name: "",
         number: ""
     });
+    const [user, setUser] = React.useState("");
+
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+        if(token){
+            const user = jwtDecode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if(user){
+                if(user.type ==='Admin'){
+                    setUser("Admin")
+                }else{
+                    setUser("NONE")
+                }
+                
+            }
+        }else{
+            setUser("")
+        }
+    }, [])
 
     const [shifts, setShifts] = useState([]);
     const [doctorCategories, setDoctorCategories] = useState({
@@ -89,17 +113,17 @@ export default function AddWard() {
         }
 
         try {
-            const response = await adminService.addWard({...wardDetails, doctorCategories, shifts});
+            const token = localStorage.getItem('token');
+            const response = await adminService.addWard({...wardDetails, doctorCategories, shifts}, token);
             if(response.status === 201) {
-                // navigate.push({
-                //     pathname: '/set-constraints',
-                //     state: response.data.wardId
-                // })
+                const new_token = response.data.token; // get the new token
+                localStorage.setItem('token', new_token) // add new token to local storage
                 toast.success("ward has been successfully added", {
                     toastId: "1"
                 })
                 navigate('/set-constraints')
             }
+            //Todo: implement for other status codes
         } catch(error) {
             console.log(error)
         }
@@ -113,7 +137,7 @@ export default function AddWard() {
         setOpen(false);
     };
 
-    return (
+    const AddWardPage =
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -146,5 +170,10 @@ export default function AddWard() {
                 </Main>
             </Box>
         </div>
-    );
+
+    return(
+        <>
+        {user != "" && user == "Admin" ? AddWardPage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

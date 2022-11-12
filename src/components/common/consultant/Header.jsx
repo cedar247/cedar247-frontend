@@ -17,6 +17,11 @@ const useStyles = makeStyles({
     }
 });
 
+const handleLogout= async (e) => {
+    localStorage.removeItem('token')
+    window.location.href = "/"
+}
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -65,7 +70,7 @@ export default function Header(props) {
                         >
 
 
-                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
+                            <Button color="inherit" onClick={handleLogout}>   <Divider orientation="vertical" flexItem>
                             <Typography variant="h6" component="div">
                                 LOGOUT
                             </Typography>

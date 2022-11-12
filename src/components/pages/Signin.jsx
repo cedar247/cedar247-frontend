@@ -18,16 +18,24 @@ import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
+import Alert from '@mui/material/Alert';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { fontGrid } from '@mui/material/styles/cssUtils';
+import { fontSize } from '@mui/system';
+import jwtDecode from 'jwt-decode'
+import TopAppBar from '../layouts/TopNavbar';
 
 //s
 export default function LoginForm() {
 
-    useEffect(() => {
-        const token  = localStorage.getItem('token');
-        if(token){
-            localStorage.removeItem('token')
-        }
-      }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         const user = jwtDecode(token)
+    //         console.log(user.type)
+    //         localStorage.removeItem('token')
+    //     }
+    // }, []);
     //to validate email
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
@@ -68,7 +76,7 @@ export default function LoginForm() {
         setSubmitted(true)
         if (values.email === "" || values.password === "") {
             toast.info("Fill All Fields", {
-                toastId: "1"
+                toastId: "1",
             })
 
             e.preventDefault()
@@ -92,8 +100,23 @@ export default function LoginForm() {
                     toast.success("Success", {
                         toastId: "1"
                     })
-                    localStorage.setItem('token',response.data.token)
-                    window.location.href = "/wards"
+                    const token = localStorage.getItem('token');
+                    if (token) {
+                        const user = jwtDecode(token)
+                        console.log(user.type)
+                        localStorage.removeItem('token')
+                    }
+                    localStorage.setItem('token', response.data.token)
+                    if (response.data.userid.type == 'Admin') {
+                        window.location.href = "/wards"
+                    }
+                    if (response.data.userid.type == 'DOCTOR') {
+                        window.location.href = "/DoctorDashboard"
+                    }
+                    if (response.data.userid.type == 'CONSULTANT') {
+                        window.location.href = "/ConsultantDashboard"
+                    }
+
                 } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
@@ -128,8 +151,12 @@ export default function LoginForm() {
     };
 
     return (
-        <>
+        <><div className="backg">
 
+        
+            <TopAppBar/>
+
+        <>
             {/* <ButtonAppBar/> */}
             <div className="container text-center bg-white bg-opacity-75 p-3" style={{
                 width: "340px", height: "auto", marginTop: "10rem", padding: '25px'
@@ -210,7 +237,20 @@ export default function LoginForm() {
                 </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             </Typography>
+            </div>
         </>
 
     );
