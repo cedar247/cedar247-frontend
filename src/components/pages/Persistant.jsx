@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import '../../index.css';
 import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
-import { DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
+import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
