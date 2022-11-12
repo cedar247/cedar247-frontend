@@ -128,32 +128,36 @@ export default function CreateSchedule() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let error = false;
+        console.log(requirements)
         for(let i = 0; i < requirements.length; i++){
             const requirementDetails = requirements[i];
 
-            for(const [key, value] of Object.entries(requirementDetails)) {
-                console.log(value)
-                if(value === 0 || value === ""){
-                    error = true;
+            // iterate through doctor cactegories
+            for(let i = 0; i < doctorCategories.length; i++){
+                if(requirementDetails[doctorCategories[i]] == ""){
+                    error = true
                 }
             }
         }
 
-        // if(error) {
-        //     toast.warning("Fill all the fields", {
-        //         toastId: "1"
-        //     })
+        
         
         try {
-            const token = localStorage.getItem('token')
-            const response = await consulantService.createSchedule(requirements, token);
-            if(response.status === 201) {
-                toast.success("Schedule created successfully!!", {
+            if(error) {
+                toast.warning("Fill all the fields", {
                     toastId: "1"
                 })
-                navigate('/ConsultantDashboard')
+            } else {
+                const token = localStorage.getItem('token')
+                const response = await consulantService.createSchedule(requirements, token);
+                if(response.status === 201) {
+                    toast.success("Schedule created successfully!!", {
+                        toastId: "1"
+                    })
+                    navigate('/ConsultantDashboard')
+                }
+                console.log(response)
             }
-            console.log(response)
         } catch(error) {
             console.log(error)
         }
@@ -200,7 +204,7 @@ export default function CreateSchedule() {
                             {
                                 shifts.map(
                                     (shift, index, arr) => (
-                                        <ShiftDetails handleRequirements={handleRequirements} index={index} id={shift._id} shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
+                                        <ShiftDetails requirements={requirements} handleRequirements={handleRequirements} index={index} id={shift._id} shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
                                     )
                                 )
                             }
