@@ -12,9 +12,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AddHomeIcon from '@mui/icons-material/AddHome';
-import { Button, Grid} from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Button} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CreateIcon from '@mui/icons-material/Create';
@@ -22,9 +20,6 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SyncLockSharpIcon from '@mui/icons-material/SyncLockSharp';
 import PreviewSharpIcon from '@mui/icons-material/PreviewSharp';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
-import PasswordIcon from '@mui/icons-material/Password';
-import ChangePassword from '../../pages/ChangePassword.jsx';
-import CustomizedDialogs from '../../layouts/Dialog.jsx';
 import { Link } from "react-router-dom";
 import { blue} from "@mui/material/colors";
 
@@ -48,9 +43,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SideBar(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const     handleClickChangePassword    = () =>{
-        props.handleChangePassword();
-    }
     return (
         <Drawer
                     sx={{
@@ -192,13 +184,14 @@ export default function SideBar(props) {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
-                                        <Button
-                                            onClick={handleClickChangePassword}
-                                            variant="contained"
-                                            fullWidth
-                                            color="primary"
-                                        > Change password
-                                        </Button>
+                                        <Link to="/ConsultantChangepwd" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                variant="contained"
+                                                fullWidth
+                                                color="primary"
+                                            > Change password
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </ListItem>
                                 </div>

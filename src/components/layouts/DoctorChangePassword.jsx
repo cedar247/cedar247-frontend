@@ -1,14 +1,10 @@
 import React from 'react'
-import { Grid, Paper, Button, Typography } from '@material-ui/core'
-import { styled } from '@mui/material/styles';
+import { Button, Typography } from '@material-ui/core'
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import { TextField } from '@material-ui/core'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import Header from '../common/doctor/Header';
-import SideBar from "../common/doctor/SideBar";
-import { makeStyles } from "@material-ui/core/styles";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { toast } from "react-toastify";
@@ -16,11 +12,10 @@ import DoctorService from "../../services/API/DoctorService";
 
 const theme = createTheme();
 
-export default function DoctorChangePassword() {
-    const [open, setOpen] = React.useState(false);
-    const id = "633ab0f123be88c950fb8a89"
+export default function DoctorChangePassword(props) {
+    const [id] = React.useState(props.id);
+    // const id = "633ab0f123be88c950fb8a89"
 
-    const paperStyle = { padding: '0 15px 40px 15px', width:'50%' , height:'50%' }
     const btnStyle = { marginTop: 10 }
     const passwordRegExp=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     const initialValues = {
@@ -28,13 +23,6 @@ export default function DoctorChangePassword() {
         password: '',
         confirmPassword:''
     }
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
     const validationSchema = Yup.object().shape({
         email: Yup.string().email("Enter valid email").required("Required"),
         password: Yup.string().min(8, "Minimum characters should be 8")
