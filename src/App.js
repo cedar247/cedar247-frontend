@@ -1,18 +1,8 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginForm from './components/pages/Signin';
-import AdminDashboard from './components/pages/Persistant';
-import AddWard from './components/pages/AddWard';
-import CreateSchedule from './components/pages/CreateSchedule';
-import SetDeadline from './components/pages/SetDeadline.jsx';
-import DoctorsView from './components/pages/DoctorsView';
-import ConsultantDashboard from './components/pages/ConsultantDashboard';
-import DoctorDashboard from './components/pages/DoctorDashboard';
-import ViewExchangeShifts from './components/pages/viewExchangeShifts';
-import ConsultantViewSwappingShifts from './components/pages/ConsultantViewSwappingShifts';
-import Persistant from './components/pages/Persistant';
-import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/ConsultantChangePassword.jsx';
 import { ToastContainer} from 'react-toastify';
@@ -20,6 +10,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import PersistentDrawerLeft from './components/pages/Persistant.jsx';
 import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
 import { LandingPage } from './components/pages/LandingPage';
+import { default as AdminDashboard, default as Persistant } from './components/pages/Persistant';
+import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
+import SetConstraint from './components/pages/setConstraints';
+import SetDeadline from './components/pages/SetDeadline.jsx';
+import LoginForm from './components/pages/Signin';
+import ViewExchangeShifts from './components/pages/viewExchangeShifts';
 
 const theme = createTheme({
   palette: {

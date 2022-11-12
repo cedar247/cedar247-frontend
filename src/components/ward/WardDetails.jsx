@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
-import { TextField, Grid } from '@mui/material';
-import Shift from './Shift';
-import Typography from '@material-ui/core/Typography';
-import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Typography from '@material-ui/core/Typography';
+import { Grid, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import Shift from './Shift';
 
 
 export default function WardDetails(

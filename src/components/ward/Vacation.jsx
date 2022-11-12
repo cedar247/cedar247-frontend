@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { InputLabel, Select, MenuItem, FormControl} from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import React from 'react';
 
 export default function Vacation({shiftTypes, setShiftTypes, index}) {
-    const [days, setDays] = useState("");
+    // const [days, setDays] = useState("");
     
     const handleChange = (e) => {
         let CPshifTypes = [...shiftTypes];

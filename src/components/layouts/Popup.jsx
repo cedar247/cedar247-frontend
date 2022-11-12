@@ -21,7 +21,7 @@ export default function PopUp(props) {
   const handleClose = () => {
     setOpen(false);
     props.closer();
-    props.SetDefaultOption();
+    // props.SetDefaultOption();
   };
 
   const descriptionElementRef = React.useRef(null);
