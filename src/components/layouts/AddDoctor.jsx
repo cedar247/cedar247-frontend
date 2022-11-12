@@ -37,9 +37,9 @@ export default function AddDoctor(props) {
 
 
   //use effects to fetch wards and doctor types while rendering
-  useEffect(() => {
-    getAllWards();
-  }, []);
+  // useEffect(() => {
+  //   getAllWards();
+  // }, []);
 
 // to set the value for the wards (ID)
   const handleChange3 = (event) => {

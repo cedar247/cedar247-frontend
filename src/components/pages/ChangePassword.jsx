@@ -96,13 +96,13 @@ export default function ChangePassword() {
                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                                 {(props) => (
                                     <Form noValidate>
-                                        <Field as={TextField} name='email' label='Email' fullWidth
+                                        <Field as={TextField} name='email' label='Email' fullwidth="true"
                                             error={props.errors.email && props.touched.email}
                                             helperText={<ErrorMessage name='email' />} required />
-                                        <Field as={TextField} name='password' label='Password' type='password' fullWidth
+                                        <Field as={TextField} name='password' label='Password' type='password' fullwidth="true"
                                             error={props.errors.password && props.touched.password}
                                             helperText={<ErrorMessage name='password' />} required />
-                                        <Field as={TextField} name='confirmPassword' label='Confirm Password' type='password' fullWidth
+                                        <Field as={TextField} name='confirmPassword' label='Confirm Password' type='password' fullwidth="true"
                                             error={props.errors.confirmPassword && props.touched.confirmPassword}
                                             helperText={<ErrorMessage name='confirmPassword' />} required />
                                         <Button type='submit' style={btnStyle} variant='contained'
