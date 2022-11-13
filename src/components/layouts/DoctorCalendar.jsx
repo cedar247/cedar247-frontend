@@ -42,7 +42,7 @@ import Checkbox from '@mui/material/Checkbox';
                     // console.log(response.data[1]);
                     // console.log(formatData(response.data[0]))
                 } catch (error) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
 
