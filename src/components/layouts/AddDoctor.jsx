@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 import Autocomplete, {createFilterOptions} from "@mui/material/Autocomplete";
 
 
-// to set filter options
+// to set filter optionsss
 const filter = createFilterOptions();
 
 // theme is to theme the page
@@ -37,9 +37,9 @@ export default function AddDoctor(props) {
 
 
   //use effects to fetch wards and doctor types while rendering
-  useEffect(() => {
-    getAllWards();
-  }, []);
+  // useEffect(() => {
+  //   getAllWards();
+  // }, []);
 
 // to set the value for the wards (ID)
   const handleChange3 = (event) => {

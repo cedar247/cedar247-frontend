@@ -19,23 +19,23 @@ export default function WardDetailList(props) {
     const [values, setValues] = React.useState({
         _id: ''
     });
-    console.log(props._id)
+    // console.log(props._id)
     // setValues({
     //     _id : props._id
     // })
-    useEffect(() => {
-        setValues({
-            _id: props._id
-        })
-        getAllCons();
-        getAllDocs();
+    // useEffect(() => {
+    //     setValues({
+    //         _id: props._id
+    //     })
+    //     getAllCons();
+    //     getAllDocs();
 
-    }, []);
+    // }, []);
     const [Docs, setDocs] = React.useState([]);
     const [Cons, setCons] = React.useState([]);
 
     const getAllDocs = async () => {
-        console.log("All doc");
+        // console.log("All doc");
         setValues({
             _id: props._id
         })

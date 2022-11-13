@@ -91,7 +91,7 @@ import Checkbox from '@mui/material/Checkbox';
             }
         };
 
-        console.log(windowHeight);
+        // console.log(windowHeight);
         // console.log(calendar);
 
         return (
