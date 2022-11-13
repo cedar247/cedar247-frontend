@@ -147,7 +147,7 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 aria-label = "btn-ViewExchange"
-                                                sx={{ bgcolor: blue[800], mt: 3, mb: 2 }}
+                                                sx={{ bgcolor: blue[800]}}
                                             >
                                                 View Exchange Shifts
                                             </Button>

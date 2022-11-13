@@ -54,6 +54,7 @@ export default function DoctorChangePassword(props) {
 
     return (
         <ThemeProvider theme={theme}>
+            <div data-testid= "doctorChanPwd">
             <Container component="main" maxWidth="xs" label = "container">
                 <Typography variant='caption' ><h1 align="center" >Change Password</h1></Typography>
                 <CssBaseline />
@@ -83,6 +84,7 @@ export default function DoctorChangePassword(props) {
                     </Formik>
                 </Box>
             </Container>
+            </div>
         </ThemeProvider>
     )
 }
