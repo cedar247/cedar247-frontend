@@ -88,7 +88,7 @@ export default function AddWard() {
         try {
             const all_shifts = await adminService.getAllShifts();
             const data = all_shifts.data.shifts
-            console.log(data)
+            
             const obj = {}
             for(let i = 0; i < data.length; i++) {
                 obj[data[i]["_id"]] = {
