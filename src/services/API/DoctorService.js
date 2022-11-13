@@ -36,7 +36,7 @@ const setRequestResponse = (details) => {
     return axios.post(APIEndpoint + "/doctor/setRequestResponse", details);
 }; 
 
-export default {
+const DoctorService = {
     defineRequirements,
     changeclendar,
     changePassword,
@@ -44,5 +44,6 @@ export default {
     getDoctorShifts,
     setSwappingShifts,
     getRequests,
-    setRequestResponse,
+    setRequestResponse
 }
+export default DoctorService;

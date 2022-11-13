@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid, TextField} from '@material-ui/core';
-import ShiftDetails from "../schedule/ShiftDetails";
+import { styled } from '@mui/material/styles';
+import { Button, Typography, TextField} from '@material-ui/core';
 import MonthPicker from "../schedule/MonthPicker";
 import ConsultantService from "../../services/API/ConsultantService";
 import { toast } from "react-toastify";
@@ -48,7 +45,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SetDeadline() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    
     const [values, setValues] = React.useState({
         month: "",
         year: "",
@@ -163,7 +160,7 @@ export default function SetDeadline() {
     
     return (
         <>
-        {user != "" && user === "CONSULTANT" ? setDeadlinePage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "CONSULTANT" ? setDeadlinePage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

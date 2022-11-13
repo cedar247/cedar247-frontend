@@ -105,10 +105,10 @@ export default function AdminDashboard() {
         setPopOpen(true);
         setOption(1);
     }
-    const handleWard = () => {
-        setPopOpen(true);
-        setOption(3);
-    }
+    // const handleWard = () => {
+    //     setPopOpen(true);
+    //     setOption(3);
+    // }
     // handles the opening of the popup for doctor
     const handleDoctor = () => {
         setPopOpen(true);
@@ -317,7 +317,7 @@ export default function AdminDashboard() {
         </div>
         return(
             <>
-            {user != "" && user == "Admin" ? Adminpage :<> <AccessDenied></AccessDenied> </> }
+            {user !== "" && user === "Admin" ? Adminpage :<> <AccessDenied></AccessDenied> </> }
             </>
         )
 

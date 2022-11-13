@@ -1,22 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Box from '@material-ui/core/Box';
 import Typography  from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Shifts from './Shifts';
 import FormGroup from '@material-ui/core/FormGroup';
-import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import Vacation from "./Vacation";
-import { makeStyles } from "@material-ui/core/styles";
-import ConsecutiveShifts from "./ConsecutiveShifts";
-import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles({
-    field: {
-        "&&": {
-            
-        }
-    }
-})
 
 export default function Constraints({ 
     shifts,
@@ -27,16 +15,6 @@ export default function Constraints({
 }) {
 
 
-
-    const handleConsecutiveShifts = (event, innerIndex, outerIndex) => {
-        let cpConsecutiveGroups = [...consecutiveGroups]
-        let group = [...cpConsecutiveGroups[outerIndex]]
-        let shift = {...group[innerIndex]}
-        shift.checked = event.target.checked
-        group[innerIndex] = shift
-        cpConsecutiveGroups[outerIndex] = group
-        setConsecutiveGroups(cpConsecutiveGroups)
-    }
 
     const handleShiftTypes = (event, index) => {
         // setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });

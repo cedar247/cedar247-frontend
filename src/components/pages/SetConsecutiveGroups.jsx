@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
 import SideBar from '../common/admin/SideBar';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Button, Typography } from '@material-ui/core';
-import { Navigate, useLocation } from 'react-router-dom';
 import adminService from '../../services/API/AdminService';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
@@ -200,7 +199,7 @@ export default function SetConsecutiveGroups() {
     
     return (
         <>
-        {user != "" && user == "Admin" ? setConsecutiveGroupsPage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "Admin" ? setConsecutiveGroupsPage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

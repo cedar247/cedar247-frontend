@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Box } from '@material-ui/core';
 import { TextField } from '@mui/material';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 
 
 const useStyles = makeStyles({
@@ -25,24 +23,6 @@ const useStyles = makeStyles({
 
 export default function Shift({ shifts, addShift, allShifts, handleShiftChange, index}) {
     const classes = useStyles();
-    // const theme = useTheme();
-    const [shiftDetails, setShiftDetails] = useState({
-        name: "",
-        startTime: "",
-        endTime: ""
-    })
-    const [personName, setPersonName] = React.useState([]);
-
-    const handleChangeMultiple = (event) => {
-        const { options }= event.target;
-        const value = [];
-        for (let i = 0, l = options.length; i < l; i += 1) {
-          if (options[i].selected) {
-            value.push(options[i].value);
-          }
-        }
-        setPersonName(value);
-    };
 
     return (
         <Box>

@@ -17,7 +17,7 @@ import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/ConsultantChangePassword.jsx';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PersistentDrawerLeft from './components/pages/Persistant.jsx';
+
 import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
 import { LandingPage } from './components/pages/LandingPage';
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import '../CSS/LandingPage.css';
 import Navbar from '../layouts/NavBar';
@@ -49,13 +49,13 @@ export function LandingPage() {
                 <h4>Contact Us On</h4>
                 <div className="d-flex justify-content-evenly">
                     <img
-                        src={"https://img.shields.io/badge/-Facebook-blue?style=for-the-badge&labelColor=blue&logo=facebook&logoColor=white"}/>
+                        src={"https://img.shields.io/badge/-Facebook-blue?style=for-the-badge&labelColor=blue&logo=facebook&logoColor=white"} alt=""/>
                     <img
-                        src={"https://img.shields.io/badge/-Twitter-9cf?style=for-the-badge&labelColor=9cf&logo=twitter&logoColor=white"}/>
+                        src={"https://img.shields.io/badge/-Twitter-9cf?style=for-the-badge&labelColor=9cf&logo=twitter&logoColor=white"} alt=""/>
                     <img
-                        src={"https://img.shields.io/badge/-Instagram-ff69b4?style=for-the-badge&labelColor=ff69b4&logo=instagram&logoColor=white"}/>
+                        src={"https://img.shields.io/badge/-Instagram-ff69b4?style=for-the-badge&labelColor=ff69b4&logo=instagram&logoColor=white"} alt=""/>
                     <img
-                        src={"https://img.shields.io/badge/-LinkedIn-blue?style=for-the-badge&labelColor=blue&logo=linkedin&logoColor=white"}/>
+                        src={"https://img.shields.io/badge/-LinkedIn-blue?style=for-the-badge&labelColor=blue&logo=linkedin&logoColor=white"} alt=""/>
                 </div>
             </div>
         </div>

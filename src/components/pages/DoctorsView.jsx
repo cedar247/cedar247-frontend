@@ -3,14 +3,13 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from '../common/consultant/SideBar';
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import Doctor from '../ward/Doctor';
 import consulantService from '../../services/API/ConsultantService';
 import jwtDecode from 'jwt-decode' 
 import AccessDenied from './AccessDenied';
+import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -122,7 +121,7 @@ export default function DoctorsView() {
     
     return (
         <>
-        {user != "" && user == "CONSULTANT" ? doctorsViewPage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "CONSULTANT" ? doctorsViewPage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

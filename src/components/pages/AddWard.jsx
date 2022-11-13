@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
 import SideBar from '../common/admin/SideBar';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import adminService from "../../services/API/AdminService";
@@ -13,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";  
 import jwtDecode from 'jwt-decode' 
 import AccessDenied from './AccessDenied';
-import { Container } from '@mui/material';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -307,7 +305,7 @@ export default function AddWard() {
 
     return(
         <>
-        {user != "" && user == "Admin" ? AddWardPage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "Admin" ? AddWardPage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }
