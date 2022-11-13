@@ -119,6 +119,7 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="create-schedule"
                                             >
                                                 Create Schedule
                                             </Button>
@@ -138,6 +139,7 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="view-doctors"
                                             >
                                                 View Doctors
                                             </Button>
@@ -174,6 +176,7 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="set-deadline"
                                             >
                                                 Set Deadline
                                             </Button>
