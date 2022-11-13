@@ -1,6 +1,6 @@
-describe('Login Page', () => {
+describe('Login Page Consultant', () => {
     it('successfully loads', () => {
-      cy.visit('/') // change URL to match your dev URL
+      cy.visit('/signIn') // change URL to match your dev URL
 
       cy.get('button')
 

@@ -52,10 +52,12 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                 </Typography>
 
                 <select 
+                    data-testid="select"
                     className="form-select"  
                     size="3" 
                     aria-label="size 3 select example"
                     onChange={(e) => handleShiftChange(e, index, "shiftId")}
+                    id="shift-select"
                 >
 
                     {allShifts.map((shift) => (

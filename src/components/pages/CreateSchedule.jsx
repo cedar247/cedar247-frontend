@@ -176,7 +176,10 @@ export default function CreateSchedule() {
 
     const CreateSchedulePage =
         <div>
-            <Box sx={{ display: 'flex' }}>
+            <Box 
+                sx={{ display: 'flex' }}
+                className="container"
+            >
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
