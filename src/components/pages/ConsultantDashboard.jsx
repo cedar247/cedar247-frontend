@@ -7,8 +7,8 @@ import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
-import { useEffect, useState } from "react";
-import PopUp from '../layouts/ConsultantPopups';
+import { useEffect } from "react";
+// import PopUp from '../layouts/ConsultantPopups';
 
 const windowHeight = window.innerHeight-200;
 const drawerWidth = 240;
@@ -64,7 +64,6 @@ export default function ConsultantDashboard() {
         }
     }, []);
     const [open, setOpen] = React.useState(false);
-    const [popOpen, setPopOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -80,15 +79,6 @@ export default function ConsultantDashboard() {
     }
 
 
-    const handleClosePop = () => {
-        setPopOpen(false);
-    };
-
-    const handleChangePassword = () => {
-        setPopOpen(true);
-    };
-
-
     // document.body.style.backgroundImage = `url(${Back2})`;
     const consultantpage = 
         <div className='DashBody' >
@@ -96,17 +86,16 @@ export default function ConsultantDashboard() {
                 <CssBaseline />
 
                 <Header handleDrawerOpen={handleDrawerOpen} open={open} handlelogout={handleLogout}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open} handleChangePassword={handleChangePassword} />
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} />
 
                 <Main open={open} style={{paddingTop: '100px' }}>
                     <Calendar id = {id} windowHeight = {windowHeight} />
-                    <PopUp opener={popOpen} closer={handleClosePop}/>
                 </Main>
             </Box>
         </div>
         return (
             <>
-                {user != "" && user == "CONSULTANT" ? consultantpage : <> <AccessDenied></AccessDenied> </>}
+                {user !== "" && user === "CONSULTANT" ? consultantpage : <> <AccessDenied></AccessDenied> </>}
             </>
         )
 }

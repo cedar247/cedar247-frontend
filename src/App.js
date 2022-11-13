@@ -14,7 +14,7 @@ import Persistant from './components/pages/Persistant';
 import SetConstraint from './components/pages/setConstraints';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import PopUp from './components/layouts/Popup';
-import ChangePassword from './components/layouts/test';
+import ChangePassword from './components/layouts/ConsultantChangePassword.jsx';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersistentDrawerLeft from './components/pages/Persistant.jsx';
@@ -53,7 +53,7 @@ function App() {
             <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
             <Route path="/Persistant" element={<Persistant/>}></Route>
             <Route path="/Popup" element={<PopUp />}></Route>
-            <Route path="/changepwd" element={<ChangePassword />}></Route>
+            <Route path="/ConsultantChangepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
             <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>

@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
 import jwtDecode from 'jwt-decode';
 import AccessDenied from './AccessDenied';
+import { Grid } from '@mui/material';
+import ConsecutiveShifts from '../ward/ConsecutiveShifts';
 
 const drawerWidth = 240;
 
@@ -48,13 +50,10 @@ export default function SetConstraint() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
-    const [maxLeaves, setMaxLeaves] = useState('');
-    const [numConsecutiveGroupShifts, setNumConsecutiveGroupShifts] = useState('');
-    const [consecutiveGroups, setConsecutiveGroups] = useState([]);
-    const [specialShifts, setSpecialShifts] = useState([]);
-    const [casualtyDay, setCasualtyDay] = useState('');
-    const [casualtyDayShifts, setCasualtyDayShifts] = useState([]);
     const [shiftTypes, setShiftTypes] = useState([]);
+    const [numConsecGroups, setNumConsecGroups] = useState(0);
+    const [consecGroups, setConsecGroups] = useState([]);
+
     const [user, setUser] = React.useState("");
 
     useEffect(() => {
@@ -85,9 +84,31 @@ export default function SetConstraint() {
             }
 
             const response = await adminService.getShifts(token);
-            if(response.data) {
+            const consecutiveGroupsResponse = await adminService.getNumConsecGroups(token);
+            if(response.data && consecutiveGroupsResponse.data) {
                 const shiftsGot = response.data;
                 setShifts(shiftsGot)
+
+                // consecutive groups of shifts
+                const numConsec = consecutiveGroupsResponse.data.numConsecGroups;
+                setNumConsecGroups(numConsec)
+
+                const consecGroupsShifts = []
+                for(let i = 0; i < numConsec; i++) {
+                    const shiftGroups = []
+
+                    for(let j = 0; j < shiftsGot.length; j++) {
+                        shiftGroups.push({
+                            id: shiftsGot[j]._id,
+                            checked: true
+                        })
+                    }
+
+                    consecGroupsShifts.push(shiftGroups)
+                }
+                setConsecGroups(consecGroupsShifts)
+
+                // for shifts with vacation
                 const types = []
                 const casualtyDShifts = []
                 for(let i = 0; i < shiftsGot.length; i++){
@@ -104,23 +125,47 @@ export default function SetConstraint() {
                 }
                 
                 setShiftTypes(types)
-                setCasualtyDayShifts(casualtyDShifts)
             }
         } catch (error) {
             console.log(error)
         }
     }
 
+    // for consecutive shifts
+    const handleConsecutiveShifts = (e, innerIndex, outerIndex) => {
+        let cpConsecGroups = [...consecGroups]
+        let consecGroup = [...cpConsecGroups[outerIndex]]
+        consecGroup[innerIndex].checked = e.target.checked
+        cpConsecGroups[outerIndex] = consecGroup
+        setConsecGroups(cpConsecGroups)
+    }
+
+    const createGroups = () => {
+        let arr  = []
+        for(let i = 0; i < numConsecGroups; i++){
+            arr.push(
+                <Grid key={i} item md={4} sm={6} xs={12}>
+                    <ConsecutiveShifts 
+                        shifts={shifts}
+                        handleConsecutiveShifts={handleConsecutiveShifts}
+                        outerIndex={i}
+                        consecutiveGroups={consecGroups}
+                    />
+                </Grid>
+            )
+        }
+
+        return(
+            <Grid container spacing={3}  mb={2}>
+                {arr.map(shiftGroup=>shiftGroup)}
+            </Grid>
+        )
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // if(maxLeaves === "" || numConsecutiveGroupShifts === "" || casualtyDay === "" || casualtyDayShifts === [] || shiftTypes === []) {
-        //     toast.warning("Fill All Fields", {
-        //         toastId: "1"
-        //     })
-        // }
 
-        if(maxLeaves === "" || numConsecutiveGroupShifts === "" || shiftTypes === []) {
+        if(shiftTypes === []) {
             toast.warning("Fill All Fields", {
                 toastId: "1"
             })
@@ -130,11 +175,8 @@ export default function SetConstraint() {
             try {
                 const token = localStorage.getItem('token') // get the token from localstorage
                 const response = await adminService.setConstraints({
-                    maxLeaves,
-                    numConsecutiveGroupShifts,
-                    casualtyDay,
-                    casualtyDayShifts,
-                    shiftTypes
+                    shiftTypes,
+                    consecGroups
                 }, token)
 
                 if(response.status === 201) {
@@ -142,7 +184,15 @@ export default function SetConstraint() {
                         toastId: "1"
                     })
 
-                    navigate('/set-consecutive-groups')
+                    navigate('/wards')
+                } else if(response.status === 200) {
+                    const error = response.data.error;
+
+                    if(error !== undefined){
+                        toast.error(error, {
+                            toastId: "1"
+                        })
+                    }
                 }
             } catch(error) {
                 console.log(error)
@@ -182,22 +232,16 @@ export default function SetConstraint() {
                         {/* <WardDetails/> */}
                         <Constraints 
                             shifts={shifts} 
-                            setMaxLeaves={setMaxLeaves} 
-                            setNumConsecutiveGroupShifts={setNumConsecutiveGroupShifts}
-                            numConsecutiveGroupShifts={numConsecutiveGroupShifts}
-                            casualtyDay={casualtyDay}
-                            setCasualtyDay={setCasualtyDay}
                             shiftTypes={shiftTypes}
                             setShiftTypes={setShiftTypes}
-                            maxLeaves={maxLeaves}
-                            casualtyDayShifts={casualtyDayShifts}
-                            setCasualtyDayShifts={setCasualtyDayShifts}
-                            consecutiveGroups={consecutiveGroups}
-                            setConsecutiveGroups={setConsecutiveGroups}
                         />
+                        <Typography>
+                            Select the consecutive Groups of Shifts* (select alteast two shifts in a group)
+                        </Typography>
+                        {createGroups()}
                         <Box textAlign='center'>
                             <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
-                                Next
+                                Submit
                             </Button>
                         </Box>
                     </form>
@@ -207,7 +251,7 @@ export default function SetConstraint() {
     
     return(
         <>
-        {user != "" && user == "Admin" ? setConstraintPage :<> <AccessDenied></AccessDenied> </> }
+        {user != "" && user === "Admin" ? setConstraintPage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

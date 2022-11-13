@@ -1,7 +1,6 @@
-import { makeStyles } from "@material-ui/core/styles";
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import DoctorService from "../../services/API/DoctorService";
 import Header from '../common/doctor/Header';
@@ -10,12 +9,7 @@ import Calendar from '../layouts/DoctorCalendar.jsx';
 import PopUp from '../layouts/DoctorPopups';
 import jwtDecode from 'jwt-decode'
 import AccessDenied from './AccessDenied';
-import { useEffect, useState } from "react";
-const useStyles = makeStyles({
-    paper: {
-        background: "#f5f5f5"
-    }
-});
+import { useEffect } from "react";
 
 
 const drawerWidth = 240;
@@ -71,8 +65,6 @@ export default function DoctorDashboard() {
         localStorage.removeItem('token')
         window.location.href = "/"
     }
-    const classes = useStyles();
-    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [popOpen, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
@@ -153,14 +145,14 @@ export default function DoctorDashboard() {
                 />
             <Main open={open} style={{ paddingTop: '100px' }}>
                 <Calendar id={id} windowHeight={windowHeight} />
-                <PopUp opener={popOpen} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
+                <PopUp id={id} opener={popOpen} closer={handleClosePop} DefaultOption={SetDefaultOption} Option={Option} shifts={shifts} />
             </Main>
         </Box>
     </div>
 
     return (
         <>
-            {user != "" && user == "DOCTOR" ? doctorpage : <> <AccessDenied></AccessDenied> </>}
+            {user !== "" && user === "DOCTOR" ? doctorpage : <> <AccessDenied></AccessDenied> </>}
         </>
     )
 }

@@ -118,7 +118,7 @@ export default function ViewExchangeShifts() {
         }
     }
 
-    const viewExchangePage = <div>
+    const viewExchangePage = <div data-testid= "ViewExchan">
                                 <Box sx={{ display: 'flex' }}>
                                     <CssBaseline />
                                     <AppBarExchangeRequest setOption ={setOption} />

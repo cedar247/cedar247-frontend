@@ -119,15 +119,15 @@ function SentCards(props) {
                         <Divider color="primary" />
                         <Box component="div" sx={{ display: 'inline' }}>
                             <Typography fontSize={20} fontWeight = "bold"component="div">From </Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Date : {props.fromDate}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Shift : {props.fromShiftName}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Time : {props.fromShift}</Typography>
+                            <Typography data-testid="fromdate" fontSize={18} marginLeft={5} component="div">Date : {props.fromDate}</Typography>
+                            <Typography data-testid="fromShiftName" fontSize={18} marginLeft={5} component="div">Shift : {props.fromShiftName}</Typography>
+                            <Typography data-testid="fromShift" fontSize={18} marginLeft={5} component="div">Time : {props.fromShift}</Typography>
                         </Box>
                         <Box component="div" sx={{ display: 'inline' }}>
                             <Typography fontSize={20} fontWeight = "bold"component="div">To </Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Date : {props.toDate}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Shift : {props.toShiftName}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Time : {props.toShift}</Typography>
+                            <Typography data-testid="todate" fontSize={18} marginLeft={5} component="div">Date : {props.toDate}</Typography>
+                            <Typography data-testid="toShiftName" fontSize={18} marginLeft={5} component="div">Shift : {props.toShiftName}</Typography>
+                            <Typography data-testid="toShift" fontSize={18} marginLeft={5} component="div">Time : {props.toShift}</Typography>
                         </Box>
                     </CardContent>
                 </React.Fragment>
@@ -272,22 +272,22 @@ function RecievedCards(props) {
                         <Divider color="primary" />
                         <Box component="div" sx={{ display: 'inline' }}>
                             <Typography fontSize={20} fontWeight = "bold"component="div">From </Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Date : {props.fromDate}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Shift : {props.fromShiftName}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Time : {props.fromShift}</Typography>
+                            <Typography data-testid="fromdate" fontSize={18} marginLeft={5} component="div">Date : {props.fromDate}</Typography>
+                            <Typography data-testid="fromShiftName" fontSize={18} marginLeft={5} component="div">Shift : {props.fromShiftName}</Typography>
+                            <Typography data-testid="fromShift" fontSize={18} marginLeft={5} component="div">Time : {props.fromShift}</Typography>
 
                         </Box>
                         <Box component="div" sx={{ display: 'inline' }}>
                             <Typography fontSize={20} fontWeight = "bold"component="div">To </Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Date : {props.toDate}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Shift : {props.toShiftName}</Typography>
-                            <Typography fontSize={18} marginLeft={5} component="div">Time : {props.toShift}</Typography>
+                            <Typography data-testid="todate" fontSize={18} marginLeft={5} component="div">Date : {props.toDate}</Typography>
+                            <Typography data-testid="toShiftName" fontSize={18} marginLeft={5} component="div">Shift : {props.toShiftName}</Typography>
+                            <Typography data-testid="toShift" fontSize={18} marginLeft={5} component="div">Time : {props.toShift}</Typography>
                         </Box>
                         <Divider />
                     </CardContent>
                     <CardActions>
-                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleAccept()} variant="contained" color="success" fullWidth >Accept</Button>
-                        <Button disabled = {props.status!=0 || disabled } onClick = {(e)=>handleReject()} variant="contained" color="error" fullWidth>Rejct</Button>
+                        <Button aria-label = "accept" disabled = {props.status!=0 || disabled } onClick = {(e)=>handleAccept()} variant="contained" color="success" fullWidth >Accept</Button>
+                        <Button aria-label = "reject" disabled = {props.status!=0 || disabled } onClick = {(e)=>handleReject()} variant="contained" color="error" fullWidth>Rejct</Button>
                     </CardActions>
                 </React.Fragment>
             </Card></div>

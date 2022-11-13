@@ -1,6 +1,6 @@
 import * as React from "react";
 import dayjs from "dayjs";
-import { Grid, Paper, Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import DoctorService from "../../services/API/DoctorService";
 
-export default function RequestExchangeShifts() {
+export default function RequestExchangeShifts(props) {
     const [fromDate, setFromDate] = React.useState(dayjs());
     const [toDate, setToDate] = React.useState(dayjs());
     const [selectedOneDate,setSelectedOneDate] = React.useState(false);
@@ -25,10 +25,12 @@ export default function RequestExchangeShifts() {
     const [fromShifts, setFromShifts] = React.useState([]);
     const [toShifts, setToShifts] = React.useState([]);
     const [doctors, setDoctors] = React.useState([]);
-    const [errors, setErrors] = React.useState([]);
+    const [errors] = React.useState([]);
     const [shifts, setShifts] = React.useState([]);
+    const [id, setID] = React.useState(props.id);
+
     // const id = "633ab0f123be88c950fb8a89";
-    const id = "633ab54a9fd528b9532b8d59"
+    // const id = "633ab54a9fd528b9532b8d59"
 
     React.useEffect(() => {
         console.log("load page")
@@ -55,7 +57,7 @@ export default function RequestExchangeShifts() {
 
     const handleFromShift = (event) => {
         setFromShift(event.target.value);
-        if(toShift != ""){
+        if(toShift !== ""){
             getDoctorData(event.target.value , toShift)
         }
     };
@@ -63,7 +65,7 @@ export default function RequestExchangeShifts() {
     const handleToShift = (event) => {
         console.log(fromShift,event.target.value, "handletoshift")
         setToShift(event.target.value);
-        if(fromShift != ""){
+        if(fromShift !== ""){
             getDoctorData(fromShift ,event.target.value)
         }
     };
@@ -81,14 +83,14 @@ export default function RequestExchangeShifts() {
         }
         try {
             const response = await DoctorService.setSwappingShifts(values);
-            if(response.data == "Successfull"){
+            if(response.data === "Successfull"){
                 toast.success("Successfull!!!",{toastId: "1"})
                 setHideDoctor(true);
                 setHide(true);
             }
         }catch (error) {
             console.log(error)
-            if(error.response.data.error == "swapping requiest is exists"){
+            if(error.response.data.error === "swapping requiest is exists"){
                 toast.error("swapping requiest is exists",{toastId: "1"})
             }
             toast.error("Something went wrong! \nTry again.",{toastId: "1"})
@@ -101,7 +103,7 @@ export default function RequestExchangeShifts() {
         console.log(shift1,shift2, "inside getDoctorData")
 
         for (let i = 0; i < fromShifts.length; i++) {
-            if (fromShifts[i].id == shift1){
+            if (fromShifts[i].id === shift1){
                 for (let j = 0; j < fromShifts[i]["doctors"].length; j++) {
                     const doctor = fromShifts[i]["doctors"][j];
                     if(!existingShiftDoctors.includes(doctor)){
@@ -112,7 +114,7 @@ export default function RequestExchangeShifts() {
         }
 
         for (let i = 0; i < toShifts.length; i++) {
-            if (toShifts[i].id == shift2){
+            if (toShifts[i].id === shift2){
                 for (let j = 0; j < toShifts[i]["doctors"].length; j++) {
                     console.log(toShifts[i]["doctors"])
                     const doctor = toShifts[i]["doctors"][j];
@@ -124,7 +126,7 @@ export default function RequestExchangeShifts() {
             }
         }
 
-        if(exchangeShiftDoctors.length == 0){
+        if(exchangeShiftDoctors.length === 0){
                 toast.error("No Doctor found!!!. \nSelect another  shift!!!",{toastId: "1"})
                 setHideDoctor(true);
         }else{
@@ -137,7 +139,7 @@ export default function RequestExchangeShifts() {
 
     const getShiftData = async (date1,date2) => {
         // console.log(fromShift,"added")
-        if(errors.length == 0 ){
+        if(errors.length === 0 ){
             const values = {
                 id: id,
                 fromDate: date1,
@@ -168,7 +170,7 @@ export default function RequestExchangeShifts() {
                 setFromShift("");
                 setDoctor("");
             }catch (error) {
-                console.log(error.response.data.error == "no shift Of Schedule")
+                console.log(error.response.data.error === "no shift Of Schedule")
                 toast.error("No swapping option found!!!",{toastId: "1"})
                 setHide(true)
                 setHideDoctor(true)
@@ -211,6 +213,7 @@ export default function RequestExchangeShifts() {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div data-testid= "Reqexchan">
             <Typography variant='caption' ><h1 align="center" >Swapping Shift Form</h1></Typography>
             <Stack
                 sx={{ m: 3 }}
@@ -218,7 +221,8 @@ export default function RequestExchangeShifts() {
                 spacing={{ xs: 1, sm: 2, md: 4 }}
             >
                 <DatePicker
-                    // disablePast
+                    inputProps={{'aria-label':'Exchange-From-Date'}}
+                    disablePast
                     label="Select Exchange From Date"
                     openTo="day"
                     views={["year", "month", "day"]}
@@ -228,7 +232,8 @@ export default function RequestExchangeShifts() {
                     renderInput={(params) => <TextField {...params} />}
                 />
                 <DatePicker
-                    // disablePast
+                    inputProps={{'aria-label':'Exchange-To-Date'}}
+                    disablePast
                     label="Select Exchange to Date"
                     openTo="day"
                     views={["year", "month", "day"]}
@@ -248,6 +253,7 @@ export default function RequestExchangeShifts() {
                         Select Exchange from Shift
                     </InputLabel>
                     <Select
+                        data-testid="ExchangeToShift"
                         labelId="Select_Doctor_label_1"
                         id="Select_Shift_From"
                         value={fromShift}
@@ -268,6 +274,7 @@ export default function RequestExchangeShifts() {
                         Select Exchange to Shift
                     </InputLabel>
                     <Select
+                        data-testid="ExchangeFromShift"
                         labelId="Select_Doctor_label_2"
                         id="Select_Shift_To"
                         value={toShift}
@@ -293,14 +300,15 @@ export default function RequestExchangeShifts() {
                         Select Doctor
                     </InputLabel>
                     <Select
-                    labelId = "Select_Doctor_1"
-                    id = "Select_Doctor"
-                    value = {doctor}
-                    onChange = {handleDoctor}
-                    autoWidth
-                    label= "Select Doctor"
-                    disabled ={hideDoctor}
-                    >
+                        data-testid="ExchangeWithDoctor"
+                        labelId = "Select_Doctor_1"
+                        id = "Select_Doctor"
+                        value = {doctor}
+                        onChange = {handleDoctor}
+                        autoWidth
+                        label= "Select Doctor"
+                        disabled ={hideDoctor}
+                        >
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
@@ -308,6 +316,7 @@ export default function RequestExchangeShifts() {
                     </Select>
                 </FormControl>
                 <Button
+                    aria-label= "submit"
                     type="submit"
                     variant="contained"
                     onClick={handleSubmit}
@@ -316,6 +325,7 @@ export default function RequestExchangeShifts() {
                     Add Swapping Request
                 </Button>
             </Stack>
+            </div>
         </LocalizationProvider>
     );
 }
