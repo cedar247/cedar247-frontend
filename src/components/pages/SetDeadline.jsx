@@ -13,6 +13,7 @@ import ConsultantService from "../../services/API/ConsultantService";
 import { toast } from "react-toastify";
 import jwtDecode from 'jwt-decode' 
 import AccessDenied from './AccessDenied';
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -45,6 +46,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function SetDeadline() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [values, setValues] = React.useState({
@@ -97,6 +99,8 @@ export default function SetDeadline() {
                 toast.success("Deadline has been set successfully!", {
                     toastId: "1"
                 })
+
+                navigate('/ConsultantDashboard')
             }
         } catch(error) {
             console.log(error)
@@ -148,7 +152,7 @@ export default function SetDeadline() {
                         </Box>
 
                         <Box textAlign='center' m={3}>
-                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
+                            <Button id="set-deadline-btn" variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Set Deadline
                             </Button>
                         </Box>
