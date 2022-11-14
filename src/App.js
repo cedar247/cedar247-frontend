@@ -13,7 +13,7 @@ import DoctorDashboard from './components/pages/DoctorDashboard';
 import DoctorsView from './components/pages/DoctorsView';
 import { LandingPage } from './components/pages/LandingPage';
 import { default as AdminDashboard, default as Persistant } from './components/pages/Persistant';
-import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
+// import SetConsecutiveGroups from './components/pages/SetConsecutiveGroups';
 import SetConstraint from './components/pages/setConstraints';
 import SetDeadline from './components/pages/SetDeadline.jsx';
 import LoginForm from './components/pages/Signin';

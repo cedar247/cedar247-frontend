@@ -2,7 +2,7 @@ import React from "react";
 import Box from '@material-ui/core/Box';
 import Typography  from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Checkbox, TextField } from '@material-ui/core';
 import Vacation from "./Vacation";
 import { makeStyles  } from "@material-ui/core/styles";
 import { Grid } from "@mui/material";
@@ -36,7 +36,7 @@ export default function Constraints({
         <Box>
 
 
-            <Grid container spacing={3} mt={2} mb={2}>
+            {/* <Grid container spacing={3} mt={2} mb={2}>
                 <Grid item md={6} sm={12} xs={12}>
                     <TextField 
                         id="outlined-basic" 
@@ -62,7 +62,7 @@ export default function Constraints({
                         InputProps={{ inputProps: { min: 0, max: 5 } }}
                     />
                 </Grid>
-            </Grid>
+            </Grid> */}
 
 
             {/* {createShiftGroups()} */}
