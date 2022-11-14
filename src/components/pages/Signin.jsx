@@ -177,7 +177,7 @@ export default function LoginForm() {
                 <br></br>
                 <br></br>
 
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '33ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Email*</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
@@ -194,7 +194,7 @@ export default function LoginForm() {
                     {submitted && values.email === "" ? <p style={{ color: 'red' }}>Email is Required !!!!!</p> : ""}
                 </FormControl>
 
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '33ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
                     <OutlinedInput
 
