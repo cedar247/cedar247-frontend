@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 });
 
 const handleLogout= async (e) => {
+    console.log("Logout");
     localStorage.removeItem('token')
     window.location.href = "/"
     }
