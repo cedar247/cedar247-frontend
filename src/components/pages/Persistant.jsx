@@ -49,7 +49,7 @@ export default function AdminDashboard() {
             const user = jwtDecode(token)
             if(!user){
                 localStorage.removeItem('token')
-                window.location.href = "/"
+                window.location.href = "/restricted"
             }
             else if(user){
                 if(user.type ==='Admin'){
@@ -57,11 +57,13 @@ export default function AdminDashboard() {
                     setUser("Admin")
                      
                 }else{
+                    window.location.href = "/restricted"
                     setUser("NONE")
                 }
                 
             }
         }else{
+            window.location.href = "/restricted"
             setUser("")
         }
       }, []);
@@ -283,7 +285,7 @@ export default function AdminDashboard() {
         </div>
         return(
             <>
-            {user !== "" && user === "Admin" ? Adminpage :<> <AccessDenied></AccessDenied> </> }
+            {user !== "" && user === "Admin" ? Adminpage :<></> }
             </>
         )
 

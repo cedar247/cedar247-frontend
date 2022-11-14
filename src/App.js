@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import PopUp from './components/layouts/Popup';
 import ChangePassword from './components/layouts/test';
+import AccessDenied from './components/pages/AccessDenied';
 import AddWard from './components/pages/AddWard';
 import ConsultantDashboard from './components/pages/ConsultantDashboard';
 import ConsultantViewSwappingShifts from './components/pages/ConsultantViewSwappingShifts';
@@ -56,6 +57,7 @@ function App() {
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
             {/* <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route> */}
             <Route path='/ConsultantViewSwappingShifts' element={<ConsultantViewSwappingShifts/>}></Route>
+            <Route exact path="/restricted" element={<AccessDenied/>}></Route>
           </Routes>
         </Router>
       </ThemeProvider>
