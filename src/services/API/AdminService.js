@@ -99,6 +99,12 @@ const setConsecGroups = (consecGroups, token) => {
     )
 }
 
+const getAllShifts = () => {
+    return axios.get(
+        APIEndpoint + "/admin/get-all-shifts"
+    )
+}
+
 const adminService = {
     addWard,
     getShifts,
@@ -115,7 +121,8 @@ const adminService = {
     setConsecGroups,
     getAllDocs,
     getAllCons,
-    DeleteWard
+    DeleteWard,
+    getAllShifts
 }
 
 export default adminService;

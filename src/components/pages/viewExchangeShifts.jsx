@@ -65,7 +65,19 @@ export default function ViewExchangeShifts() {
         if (refresh){
             setRefresh(false)
         }
-
+        async function handleGetRequests(userId){
+            try {
+                    const response = await DoctorService.getRequests({id:userId,refresh:refresh});
+                    console.log(response);
+                    if(response.data) {
+                        setToRequests(response.data[1])
+                        setFromRequests(response.data[0])
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                
+            }
         const token = localStorage.getItem('token');
             if (token) {
                 const user = jwtDecode(token)
@@ -87,21 +99,8 @@ export default function ViewExchangeShifts() {
                 setUser("")
             }
 
-    },[id, refresh]);
+    },[user, refresh]);
     
-    async function handleGetRequests(userId){
-        try {
-                const response = await DoctorService.getRequests({id:userId,refresh:refresh});
-                console.log(response);
-                if(response.data) {
-                    setToRequests(response.data[1])
-                    setFromRequests(response.data[0])
-                }
-            } catch (error) {
-                console.log(error);
-            }
-            
-        }
 
     const handleRefresh = () => {
         console.log("setrefresh")
@@ -118,7 +117,7 @@ export default function ViewExchangeShifts() {
         }
     }
 
-    const viewExchangePage = <div>
+    const viewExchangePage = <div data-testid= "ViewExchan">
                                 <Box sx={{ display: 'flex' }}>
                                     <CssBaseline />
                                     <AppBarExchangeRequest setOption ={setOption} />

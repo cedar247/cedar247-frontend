@@ -53,6 +53,7 @@ export default function Header(props) {
                             onClick={() => props.handleDrawerOpen()}
                             edge="start"
                             sx={{ mr: 2, ...(props.open && { display: 'none' }) }}
+                            id="sidebar-btn"
                         >
                             <MenuIcon />
                         </IconButton>

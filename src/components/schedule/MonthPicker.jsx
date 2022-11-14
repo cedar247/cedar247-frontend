@@ -34,7 +34,7 @@ export default function MonthPicker({ values, handleChange }) {
                         <InputLabel id="demo-simple-select-filled-label" color='secondary'>Year</InputLabel>
                             <Select
                                 labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
+                                id="year"
                                 value={values.year}
                                 onChange={handleChange("year")}
                                 color='secondary'
@@ -57,7 +57,7 @@ export default function MonthPicker({ values, handleChange }) {
                         <InputLabel id="demo-simple-select-filled-label" color='secondary'>Month</InputLabel>
                             <Select
                                 labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
+                                id="month"
                                 value={values.month}
                                 onChange={handleChange("month")}
                                 color='secondary'

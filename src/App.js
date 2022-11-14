@@ -51,7 +51,7 @@ function App() {
             <Route path="/DoctorDashboard" element={<DoctorDashboard/>}></Route>
             <Route path="/Persistant" element={<Persistant/>}></Route>
             <Route path="/Popup" element={<PopUp />}></Route>
-            <Route path="/changepwd" element={<ChangePassword />}></Route>
+            <Route path="/ConsultantChangepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
             <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>

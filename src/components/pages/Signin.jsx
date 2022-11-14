@@ -185,6 +185,7 @@ export default function LoginForm() {
                         value={values.email ? values.email : ""}
                         onChange={(e) => validateEmail(e)}
                         label="Email*"
+                        className='email'
                         startAdornment={<InputAdornment position="start"> <MailOutlineIcon
                             sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></InputAdornment>}
                     />
@@ -198,6 +199,7 @@ export default function LoginForm() {
                     <OutlinedInput
 
                         id="outlined-adornment-password"
+                        className='password'
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password ? values.password : ""}
                         onChange={handleChange("password")}
@@ -224,6 +226,7 @@ export default function LoginForm() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleSubmit}
+                    className="sign-in"
                 >
                     Sign In
                 </Button>
