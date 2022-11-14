@@ -137,8 +137,41 @@ export default function AdminDashboard() {
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
+
                 {/* appBar component of the page */}
                 <Header handleDrawerOpen={handleDrawerOpen} handlelogout={handleLogout} open={open} />
+                <AppBar position="fixed" open={open}>
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h5" component="div">
+                            ADMIN
+                        </Typography>
+
+                        <Box
+                            sx={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'row-reverse'
+                            }}
+                        >
+                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
+                                <Typography variant="h6" component="div">
+                                    LOGOUT
+                                </Typography>
+                            </Divider><LogoutIcon /></Button>
+                        </Box>
+
+                    </Toolbar>
+                </AppBar>
 
 
                 {/* Side bar component of the page */}

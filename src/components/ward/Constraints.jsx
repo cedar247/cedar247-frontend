@@ -50,7 +50,35 @@ export default function Constraints({
     return (
         <Box>
 
-            
+
+            <Grid container spacing={3} mt={2} mb={2}>
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Maximum number of leaves per month:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={(e) => setMaxLeaves(e.target.value)}
+                        fullWidth
+                        value={maxLeaves}
+                    />
+                </Grid>
+
+                <Grid item md={6} sm={12} xs={12}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="How many consecutive groups of shifts:" 
+                        variant="outlined" 
+                        color='secondary' 
+                        type="number"
+                        onChange={(e)=> setNumConsecutiveGroupShifts(e.target.value)}
+                        fullWidth
+                        InputProps={{ inputProps: { min: 0, max: 5 } }}
+                    />
+                </Grid>
+            </Grid>
+
 
             {/* {createShiftGroups()} */}
 
