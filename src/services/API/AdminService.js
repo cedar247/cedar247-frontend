@@ -49,7 +49,9 @@ const addWard = (ward, token) => {
 }
 const getDoctorTypes = (values) => {
     console.log(values);
-    return axios.post(APIEndpoint + "/admin/getDoctorTypes",values);
+    console.log('in admin service');
+    const val = {WardID: values}
+    return axios.post(APIEndpoint + "/admin/getDoctorTypes",val);
 }; 
 
 const DeleteWard =  (id) => {

@@ -42,9 +42,10 @@ export default function AddDoctor(props) {
   }, []);
 
 // to set the value for the wards (ID)
-  const handleChange3 = (event) => {
+  const handleChange3 = async (event) => {
+    console.log("Hi");
     setValues({ ...values, ["WardID"]: event.target.value });
-    getDoctorTypes();
+    getDoctorTypes(event.target.value);
   };
 
   // to fetch all details of the wards
@@ -63,11 +64,12 @@ export default function AddDoctor(props) {
   };
 
   //to fetch the doctor types from the backend
-  const getDoctorTypes = async (event) => {
+  const getDoctorTypes = async (val) => {
     
     try {
       //fetches the data from the backend
-      const response = await AdminService.getDoctorTypes(values);
+      // setTimeout(function(){ }, 500);
+      const response = await AdminService.getDoctorTypes(val);
       //for debugging purpose
       // console.log(response);
       console.log(response.data);
