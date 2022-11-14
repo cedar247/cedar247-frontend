@@ -35,7 +35,7 @@ export default function AddConsultant(props) {
     WardID: ""
   });
 
-  //to fetch the ward names from the backed 
+  // to fetch the ward names from the backed 
   useEffect(() => {
     getAllWards();
   }, []);

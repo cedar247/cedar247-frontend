@@ -7,9 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { red, green, blue, orange } from "@mui/material/colors";
-import CardHeader from '@mui/material/CardHeader';
 import { Divider } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import MarkAsUnreadIcon from '@mui/icons-material/MarkAsUnread';
 import Alert from './Alert'
@@ -21,20 +19,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 //to style the page with bullet
-const bull = (
-    <Box
-        component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-        •
-    </Box>
-);
 
 //card componet is to have the details of the doctor sent requests
 function SentCards(props) {
 
     const changeAvetar = ()=>{
-        if (props.status == 3) {
+        if (props.status === 3) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -48,7 +38,7 @@ function SentCards(props) {
                         </div>
                     </List>
         }
-        else if(props.status == 1) {
+        else if(props.status === 1) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -61,7 +51,7 @@ function SentCards(props) {
                             </ListItem>
                         </div>
                     </List>
-        }else if(props.status == 2) {
+        }else if(props.status === 2) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -74,7 +64,7 @@ function SentCards(props) {
                             </ListItem>
                         </div>
                     </List>
-        }else if(props.status == 4) {
+        }else if(props.status === 4) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -187,7 +177,7 @@ function RecievedCards(props) {
     }
 
     const changeAvetar = ()=>{
-        if (props.status == 3) {
+        if (props.status === 3) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -201,7 +191,7 @@ function RecievedCards(props) {
                         </div>
                     </List>
         }
-        else if(props.status == 1) {
+        else if(props.status === 1) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -214,7 +204,7 @@ function RecievedCards(props) {
                             </ListItem>
                         </div>
                     </List>
-        }else if(props.status == 2) {
+        }else if(props.status === 2) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -227,7 +217,7 @@ function RecievedCards(props) {
                             </ListItem>
                         </div>
                     </List>
-        }else if(props.status == 4) {
+        }else if(props.status === 4) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>
@@ -311,7 +301,7 @@ function RecievedCards(props) {
 function ConsultantResponededCards(props) {
 
     const changeAvetar = ()=>{
-        if (props.status == 3) {
+        if (props.status === 3) {
             return  <List>
                         <div>
                             <ListItem sx={{ mr: 2 }}>

@@ -3,10 +3,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Button, Typography, Grid } from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import adminService from '../../services/API/AdminService';
 import consulantService from '../../services/API/ConsultantService';
@@ -117,7 +115,7 @@ export default function CreateSchedule() {
     const handleRequirements = (id, index, e, doctorCategory) => {
         let cpRequirements = [...requirements]
         let requirement = {...cpRequirements[index]}
-        if(requirement.shiftId == id) {
+        if(requirement.shiftId === id) {
             // console.log(typeof doctorCategory)
             requirement[doctorCategory] = e.target.value;
             cpRequirements[index] = requirement;
@@ -134,7 +132,7 @@ export default function CreateSchedule() {
 
             // iterate through doctor cactegories
             for(let i = 0; i < doctorCategories.length; i++){
-                if(requirementDetails[doctorCategories[i]] == ""){
+                if(requirementDetails[doctorCategories[i]] === ""){
                     error = true
                 }
             }
@@ -231,7 +229,7 @@ export default function CreateSchedule() {
     
     return (
         <>
-        {user != "" && user === "CONSULTANT" ? CreateSchedulePage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "CONSULTANT" ? CreateSchedulePage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

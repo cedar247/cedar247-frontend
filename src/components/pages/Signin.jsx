@@ -13,15 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
-import Alert from '@mui/material/Alert';
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import { fontGrid } from '@mui/material/styles/cssUtils';
-import { fontSize } from '@mui/system';
 import jwtDecode from 'jwt-decode'
 import TopAppBar from '../layouts/TopNavbar';
 
@@ -39,7 +35,7 @@ export default function LoginForm() {
     //to validate email
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
-    const [emailAlert, setAlert] = React.useState(false);
+    // const [emailAlert, setAlert] = React.useState(false);
     const [submitted, setSubmitted] = useState(false);
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -52,9 +48,9 @@ export default function LoginForm() {
     });
     // validates the email
     const validateEmail = (e) => {
-        setAlert({
-            emailAlert: true
-        });
+        // setAlert({
+        //     emailAlert: true
+        // });
         var email = e.target.value;
         setValues({ ...values, email: email });
         if (validator.isEmail(email)) {
@@ -91,12 +87,12 @@ export default function LoginForm() {
                 // to login the user
                 const response = await AuthService.DoLogin(values);
                 console.log(response);// for dubugging purpose
-                if (response.data.status == "Failed") {
+                if (response.data.status === "Failed") {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
                     })
                 }
-                else if (response.data.status == "ok") {
+                else if (response.data.status === "ok") {
                     toast.success("Success", {
                         toastId: "1"
                     })
@@ -107,13 +103,13 @@ export default function LoginForm() {
                         localStorage.removeItem('token')
                     }
                     localStorage.setItem('token', response.data.token)
-                    if (response.data.userid.type == 'Admin') {
+                    if (response.data.userid.type === 'Admin') {
                         window.location.href = "/wards"
                     }
-                    if (response.data.userid.type == 'DOCTOR') {
+                    if (response.data.userid.type === 'DOCTOR') {
                         window.location.href = "/DoctorDashboard"
                     }
-                    if (response.data.userid.type == 'CONSULTANT') {
+                    if (response.data.userid.type === 'CONSULTANT') {
                         window.location.href = "/ConsultantDashboard"
                     }
 
@@ -132,28 +128,27 @@ export default function LoginForm() {
 
     };
 
-    const handleOpen = () => {
+    // const handleOpen = () => {
 
-        this.setState({
-            open: true
-        });
-        console.log(this.state.open);
+    //     this.setState({
+    //         open: true
+    //     });
+    //     console.log(this.state.open);
 
-    };
+    // };
     // to enable show password
     const handleClickShowPassword = () => {
         setValues({ ...values, ["showPassword"]: !values.showPassword });
     };
 
     //to enable handle mouse down
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    // const handleMouseDownPassword = (event) => {
+    //     event.preventDefault();
+    // };
 
     return (
         <><div className="backg">
 
-        
             <TopAppBar/>
 
             {/* <ButtonAppBar/> */}

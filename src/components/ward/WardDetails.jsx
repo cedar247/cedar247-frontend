@@ -1,10 +1,10 @@
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import { Grid, TextField } from '@mui/material';
-import React, { useState } from 'react';
 import Shift from './Shift';
 
 
@@ -45,6 +45,7 @@ export default function WardDetails(
                         fullWidth
                         margin='normal'
                         onChange={ handleChange("name") }
+                        value={wardDetails.name}
                     />
                 </Grid>
 
@@ -58,6 +59,8 @@ export default function WardDetails(
                         fullWidth
                         margin='normal'
                         onChange={ handleChange("number") }
+                        InputProps={{ inputProps: { min: 0 } }}
+                        value={wardDetails.number}
                     />
                 </Grid>
             </Grid>
@@ -71,7 +74,7 @@ export default function WardDetails(
                 onChange={(e)=>setNumOfShifts(e.target.value)}
                 fullWidth
                 margin='normal'
-                
+                value={numOfShifts}
             />
 
           

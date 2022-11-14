@@ -1,7 +1,10 @@
+import React from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TextField } from '@mui/material';
-import React, { useState } from 'react';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import { brown } from '@material-ui/core/colors'
 
 
 const useStyles = makeStyles({
@@ -21,29 +24,11 @@ const useStyles = makeStyles({
 
 export default function Shift({ shifts, addShift, allShifts, handleShiftChange, index}) {
     const classes = useStyles();
-    // const theme = useTheme();
-    const [shiftDetails, setShiftDetails] = useState({
-        name: "",
-        startTime: "",
-        endTime: ""
-    })
-    const [personName, setPersonName] = React.useState([]);
-
-    const handleChangeMultiple = (event) => {
-        const { options }= event.target;
-        const value = [];
-        for (let i = 0, l = options.length; i < l; i += 1) {
-          if (options[i].selected) {
-            value.push(options[i].value);
-          }
-        }
-        setPersonName(value);
-    };
 
     return (
         <Box>
             <FormControl>
-                <Typography htmlFor="select-multiple-native">
+                <Typography htmlFor="select-multiple-native" color='primary'>
                     Select a shift
                 </Typography>
 
@@ -72,7 +57,7 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                     <TextField 
                         id="outlined-basic" 
                         label="Shift" 
-                        variant="outlined" 
+                        variant="filled" 
                         color='secondary'
                         fullWidth
                         InputProps={{
@@ -84,7 +69,7 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                     <TextField 
                         id="outlined-basic" 
                         label="Start" 
-                        variant="outlined" 
+                        variant="filled" 
                         color='secondary' 
                         type="time"
                         InputLabelProps={{
@@ -99,7 +84,7 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                     <TextField 
                         id="outlined-basic" 
                         label="End" 
-                        variant="outlined" 
+                        variant="filled" 
                         color='secondary' 
                         type="time"
                         InputLabelProps={{
@@ -112,8 +97,8 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                 <Box>
                     {shifts[index] && 
                         <Box>
-                            <Typography>{shifts[index]["name"]}</Typography>
-                            <Typography>Start time: {shifts[index]["startTime"]}</Typography>
+                            <Typography color={brown[500]}>{shifts[index]["name"]}</Typography>
+                            <Typography color=''>Start time: {shifts[index]["startTime"]}</Typography>
                             <Typography>End time: {shifts[index]["endTime"]}</Typography>
                         </Box>
                     }

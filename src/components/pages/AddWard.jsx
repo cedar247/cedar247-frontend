@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/admin/Header';
 import SideBar from '../common/admin/SideBar';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import adminService from "../../services/API/AdminService";
@@ -13,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";  
 import jwtDecode from 'jwt-decode' 
 import AccessDenied from './AccessDenied';
-import { Container } from '@mui/material';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -194,9 +192,9 @@ export default function AddWard() {
                 if(response.status === 201) {
                     const new_token = response.data.token; // get the new token
                     localStorage.setItem('token', new_token) // add new token to local storage
-                    toast.success("ward has been successfully added", {
-                        toastId: "1"
-                    })
+                    // toast.success("ward has been successfully added", {
+                    //     toastId: "1"
+                    // })
                     navigate('/set-constraints')
                 }
                 //Todo: implement for other status codes
@@ -225,13 +223,13 @@ export default function AddWard() {
 
     const AddWardPage =
         <div
-            style={{
-                minHeight: "100vh",
-                // background: '#d2e6f9'
-            }}
+            // style={{
+            //     minHeight: "100vh",
+            //     // background: '#d2e6f9'
+            // }}
         >
             <Box 
-                sx={{ display: 'flex' }}
+                sx={{ display: 'flex', mt: 3 }}
                 className="container"
 
                 >
@@ -240,15 +238,17 @@ export default function AddWard() {
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
-                    <Typography 
-                        variant='h4' 
-                        component="h1"
-                        align='center'
-                        gutterBottom
-                        color='secondary'
-                    >
-                        Add Ward
-                    </Typography>
+                    <Box mt={3}>
+                        <Typography 
+                            variant='h3' 
+                            component="h1"
+                            align='center'
+                            gutterBottom
+                            color='secondary'
+                        >
+                            Add Ward
+                        </Typography>
+                    </Box>
 
                     {/* content of the main is here */}
                     <form action="">
@@ -293,12 +293,12 @@ export default function AddWard() {
                             </Grid>
                         </Grid>
 
-                        <Box textAlign='center' style={{"marginTop": "20px"}}>
-                            <Link to="/set-constraints" style={{textDecoration: 'none'}}>
+                        <Box textAlign='center' style={{"marginTop": "20px", "marginBottom": "100px"}} >
+                            {/* <Link to="/set-constraints" style={{textDecoration: 'none'}}> */}
                                 <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Next
                                 </Button>
-                            </Link>
+                            {/* </Link> */}
                         </Box>
                     </form>
                 </Main>
@@ -307,7 +307,7 @@ export default function AddWard() {
 
     return(
         <>
-        {user != "" && user == "Admin" ? AddWardPage :<> <AccessDenied></AccessDenied> </> }
+        {user !== "" && user === "Admin" ? AddWardPage :<> <AccessDenied></AccessDenied> </> }
         </>
     )
 }

@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Box from '@material-ui/core/Box';
 import Typography  from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Shifts from './Shifts';
 import FormGroup from '@material-ui/core/FormGroup';
-import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import Vacation from "./Vacation";
-import { makeStyles } from "@material-ui/core/styles";
-import ConsecutiveShifts from "./ConsecutiveShifts";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles  } from "@material-ui/core/styles";
+import { Grid } from "@mui/material";
 
 const useStyles = makeStyles({
-    field: {
-        "&&": {
-            
-        }
-    }
+    formGroup: {
+        alignItems: 'center'
+      }
 })
 
 export default function Constraints({ 
@@ -26,17 +21,7 @@ export default function Constraints({
     setConsecutiveGroups
 }) {
 
-
-
-    const handleConsecutiveShifts = (event, innerIndex, outerIndex) => {
-        let cpConsecutiveGroups = [...consecutiveGroups]
-        let group = [...cpConsecutiveGroups[outerIndex]]
-        let shift = {...group[innerIndex]}
-        shift.checked = event.target.checked
-        group[innerIndex] = shift
-        cpConsecutiveGroups[outerIndex] = group
-        setConsecutiveGroups(cpConsecutiveGroups)
-    }
+    const classes = useStyles();
 
     const handleShiftTypes = (event, index) => {
         // setShiftTypes({ ...shiftTypes, [event.target.name]: event.target.checked });
@@ -82,8 +67,8 @@ export default function Constraints({
 
             {/* {createShiftGroups()} */}
 
-            <Box mt={4}>
-                <Typography>
+            <Box mt={4} mb={3}>
+                <Typography color="primary">
                     What are the shifts that doctors should get a golden day(A vacation given to doctors after completing a specific shift) after it?:
                 </Typography>
             </Box>
@@ -94,21 +79,27 @@ export default function Constraints({
                     shifts.map(
                         (shift, index, arr) => (
                             <Box key={shift._id}>
-                                <FormControlLabel
-                                    key={shift._id}
-                                    control={
-                                    <Checkbox
-                                        checked={shiftTypes[index].checked}
-                                        onChange={(e) => handleShiftTypes(e, index)}
-                                        name={shift.name}
-                                        color="secondary"
-                                        key={shift._id}
-                                    />
-                                    }
-                                    label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
-                                />
+                                <Grid container>
+                                    <Grid item sm={6} >
+                                        <FormControlLabel
+                                            key={shift._id}
+                                            control={
+                                            <Checkbox
+                                                checked={shiftTypes[index].checked}
+                                                onChange={(e) => handleShiftTypes(e, index)}
+                                                name={shift.name}
+                                                color="secondary"
+                                                key={shift._id}
+                                            />
+                                            }
+                                            label={shift.name + " ( " + shift.startTime + " - " + shift.endTime + " )"}
+                                        />
+                                    </Grid>
 
-                                <Vacation shiftTypes={shiftTypes} setShiftTypes={setShiftTypes} index={index}/>
+                                    <Grid item sm={6}>
+                                        <Vacation shiftTypes={shiftTypes} setShiftTypes={setShiftTypes} index={index}/>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         )
                     )

@@ -9,6 +9,7 @@ const DoLogin = (details) => {
     return axios.post(APIEndpoint + "/auth/dologin",details);
 }; 
 
-export default {
+const authentication = {
     DoLogin
 }
+export default authentication;

@@ -54,7 +54,7 @@ function App() {
             <Route path="/ConsultantChangepwd" element={<ChangePassword />}></Route>
             <Route path='/set-constraints' element={<SetConstraint/>}></Route>
             <Route path='/ViewExchangeShifts' element={<ViewExchangeShifts/>}></Route>
-            <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route>
+            {/* <Route path='/set-consecutive-groups' element={<SetConsecutiveGroups/>}></Route> */}
             <Route path='/ConsultantViewSwappingShifts' element={<ConsultantViewSwappingShifts/>}></Route>
           </Routes>
         </Router>
