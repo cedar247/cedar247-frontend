@@ -98,6 +98,14 @@ export default function SetDeadline() {
                 })
 
                 navigate('/ConsultantDashboard')
+            } else if(response.status === 200) {
+                const error = response.data.error;
+
+                    if(error !== undefined){
+                        toast.error(error, {
+                            toastId: "1"
+                        })
+                    }
             }
         } catch(error) {
             console.log(error)
@@ -114,14 +122,17 @@ export default function SetDeadline() {
 
     const setDeadlinePage =
         <div>
-            <Box sx={{ display: 'flex' }}>
+            <Box 
+                sx={{ display: 'flex' }}
+                className="container"
+            >
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
                     <Typography 
-                        variant='h4' 
+                        variant='h3' 
                         component="h1"
                         align='center'
                         gutterBottom
@@ -140,7 +151,7 @@ export default function SetDeadline() {
                                 type="date"
                                 defaultValue="2022-09-23"
                                 InputLabelProps={{
-                                shrink: true,
+                                    shrink: true,
                                 }}
                                 margin='normal'
                                 color='secondary'

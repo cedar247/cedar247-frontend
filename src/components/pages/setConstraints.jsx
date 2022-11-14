@@ -178,7 +178,7 @@ export default function SetConstraint() {
                 }, token)
 
                 if(response.status === 201) {
-                    toast.success("Constraints has been successfully set", {
+                    toast.success("Ward has been successfully added", {
                         toastId: "1"
                     })
 
@@ -210,17 +210,21 @@ export default function SetConstraint() {
 
     const setConstraintPage = 
         <div>
-            <Box sx={{ display: 'flex' }}>
+            <Box 
+                sx={{ display: 'flex' }}
+                className="container"
+                >
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
                     <Typography 
-                        variant='h4' 
+                        variant='h3' 
                         component="h1"
                         align='center'
                         gutterBottom
+                        color='secondary'
                     >
                         Constraints
                     </Typography>
@@ -233,9 +237,11 @@ export default function SetConstraint() {
                             shiftTypes={shiftTypes}
                             setShiftTypes={setShiftTypes}
                         />
-                        <Typography>
-                            Select the consecutive Groups of Shifts* (select alteast two shifts in a group)
-                        </Typography>
+                        <Box mt={4} mb={2}>
+                            <Typography color="primary">
+                                Select the consecutive Groups of Shifts* (select alteast two shifts in a group)
+                            </Typography>
+                        </Box>
                         {createGroups()}
                         <Box textAlign='center'>
                             <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
