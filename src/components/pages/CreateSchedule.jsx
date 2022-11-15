@@ -149,12 +149,20 @@ export default function CreateSchedule() {
                 const token = localStorage.getItem('token')
                 const response = await consulantService.createSchedule(requirements, token);
                 if(response.status === 201) {
+                    
                     toast.success("Schedule created successfully!!", {
                         toastId: "1"
                     })
                     navigate('/ConsultantDashboard')
+                } else if(response.status === 200) {
+                    const error = response.data.error;
+
+                    if(error !== undefined){
+                        toast.error(error, {
+                            toastId: "1"
+                        })
+                    }
                 }
-                console.log(response)
             }
         } catch(error) {
             console.log(error)

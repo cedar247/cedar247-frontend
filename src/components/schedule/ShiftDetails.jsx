@@ -22,7 +22,7 @@ export default function ShiftDetails(props) {
                         <TextField 
                             id="outlined-basic" 
                             label={doctorCategory} 
-                            variant="outlined" 
+                            variant="filled" 
                             color='secondary' 
                             type="number"
                             fullWidth
