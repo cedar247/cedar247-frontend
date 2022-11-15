@@ -93,9 +93,12 @@ export default function SetDeadline() {
             const response = await ConsultantService.setDeadline(values, token);
     
             if(response.status === 201) {
-                toast.success("Deadline has been set successfully!", {
-                    toastId: "1"
-                })
+                const msg = response.data.msg;
+                    if( msg !== undefined) {
+                        toast.success(msg, {
+                            toastId: "1"
+                        })
+                    }
 
                 navigate('/ConsultantDashboard')
             } else if(response.status === 200) {
