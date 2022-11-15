@@ -252,7 +252,7 @@ export default function AdminDashboard() {
 
                         <Divider />
                         <Divider />
-                        <div className='settings'>
+                        {/* <div className='settings'>
                             <List>
                                 <ListItem>
                                     <ListItemAvatar>
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
 
                                 </ListItem>
                             </List>
-                        </div>
+                        </div> */}
                     </div>
                 </Drawer>
                 {/* main component of the page */}

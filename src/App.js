@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import PopUp from './components/layouts/Popup';
-import ChangePassword from './components/layouts/test';
+import ChangePassword from './components/layouts/ConsultantChangePassword';
 import AccessDenied from './components/pages/AccessDenied';
 import AddWard from './components/pages/AddWard';
 import ConsultantDashboard from './components/pages/ConsultantDashboard';

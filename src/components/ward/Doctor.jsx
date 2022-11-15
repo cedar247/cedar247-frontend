@@ -49,7 +49,7 @@ export default function Doctor(props) {
                     </Typography>
                 </CardContent>
 
-                <CardActions>
+                {/* <CardActions>
                     <Button 
                         size="small" 
                         color='secondary' 
@@ -57,7 +57,7 @@ export default function Doctor(props) {
                     >
                         View Schedule
                     </Button>
-                </CardActions>
+                </CardActions> */}
             </Card>
         </Grid>
     )

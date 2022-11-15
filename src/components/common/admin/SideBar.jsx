@@ -159,10 +159,10 @@ export default function SideBar(props) {
                 </List> */}
 
                         <Divider />
-                        <div className='settings'>
+                        {/* <div className='settings'>
                         <List>
                             <ListItem>
-                                {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
+                                import SettingsIcon from '@mui/icons-material/Settings'; 
                                 <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                         <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
@@ -172,7 +172,7 @@ export default function SideBar(props) {
 
                             </ListItem>
                         </List>
-                        </div>
+                        </div> */}
                     </div>
                 </Drawer>
     )
