@@ -89,6 +89,7 @@ export default function AddConsultant(props) {
           toast.success("New Cosultant Added", {
             toastId: "1"
           })
+          setTimeout(function(){ window.location.reload(false); }, 1000);
         }
 
       } catch (error) {
