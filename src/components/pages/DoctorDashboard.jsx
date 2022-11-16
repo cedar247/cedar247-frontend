@@ -8,7 +8,6 @@ import SideBar from "../common/doctor/SideBar";
 import Calendar from '../layouts/DoctorCalendar.jsx';
 import PopUp from '../layouts/DoctorPopups';
 import jwtDecode from 'jwt-decode'
-import AccessDenied from './AccessDenied';
 import { useEffect } from "react";
 
 
@@ -45,7 +44,7 @@ export default function DoctorDashboard() {
             const user = jwtDecode(token)
             if (!user) {
                 localStorage.removeItem('token')
-                window.location.href = "/"
+                window.location.href = "/restricted"
             }
             else if (user) {
                 if (user.type === "DOCTOR") {
@@ -53,11 +52,13 @@ export default function DoctorDashboard() {
                     setID(user._id);
                     handleGetShifts(user._id)
                 } else {
+                    window.location.href = "/restricted"
                     setUser("NONE")
                 }
 
             }
         } else {
+            window.location.href = "/restricted"
             setUser("")
         }
     }, []);
@@ -152,7 +153,7 @@ export default function DoctorDashboard() {
 
     return (
         <>
-            {user !== "" && user === "DOCTOR" ? doctorpage : <> <AccessDenied></AccessDenied> </>}
+            {user !== "" && user === "DOCTOR" ? doctorpage : <></>}
         </>
     )
 }

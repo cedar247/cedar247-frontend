@@ -75,9 +75,16 @@ export default function ConsultantChangePassword() {
             }
             // DescriptionAlerts(true);
         } catch (error) {
-            toast.error("Please try again. There is some error",{
-                toastId: "1"})
-            console.log(error);
+            console.log(error.response.data.error);
+            if(error.response.data.error ==  "Invalid email"){
+                toast.error("Change Email Address and Please try again.",{
+                    toastId: "1"})
+                console.log(error);
+            }else{
+                toast.error("Please try again. There is some error",{
+                    toastId: "1"})
+                console.log(error);
+            }
         }
         // props.resetForm()
     }
