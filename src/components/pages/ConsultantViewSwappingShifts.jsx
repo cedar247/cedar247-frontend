@@ -6,7 +6,6 @@ import ConsultantService from "../../services/API/ConsultantService";
 import ConsultantResponededSwapshifts from '../layouts/consultantResponededSwapshifts.jsx';
 import ConsultantRecievedSwapshifts from '../layouts/consultantRecievedSwapshifts.jsx';
 import jwtDecode from 'jwt-decode'
-import AccessDenied from './AccessDenied';
 
 
 export default function ConsultantViewSwappingShifts() {
@@ -29,7 +28,7 @@ export default function ConsultantViewSwappingShifts() {
             const user = jwtDecode(token)
             if (!user) {
                 localStorage.removeItem('token')
-                window.location.href = "/"
+                window.location.href = "/restricted"
             }
             else if (user) {
                 if (user.type === "CONSULTANT") {
@@ -37,11 +36,13 @@ export default function ConsultantViewSwappingShifts() {
                     setID(user._id);
                     handleGetRequests(user._id);
                 } else {
+                    window.location.href = "/restricted"
                     setUser("NONE")
                 }
 
             }
         } else {
+            window.location.href = "/restricted"
             setUser("")
         }
 
@@ -90,7 +91,7 @@ export default function ConsultantViewSwappingShifts() {
                                 </div>
     return (
         <>
-            {user !== "" && user === "CONSULTANT" ? vieveSwappingShiftsPage : <> <AccessDenied></AccessDenied> </>}
+            {user !== "" && user === "CONSULTANT" ? vieveSwappingShiftsPage : <></>}
         </>
     );
 }
