@@ -58,6 +58,7 @@ export default function AddWard() {
     const [shiftDetails, setShiftDetails] = useState({});
     const [maxLeaves, setMaxLeaves] = useState('');
     const [numConsecutiveGroupShifts, setNumConsecutiveGroupShifts] = useState('');
+    const [ numOfShifts, setNumOfShifts ] = useState(0);
 
     useEffect(() => {
         const token  = localStorage.getItem('token');
@@ -187,7 +188,8 @@ export default function AddWard() {
                         doctorCategories,
                         shifts,
                         maxLeaves,
-                        numConsecutiveGroupShifts
+                        numConsecutiveGroupShifts,
+                        numOfShifts
                     }, token);
                 if(response.status === 201) {
                     const new_token = response.data.token; // get the new token
@@ -260,7 +262,10 @@ export default function AddWard() {
                             handleChange={handleChange} 
                             handleShiftChange={handleShiftChange} 
                             handleDoctorCategories={handleDoctorCategories} 
-                            doctorCategories={doctorCategories}/>
+                            doctorCategories={doctorCategories}
+                            numOfShifts={numOfShifts} 
+                            setNumOfShifts={setNumOfShifts}
+                            />
                         {/* <Constraints/> */}
 
                         <Grid container spacing={3} mt={3} mb={3}>

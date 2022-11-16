@@ -17,10 +17,11 @@ export default function WardDetails(
         doctorCategories,
         allShifts,
         addShift,
-        shifts
+        shifts,
+        numOfShifts, 
+        setNumOfShifts
     }
 ) {
-    const [ numOfShifts, setNumOfShifts ] = useState(0);
 
       const createShifts = () => {
         let arr = []
