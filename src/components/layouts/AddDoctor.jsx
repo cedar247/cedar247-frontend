@@ -128,6 +128,7 @@ export default function AddDoctor(props) {
           toast.success("New Doctor Added", {
             toastId: "1"
           })
+          setTimeout(function(){ window.location.reload(false); }, 1000);
         }
         // gives a warning if the email id already exits
         if(response.data.msg === "User validation failed: email: The specified email address is already in use."){
