@@ -89,6 +89,9 @@ export default function Defnerequirements(props) {
                 setShiftTypes(CPshifTypes);
                 console.log(response);
             } catch (error) {
+                if(error.response.data.error === "Maximum leaves for this month is reached"){
+                    toast.error("Maximum leaves for this month is reached",{toastId: "1"})
+                }
                 console.log(error);
             }
         }else{
