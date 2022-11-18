@@ -34,7 +34,7 @@ import jwtDecode from "jwt-decode";
                     const user  = jwtDecode(token)
                     const id = user._id
                     const response = await consulantService.viewCalendar({id:id, showAllDoctors:true});
-                    console.log(response);
+                    // console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
                     // console.log(resourcesData);
@@ -53,10 +53,12 @@ import jwtDecode from "jwt-decode";
             const date = data[i]["date"].split("-");
             const startTime = data[i]["startTime"].split(":");
             const endTime = data[i]["endTime"].split(":");
-            const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]))
-
-            if (data[i]["title"] === "night"){
-                endDate.setDate(endDate.getDate()+ 1)            
+            const startDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(startTime[0]), Number(startTime[1]));
+            const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]));
+            // console.log(endDate)           
+            if (startDate > endDate){
+                endDate.setDate(endDate.getDate() + 1) 
+                // console.log(endDate)           
             }
 
             const item = {
@@ -71,7 +73,7 @@ import jwtDecode from "jwt-decode";
             return(formatedData);
         }
 
-        console.log(windowHeight);
+        // console.log(windowHeight);
         // console.log(calendar);
 
         return (
