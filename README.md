@@ -15,7 +15,9 @@ run these commands in the terminal.
       npm install --legacy-peer-deps
   
 Then get a copy of .env.example and rename it as .env and set environmental variables. After that run the following command in the command line.
-   
+
+Select the dev brach
+
 To run the node server run the following command on the terminal.
 
       npm start
