@@ -58,7 +58,7 @@ export default function Header(props) {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h5" component="div">
-                            DASHBOARD
+                            CONSULATANT
                         </Typography>
 
                         <Box
