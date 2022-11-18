@@ -97,8 +97,8 @@ export default function Shift({ shifts, addShift, allShifts, handleShiftChange, 
                 <Box>
                     {shifts[index] && 
                         <Box>
-                            <Typography color={brown[500]}>{shifts[index]["name"]}</Typography>
-                            <Typography color=''>Start time: {shifts[index]["startTime"]}</Typography>
+                            <Typography>{shifts[index]["name"]}</Typography>
+                            <Typography>Start time: {shifts[index]["startTime"]}</Typography>
                             <Typography>End time: {shifts[index]["endTime"]}</Typography>
                         </Box>
                     }
