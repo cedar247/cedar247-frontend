@@ -3,9 +3,17 @@ import React from "react";
 import {ConsultantResponededCards} from "./requestCards";
 
 export default function ConsultantResponededSwapshifts(props) {
+    const changeHeader = () =>{
+        if(props.Accepted){
+            return <h2 style={{width: "auto", height: "auto", textAlign: "center"}}>Accepted Requests</h2>
+        }
+        else{
+            return <h2 style={{width: "auto", height: "auto", textAlign: "center"}}>Rejected Requests</h2>
+        }
+    }
     return (
         <div>
-            <h2 style={{width: "auto", height: "auto", textAlign: "center"}}>Rejected Requests</h2>
+            {changeHeader()}
             <Grid container spacing={5}>
                 {Array.from(props.respondedRequests).map((request, index, arr) => (
                     <Grid item xs={12} sm={6} md={3} key={index}>

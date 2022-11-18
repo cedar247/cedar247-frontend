@@ -73,9 +73,9 @@ export default function ConsultantViewSwappingShifts() {
         if (option === 0) {
             return  <ConsultantRecievedSwapshifts refresh = {handleRefresh} recievedRequests = {Reqests}/>
         }else if (option === 1){
-            return <ConsultantResponededSwapshifts  respondedRequests = {acceptedReqests}/>
+            return <ConsultantResponededSwapshifts Accepted = {true} respondedRequests = {acceptedReqests}/>
         }else{
-            return <ConsultantResponededSwapshifts  respondedRequests = {rejectedReqests}/>
+            return <ConsultantResponededSwapshifts Accepted = {false} respondedRequests = {rejectedReqests}/>
         }
     }
     const vieveSwappingShiftsPage = <div>
