@@ -32,7 +32,7 @@ function SentCards(props) {
                                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: red[500] }} marginLeft={5} component="div">rejected</Typography>
+                                <Typography fontSize={18} sx={{ color: red[500] }} marginLeft={5} component="div">rejected.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -46,7 +46,7 @@ function SentCards(props) {
                                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: red[500] }} marginLeft={5} component="div">Doctor rejected</Typography>
+                                <Typography fontSize={18} sx={{ color: red[500] }} marginLeft={5} component="div">Doctor rejected.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -59,7 +59,7 @@ function SentCards(props) {
                                     <Avatar sx={{ bgcolor: orange[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: orange[500] }} marginLeft={5} component="div">Doctor Accepted</Typography>
+                                <Typography fontSize={18} sx={{ color: orange[500] }} marginLeft={5} component="div">Doctor Accepted.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -72,7 +72,7 @@ function SentCards(props) {
                                     <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: green[500] }} marginLeft={5} component="div">Accepted</Typography>
+                                <Typography fontSize={18} sx={{ color: green[500] }} marginLeft={5} component="div">Accepted.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -85,7 +85,7 @@ function SentCards(props) {
                                     <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe"><EmailIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: blue[500] }} component="div">no response</Typography>
+                                <Typography fontSize={18} sx={{ color: blue[500] }} component="div">no response.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -199,7 +199,7 @@ function RecievedCards(props) {
                                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: red[500] }} component="div">Doctor rejected</Typography>
+                                <Typography fontSize={18} sx={{ color: red[500] }} component="div">Doctor rejected.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -212,7 +212,7 @@ function RecievedCards(props) {
                                     <Avatar sx={{ bgcolor: orange[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: orange[500] }} component="div">Doctor Accepted</Typography>
+                                <Typography fontSize={18} sx={{ color: orange[500] }} component="div">Doctor Accepted.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -225,7 +225,7 @@ function RecievedCards(props) {
                                     <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: green[500] }} component="div">Accepted</Typography>
+                                <Typography fontSize={18} sx={{ color: green[500] }} component="div">Accepted.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -238,7 +238,7 @@ function RecievedCards(props) {
                                     <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe"><EmailIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: blue[500] }} component="div">no response</Typography>
+                                <Typography fontSize={18} sx={{ color: blue[500] }} component="div">no response.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -309,7 +309,7 @@ function ConsultantResponededCards(props) {
                                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: red[500] }}  component="div">rejected</Typography>
+                                <Typography fontSize={18} sx={{ color: red[500] }}  component="div">rejected.</Typography>
                             </div>
                             </ListItem>
                         </div>
@@ -323,7 +323,7 @@ function ConsultantResponededCards(props) {
                                     <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe"><MarkAsUnreadIcon sx={{ fontSize: 30 }} /></Avatar>
                                 </ListItemAvatar>
                             <div>
-                                <Typography fontSize={18} sx={{ color: green[500] }}  component="div">Accepted</Typography>
+                                <Typography fontSize={18} sx={{ color: green[500] }}  component="div">Accepted.</Typography>
                             </div>
                             </ListItem>
                         </div>

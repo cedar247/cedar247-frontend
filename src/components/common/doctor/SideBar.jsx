@@ -149,7 +149,7 @@ export default function SideBar(props) {
                                                 aria-label = "btn-ViewExchange"
                                                 sx={{ bgcolor: blue[800]}}
                                             >
-                                                View Exchange Shifts
+                                                View exchange shifts
                                             </Button>
                                         </Link>
                                 </ListItem>
