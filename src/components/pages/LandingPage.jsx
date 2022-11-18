@@ -28,10 +28,8 @@ export function LandingPage() {
                     {/* src={require('../images/plane.png')} */}
                     <img src={require('../Images/about.jpg')} style={{height: 400}} alt="about"/>
                 </div>
-                <h4 className="text-center">Snap Schedule roster scheduler gives you an easy-to-use graphi
-                cal user interface <br></br> and powerful software tools that make scheduling emp
-                loyees, editing information, analyzing data, <br></br>and distributing employee work s
-                chedules easy and simple.</h4>
+                <h4 className="text-center">Cedar247 roster scheduler gives you an easy-to-use graphical user interface <br></br> and powerful software tools that make scheduling 
+                employees, editing information, analyzing data, <br></br>and distributing employee work schedules easy and simple.</h4>
             </div>
             <div id="Services" className="cover">
             <div>
@@ -39,7 +37,7 @@ export function LandingPage() {
                     <img src={require('../Images/services.png')} style={{height: 400}} alt="service"/>
                 </div>
                 <h1>Services</h1>
-                <h4>sdsdvsds </h4>
+                <h4>Cedar247 provide facility to create schedules for doctors in each ward</h4>
             </div>
             <div id="Contact" className="cover">
             <div>
