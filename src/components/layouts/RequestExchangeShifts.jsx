@@ -223,7 +223,7 @@ export default function RequestExchangeShifts(props) {
                 <DatePicker
                     inputProps={{'aria-label':'Exchange-From-Date'}}
                     disablePast
-                    label="Select Exchange From Date"
+                    label="Select the from date."
                     openTo="day"
                     views={["year", "month", "day"]}
                     value={fromDate}
@@ -234,7 +234,7 @@ export default function RequestExchangeShifts(props) {
                 <DatePicker
                     inputProps={{'aria-label':'Exchange-To-Date'}}
                     disablePast
-                    label="Select Exchange to Date"
+                    label="Select the to date."
                     openTo="day"
                     views={["year", "month", "day"]}
                     value={toDate}
@@ -250,7 +250,7 @@ export default function RequestExchangeShifts(props) {
             >
                 <FormControl sx={{ minWidth: 200 }}>
                     <InputLabel id="Select_doctor_inputlable_from">
-                        Select Exchange from Shift
+                        Choose from Shift. 
                     </InputLabel>
                     <Select
                         data-testid="ExchangeToShift"
@@ -271,7 +271,7 @@ export default function RequestExchangeShifts(props) {
 
                 <FormControl sx={{ minWidth: 200 }}>
                     <InputLabel id="Select_doctor_inputlable_to">
-                        Select Exchange to Shift
+                        Choose to Shift. 
                     </InputLabel>
                     <Select
                         data-testid="ExchangeFromShift"
