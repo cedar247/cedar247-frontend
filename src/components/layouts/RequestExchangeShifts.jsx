@@ -174,6 +174,9 @@ export default function RequestExchangeShifts(props) {
                 toast.error("No swapping option found!!!",{toastId: "1"})
                 setHide(true)
                 setHideDoctor(true)
+                setToShift("");
+                setFromShift("");
+                setDoctor("");
             }
         }
     };
@@ -263,7 +266,7 @@ export default function RequestExchangeShifts(props) {
                         disabled={hide}
                     >
                         <MenuItem value="">
-                            <em>None</em>
+                            None
                         </MenuItem>
                         {renderFromShiftLabels()}
                     </Select>
@@ -284,7 +287,7 @@ export default function RequestExchangeShifts(props) {
                         disabled={hide}
                     >
                         <MenuItem value="">
-                            <em>None</em>
+                            None
                         </MenuItem>
                         {renderToShiftLabels()}
                     </Select>
@@ -310,7 +313,7 @@ export default function RequestExchangeShifts(props) {
                         disabled ={hideDoctor}
                         >
                         <MenuItem value="">
-                            <em>None</em>
+                            None
                         </MenuItem>
                         {renderDoctorLabels()}
                     </Select>
