@@ -2,8 +2,8 @@ import config from "../../config.json"
 const axios = require('axios');
 
 
-// const APIEndpoint = config.DOMAIN_NAME + "/api";
-const APIEndpoint = "/api";
+const APIEndpoint = config.DOMAIN_NAME + "/api";
+// const APIEndpoint = "/api";
 
 const addConsultant = (details) => {
     return axios.post(APIEndpoint + "/admin/consultant", details);
