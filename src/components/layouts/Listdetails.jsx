@@ -41,7 +41,7 @@ export default function WardDetailList(props) {
         })
         console.log(values._id)
         try {
-            const response = await AdminService.getAllDocs(values);
+            const response = await AdminService.getAllDocs(props._id);
 
             console.log(response);
             console.log(response.data);
@@ -59,7 +59,7 @@ export default function WardDetailList(props) {
         })
         console.log(values._id)
         try {
-            const response = await AdminService.getAllCons(values);
+            const response = await AdminService.getAllCons(props._id);
 
             console.log(response);
             console.log(response.data);
