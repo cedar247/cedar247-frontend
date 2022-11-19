@@ -392,6 +392,9 @@ function ConsultantRecievedCards(props) {
             setDisabled(true);
             toast.success("Successfully agreed",{toastId: "1"});
         }catch (error) {
+            if(error.response.data.error === "doctors are not in the shift"){
+                toast.error("doctors are not in the shift.\nYou cannot accept this swapping request",{toastId: "1"})
+            }
             console.log(error)
             toast.error("There is some errors. try again",{toastId: "1"})
         }
