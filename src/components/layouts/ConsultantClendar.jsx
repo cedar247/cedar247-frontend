@@ -34,7 +34,7 @@ import jwtDecode from "jwt-decode";
                     const user  = jwtDecode(token)
                     const id = user._id
                     const response = await consulantService.viewCalendar({id:id, showAllDoctors:true});
-                    // console.log(response);
+                    console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
                     // console.log(resourcesData);
