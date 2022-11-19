@@ -32,13 +32,15 @@ const getAllWards = () => {
     return axios.get(APIEndpoint + "/admin/getAll");
 }; 
 
-const getAllDocs = (_id) => {
+const getAllDocs = (id) => {
+    const values = {_id:id}
     console.log("All doc in controller");
-    return axios.post(APIEndpoint + "/admin/getAllDocs",_id);
+    return axios.post(APIEndpoint + "/admin/getAllDocs",values);
 }; 
-const getAllCons = (_id) => {
+const getAllCons = (id) => {
+    const values = {_id:id}
     console.log("All doc in controller");
-    return axios.post(APIEndpoint + "/admin/getAllCons",_id);
+    return axios.post(APIEndpoint + "/admin/getAllCons",values);
 }; 
 const addWard = (ward, token) => {
     return axios.post(
