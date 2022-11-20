@@ -35,14 +35,14 @@ import Checkbox from '@mui/material/Checkbox';
                 try {
                     // console.log(appointments);
                     const response = await DoctorService.changeclendar({id:id, showAllDoctors:false});
-                    // console.log(response);
+                    console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
                     // console.log(resourcesData);
                     // console.log(response.data[1]);
                     // console.log(formatData(response.data[0]))
                 } catch (error) {
-                    // console.log(error);
+                    console.log(error);
                 }
             }
 
@@ -83,7 +83,7 @@ import Checkbox from '@mui/material/Checkbox';
     
             try {
                 const response = await DoctorService.changeclendar({id:id, showAllDoctors:!showAllDoctors});
-                // console.log(response);
+                console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
                 // console.log(resourcesData);
