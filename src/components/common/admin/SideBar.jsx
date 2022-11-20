@@ -17,6 +17,7 @@ import { Button, Grid } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const useStyles = makeStyles({
     paper: {
@@ -86,7 +87,7 @@ export default function SideBar(props) {
                                 }}
                             >
                                 <div className={classes.paper}>
-                                    <ListItem>
+                                    {/* <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                                 <AddHomeIcon color="success" sx={{ fontSize: 30 }} />
@@ -103,39 +104,41 @@ export default function SideBar(props) {
                                             </Button>
                                         </Link>
                                     </ListItem>
-                                    <Divider variant="inset" color="secondary" />
-                                    <ListItem>
+                                    <Divider variant="inset" color="secondary" /> */}
+                                    {/* <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                                 <PersonAddIcon color="primary" sx={{ fontSize: 30 }} />
                                             </Avatar>
-                                        </ListItemAvatar>
+                                        </ListItemAvatar> */}
                                         {/* <ListItemText primary=""/> */}
-                                        <Button
+                                        {/* <Button
                                             type="submit"
                                             fullWidth
                                             variant="contained"
                                             sx={{ mt: 3, mb: 2 }}
                                         >
                                             Consultant
-                                        </Button>
-                                    </ListItem>
-                                    <Divider variant="inset" color="secondary" />
+                                        </Button> */}
+                                    {/* </ListItem> */}
+                                    {/* <Divider variant="inset" color="secondary" /> */}
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <PersonAddIcon color="secondary" sx={{ fontSize: 30 }} />
+                                                <HomeIcon color="secondary" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
                                         {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            Doctor
-                                        </Button>
+                                        <Link to="/wards" style={{textDecoration: 'none'}} fullWidth>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                Dashboard
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                 </div>
                             </List>
@@ -156,10 +159,10 @@ export default function SideBar(props) {
                 </List> */}
 
                         <Divider />
-                        <div className='settings'>
+                        {/* <div className='settings'>
                         <List>
                             <ListItem>
-                                {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
+                                import SettingsIcon from '@mui/icons-material/Settings'; 
                                 <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                         <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
@@ -169,7 +172,7 @@ export default function SideBar(props) {
 
                             </ListItem>
                         </List>
-                        </div>
+                        </div> */}
                     </div>
                 </Drawer>
     )

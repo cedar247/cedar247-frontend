@@ -26,6 +26,11 @@ import AdminService from '../../services/API/AdminService';
 import Details from '../layouts/Details';
 import { AppBar, DrawerHeader, drawerWidth, Main } from '../layouts/Drawer';
 import PopUp from '../layouts/Popup';
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
+import Header from '../common/admin/Header';
+import { Link } from "react-router-dom";
+
 
 
 //to style the page
@@ -37,6 +42,40 @@ const useStyles = makeStyles({
 
 
 export default function AdminDashboard() {
+    const [user, setUser] = React.useState("");
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+        if(token){
+            const user = jwtDecode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                window.location.href = "/restricted"
+            }
+            else if(user){
+                if(user.type ==='Admin'){
+                    getAllWards();
+                    setUser("Admin")
+                     
+                }else{
+                    window.location.href = "/restricted"
+                    setUser("NONE")
+                }
+                
+            }
+        }else{
+            window.location.href = "/restricted"
+            setUser("")
+        }
+      }, []);
+    //   useEffect(() => {
+        
+    //         getAllWards();
+        
+    //   }, []);
+    const handleLogout= async (e) => {
+        localStorage.removeItem('token')
+        window.location.href = "/"
+        }
     //to keep the details of the ward
     const [Wards, setWards] = useState([]);
     //to save the classes
@@ -49,9 +88,6 @@ export default function AdminDashboard() {
     const [openPop, setPopOpen] = React.useState(false);
     const [Option, setOption] = React.useState(0);
     // fetches all details of the ward
-    useEffect(() => {
-        getAllWards();
-    }, []);
 
     const getAllWards = async () => {
         try {
@@ -71,6 +107,10 @@ export default function AdminDashboard() {
         setPopOpen(true);
         setOption(1);
     }
+    // const handleWard = () => {
+    //     setPopOpen(true);
+    //     setOption(3);
+    // }
     // handles the opening of the popup for doctor
     const handleDoctor = () => {
         setPopOpen(true);
@@ -94,44 +134,14 @@ export default function AdminDashboard() {
         setOption(0);
     };
     // document.body.style.backgroundImage = `url(${Back2})`;
-    return (
+
+    const Adminpage = 
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="fixed" open={open}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h5" component="div">
-                            ADMIN
-                        </Typography>
 
-                        <Box
-                            sx={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: 'row-reverse'
-                            }}
-                        >
-                            <Button color="inherit">   <Divider orientation="vertical" flexItem>
-                                <Typography variant="h6" component="div">
-                                    LOGOUT
-                                </Typography>
-                            </Divider><LogoutIcon /></Button>
-                        </Box>
-
-                    </Toolbar>
-                </AppBar>
-
-
+                {/* appBar component of the page */}
+                <Header handleDrawerOpen={handleDrawerOpen} handlelogout={handleLogout} open={open} />
                 {/* Side bar component of the page */}
                 <Drawer
                     sx={{
@@ -184,16 +194,19 @@ export default function AdminDashboard() {
                                                 <AddHomeIcon color="success" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <Button
-                                            color="success"
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
+                                        <Link to="/add-wards" style={{textDecoration: 'none'}} fullWidth>
+                                            <Button
+                                                color="success"
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 , pl: 5, pr:5}}
+                                                // onClick={handleWard}
 
-                                        >
-                                            WARD
-                                        </Button>
+                                            >
+                                                WARD
+                                            </Button>
+                                        </Link>
                                     </ListItem>
                                     <Divider variant="inset" color="secondary" />
                                     <ListItem>
@@ -239,7 +252,7 @@ export default function AdminDashboard() {
 
                         <Divider />
                         <Divider />
-                        <div className='settings'>
+                        {/* <div className='settings'>
                             <List>
                                 <ListItem>
                                     <ListItemAvatar>
@@ -251,7 +264,7 @@ export default function AdminDashboard() {
 
                                 </ListItem>
                             </List>
-                        </div>
+                        </div> */}
                     </div>
                 </Drawer>
                 {/* main component of the page */}
@@ -270,5 +283,11 @@ export default function AdminDashboard() {
                 </Main>
             </Box>
         </div>
-    );
+        return(
+            <>
+            {user !== "" && user === "Admin" ? Adminpage :<></> }
+            </>
+        )
+
+
 }

@@ -6,20 +6,17 @@ import * as React from "react";
 // import DialogContentText from "@mui/material/DialogContentText";
 import AddConsultant from "./AddConsultant";
 import AddDoctor from "./AddDoctor";
+import ViewCard from "./viewcard";
 
 export default function PopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
 
   const handleClose = () => {
     setOpen(false);
     props.closer();
-    props.SetDefaultOption();
+    // props.SetDefaultOption();
   };
 
   const descriptionElementRef = React.useRef(null);
@@ -42,8 +39,9 @@ export default function PopUp(props) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogContent dividers={scroll === "paper"}>
-            {props.Option == 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
-            {props.Option == 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
+            {props.Option === 1 ? <AddConsultant title = "Add Consultant"/> : <></>}
+            {props.Option === 2 ? <AddDoctor title = "Add Doctor"/> : <></>}
+            {props.Option === 4 ? <ViewCard ward = {props.ward}/> : <></>}
             {/* {props.Option == 3 ? <AddDoctor title = "Add Doctor"/> : <></>} */}
         </DialogContent>
         <DialogActions>

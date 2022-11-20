@@ -13,11 +13,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Button } from '@mui/material';
-import PasswordIcon from '@mui/icons-material/Password';
-import HomeIcon from '@mui/icons-material/Home';
+import SyncLockSharpIcon from '@mui/icons-material/SyncLockSharp';
+import PreviewSharpIcon from '@mui/icons-material/PreviewSharp';
+import TransferWithinAStationSharpIcon from '@mui/icons-material/TransferWithinAStationSharp';
+import { Link } from "react-router-dom";
+import { indigo, blue, green, purple } from "@mui/material/colors";
+
 
 const useStyles = makeStyles({
     paper: {
@@ -46,9 +50,9 @@ export default function SideBar(props) {
     const     handleClickChangePassword    = () =>{
         props.handleChangePassword();
     }
-    // const handleClickHome    = () =>{
-    //     // <Redirect to = "/DoctorDashboard"/>
-    // }
+    const handleClickRequestExchangeShifts = () =>{
+        props.handleRequestExchangeShifts();
+    }
     return (
             <Drawer
                 sx={{
@@ -68,7 +72,7 @@ export default function SideBar(props) {
                         <Typography variant="h6" component="div">
                             MENU
                         </Typography>
-                        <IconButton onClick={props.handleDrawerClose}>
+                        <IconButton aria-label = "btn-menue" onClick={props.handleDrawerClose}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
                     </DrawerHeader>
@@ -99,66 +103,84 @@ export default function SideBar(props) {
                                 <ListItem sx={{ mr: 2, ...(!props.defreq && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <AddBoxIcon color="success" sx={{ fontSize: 30 }} />
+                                            <LibraryAddIcon sx={{ color: blue[800], fontSize: 30 }} aria-label= "avatar-DefReq"/>
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
-                                        <Button
+                                        <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-DefReq"
                                             onClick={handleClickDefineRequirements}
                                             variant="contained"
                                             fullWidth
-                                            color="success"
                                         > Define Requirements
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="secondary" sx={{ ...(!props.defreq && { display: 'none' }) }} />
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.defreq && { display: 'none' }) }} />
                                 <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
                                     <ListItemAvatar>
                                         <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
+                                            <TransferWithinAStationSharpIcon sx={{color: indigo[700], fontSize: 30 }} aria-label= "avatar-ExShift" />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <div  className= " mt: 3 mb: 2" >
+                                    <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-ExShift"
+                                            onClick={handleClickRequestExchangeShifts}
+                                            variant="contained"
+                                            fullWidth
+                                        > Request to Exchange Shift
+                                        </Button>
+                                    </div>
+                                </ListItem>
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
+                                <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} aria-label= "avatar-ViewExchange"/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
+                                        <Link to="/viewExchangeShifts" style={{textDecoration: 'none'}}>
                                         <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                aria-label = "btn-ViewExchange"
+                                                sx={{ bgcolor: blue[800]}}
+                                            >
+                                                View exchange shifts
+                                            </Button>
+                                        </Link>
+                                </ListItem>
+                                <Divider variant="inset" color="blue" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
+                                <ListItem sx={{ mr: 2, ...(!props.chanpass && { display: 'none' }) }}>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <SyncLockSharpIcon color="secondary" sx={{ color: blue[800], fontSize: 30 }} aria-label= "avatar-chanPassword" />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <div  className= " mt: 3 mb: 2" >
+                                    <Button sx={{ bgcolor: blue[800] }}
+                                            aria-label = "btn-chanPassword"
                                             onClick={handleClickChangePassword}
                                             variant="contained"
                                             fullWidth
-                                            color="secondary"
                                         > Change password
                                         </Button>
                                     </div>
                                 </ListItem>
-                                <Divider variant="inset" color="secondary" sx={{ ...(!props.chanpass && { display: 'none' }) }} />
-                                {/* <ListItem sx={{ mr: 2, ...(!props.home && { display: 'none' }) }}>
-                                    <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                            <HomeIcon color="primary" sx={{ fontSize: 30 }} />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <div  className= " mt: 3 mb: 2" >
-                                        <Button
-                                            onClick={handleClickHome}
-                                            variant="contained"
-                                            fullWidth
-                                            color="primary"
-                                        > Home
-                                        </Button>
-                                    </div>
-                                </ListItem> */}
                             </div>
                         </List>
                     </Box>
+                    <Divider color="secondary" />
 
-                    <Divider />
-
-                    <Divider />
-                    <div className='settings'>
+                    {/* <div className='settings'>
                     <List>
                         <Button>
-                            <ListItem>
+                            <ListItem> */}
                                 {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
-                                <ListItemAvatar>
+                                {/* <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                         <AccountCircleIcon color="primary" sx={{ fontSize: 40 }} />
                                     </Avatar>
@@ -167,7 +189,7 @@ export default function SideBar(props) {
                             </ListItem>
                         </Button>
                     </List>
-                    </div>
+                    </div> */}
                 </div>
             </Drawer>
     )

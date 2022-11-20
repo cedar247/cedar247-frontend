@@ -13,26 +13,29 @@ import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { toast } from "react-toastify";
 import validator from 'validator';
 import "../../App.css";
 import AuthService from '../../services/authentication';
+import jwtDecode from 'jwt-decode'
+import TopAppBar from '../layouts/TopNavbar';
 
-
-//test again
+//s
 export default function LoginForm() {
 
-    useEffect(() => {
-        const token  = localStorage.getItem('token');
-        if(token){
-            localStorage.removeItem('token')
-        }
-      }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         const user = jwtDecode(token)
+    //         console.log(user.type)
+    //         localStorage.removeItem('token')
+    //     }
+    // }, []);
     //to validate email
     const [emailError, setEmailError] = useState('')
     //to aleart a invalid email
-    const [emailAlert, setAlert] = React.useState(false);
+    // const [emailAlert, setAlert] = React.useState(false);
     const [submitted, setSubmitted] = useState(false);
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -45,9 +48,9 @@ export default function LoginForm() {
     });
     // validates the email
     const validateEmail = (e) => {
-        setAlert({
-            emailAlert: true
-        });
+        // setAlert({
+        //     emailAlert: true
+        // });
         var email = e.target.value;
         setValues({ ...values, email: email });
         if (validator.isEmail(email)) {
@@ -69,7 +72,7 @@ export default function LoginForm() {
         setSubmitted(true)
         if (values.email === "" || values.password === "") {
             toast.info("Fill All Fields", {
-                toastId: "1"
+                toastId: "1",
             })
 
             e.preventDefault()
@@ -84,17 +87,32 @@ export default function LoginForm() {
                 // to login the user
                 const response = await AuthService.DoLogin(values);
                 console.log(response);// for dubugging purpose
-                if (response.data.status == "Failed") {
+                if (response.data.status === "Failed") {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
                     })
                 }
-                else if (response.data.status == "ok") {
+                else if (response.data.status === "ok") {
                     toast.success("Success", {
                         toastId: "1"
                     })
-                    localStorage.setItem('token',response.data.token)
-                    window.location.href = "/wards"
+                    const token = localStorage.getItem('token');
+                    if (token) {
+                        const user = jwtDecode(token)
+                        console.log(user.type)
+                        localStorage.removeItem('token')
+                    }
+                    localStorage.setItem('token', response.data.token)
+                    if (response.data.userid.type === 'Admin') {
+                        window.location.href = "/wards"
+                    }
+                    if (response.data.userid.type === 'DOCTOR') {
+                        window.location.href = "/DoctorDashboard"
+                    }
+                    if (response.data.userid.type === 'CONSULTANT') {
+                        window.location.href = "/ConsultantDashboard"
+                    }
+
                 } else {
                     toast.warn("Incorrect Email or Password", {
                         toastId: "1"
@@ -110,26 +128,28 @@ export default function LoginForm() {
 
     };
 
-    const handleOpen = () => {
+    // const handleOpen = () => {
 
-        this.setState({
-            open: true
-        });
-        console.log(this.state.open);
+    //     this.setState({
+    //         open: true
+    //     });
+    //     console.log(this.state.open);
 
-    };
+    // };
     // to enable show password
     const handleClickShowPassword = () => {
         setValues({ ...values, ["showPassword"]: !values.showPassword });
     };
 
     //to enable handle mouse down
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    // const handleMouseDownPassword = (event) => {
+    //     event.preventDefault();
+    // };
 
     return (
-        <>
+        <><div className="backg">
+
+            <TopAppBar/>
 
             {/* <ButtonAppBar/> */}
             <div className="container text-center bg-white bg-opacity-75 p-3" style={{
@@ -152,7 +172,7 @@ export default function LoginForm() {
                 <br></br>
                 <br></br>
 
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '33ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Email*</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
@@ -160,6 +180,7 @@ export default function LoginForm() {
                         value={values.email ? values.email : ""}
                         onChange={(e) => validateEmail(e)}
                         label="Email*"
+                        className='email'
                         startAdornment={<InputAdornment position="start"> <MailOutlineIcon
                             sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></InputAdornment>}
                     />
@@ -168,11 +189,12 @@ export default function LoginForm() {
                     {submitted && values.email === "" ? <p style={{ color: 'red' }}>Email is Required !!!!!</p> : ""}
                 </FormControl>
 
-                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                <FormControl sx={{ m: 1, width: '33ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password*</InputLabel>
                     <OutlinedInput
 
                         id="outlined-adornment-password"
+                        className='password'
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password ? values.password : ""}
                         onChange={handleChange("password")}
@@ -199,6 +221,7 @@ export default function LoginForm() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleSubmit}
+                    className="sign-in"
                 >
                     Sign In
                 </Button>
@@ -211,7 +234,20 @@ export default function LoginForm() {
                 </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             </Typography>
+            </div>
         </>
 
     );

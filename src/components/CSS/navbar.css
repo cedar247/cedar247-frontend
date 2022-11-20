@@ -1,0 +1,110 @@
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: rgb(173, 49, 49);
+    text-align: center;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 65px;
+    background: rgba(8, 114, 212, 0.7);
+    text-align: left;
+  }
+  
+  .nav_menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 3.7rem;
+  }
+  .nav_items {
+    display: flex;
+    align-items: center;
+  }
+  @media screen and (max-width: 768px) {
+    .nav_items {
+      display: none;
+    }
+  }
+  .nav_item:hover {
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .nav_link {
+    text-decoration: none !important;
+    color: rgb(255, 255, 255);
+  }
+  
+  .nav_links {
+    float: right;
+    border-radius: 4px;
+    /* background: #99c2ff; */
+    padding: 10px 10px;
+    color: #000;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+  
+  .nav_toggler div {
+    width: 2rem;
+    height: 0.2rem;
+    margin: 0.5rem;
+    background: rgb(129, 36, 36);
+    transition: 0.4s ease-in;
+  }
+  
+  .nav_toggler {
+    cursor: pointer;
+    display: none;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .nav_toggler {
+      display: block;
+    }
+  
+    .nav_menu {
+      position: absolute;
+      top: 10vh;
+      right: 0;
+      width: 20%;
+      height: 50vh;
+      background: rgb(55, 101, 173);
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: 0.5s ease-in;
+    }
+  }
+  
+  /* Nav Active Class */
+  .nav_active {
+    transform: translateX(0);
+  }
+  
+  /* Toggler Icon Animation */
+  .toggle .line1 {
+    transform: rotate(-45deg) translate(-4px, 5px);
+  }
+  
+  .toggle .line2 {
+    opacity: 0;
+  }
+  
+  .toggle .line3 {
+    transform: rotate(45deg) translate(-4px, -5px);
+  }

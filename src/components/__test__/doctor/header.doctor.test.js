@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Header from "../../components/common/doctor/Header";
+import Header from "../../common/doctor/Header";
 
 test("render Menue icon", async() => {
     render(<Header open={false} />);

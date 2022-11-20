@@ -12,18 +12,16 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AddHomeIcon from '@mui/icons-material/AddHome';
-import { Button, Grid} from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Button} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CreateIcon from '@mui/icons-material/Create';
 import GroupsIcon from '@mui/icons-material/Groups';
+import SyncLockSharpIcon from '@mui/icons-material/SyncLockSharp';
+import PreviewSharpIcon from '@mui/icons-material/PreviewSharp';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
-import PasswordIcon from '@mui/icons-material/Password';
-import ChangePassword from '../../pages/ChangePassword.jsx';
-import CustomizedDialogs from '../../layouts/Dialog.jsx';
 import { Link } from "react-router-dom";
+import { blue} from "@mui/material/colors";
 
 const useStyles = makeStyles({
     paper: {
@@ -45,7 +43,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function SideBar(props) {
     const classes = useStyles();
     const theme = useTheme();
-
     return (
         <Drawer
                     sx={{
@@ -97,14 +94,16 @@ export default function SideBar(props) {
                                                 <CalendarMonthIcon color="success" sx={{ fontSize: 30 }} />
                                             </Avatar>
                                         </ListItemAvatar>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                        >
-                                            View Schedules
+                                        <Link to="/ConsultantDashboard" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                View Schedules
                                         </Button>
+                                        </Link>
                                     </ListItem>
                                     <Divider variant="inset" color="secondary" />
                                     <ListItem>
@@ -120,6 +119,7 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="create-schedule"
                                             >
                                                 Create Schedule
                                             </Button>
@@ -139,12 +139,30 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="view-doctors"
                                             >
                                                 View Doctors
                                             </Button>
                                         </Link>
                                     </ListItem>
-
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                                <PreviewSharpIcon color="secondary" sx={{ color: blue[800],fontSize: 30 }} />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        {/* <ListItemText primary="Vacation" secondary="July 20, 2014" /> */}
+                                        <Link to="/ConsultantViewSwappingShifts" style={{textDecoration: 'none'}}>
+                                        <Button
+                                                type="submit"
+                                                fullWidth
+                                                variant="contained"
+                                                sx={{ bgcolor: blue[800], mt: 3, mb: 2 }}
+                                            >
+                                                View Exchange Shifts
+                                            </Button>
+                                        </Link>
+                                    </ListItem>
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{ bgcolor: "#f5f5f5" }}>
@@ -158,19 +176,29 @@ export default function SideBar(props) {
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                id="set-deadline"
                                             >
                                                 Set Deadline
                                             </Button>
                                         </Link>
                                     </ListItem>
-                                    <ListItem sx={{ mt: 3, mb: 2 }}>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ bgcolor: "#f5f5f5" }}>
-                                                <PasswordIcon color="secondary" sx={{ fontSize: 30 }} />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <div  className= " mt: 3 mb: 2" ><CustomizedDialogs ><ChangePassword/></CustomizedDialogs></div>
-                                    </ListItem>
+                                    <ListItem>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: "#f5f5f5" }}>
+                                            <SyncLockSharpIcon color="primary" sx={{ fontSize: 30 }} />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <div  className= " mt: 3 mb: 2" >
+                                        <Link to="/ConsultantChangepwd" style={{textDecoration: 'none'}}>
+                                            <Button
+                                                variant="contained"
+                                                fullWidth
+                                                color="primary"
+                                            > Change password
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </ListItem>
                                 </div>
                             </List>
                         </Box>
@@ -178,11 +206,11 @@ export default function SideBar(props) {
                         <Divider />
 
                         <Divider />
-                        <div className='settings'>
+                        {/* <div className='settings'>
                         <List>
-                            <ListItem>
+                            <ListItem> */}
                                 {/* import SettingsIcon from '@mui/icons-material/Settings'; */}
-                                <ListItemAvatar>
+                                {/* <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: "#f5f5f5" }}>
                                         <SettingsIcon color="primary" sx={{ fontSize: 40 }} />
                                     </Avatar>
@@ -191,7 +219,7 @@ export default function SideBar(props) {
 
                             </ListItem>
                         </List>
-                        </div>
+                        </div> */}
                     </div>
                 </Drawer>
     )

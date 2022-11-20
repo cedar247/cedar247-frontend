@@ -1,13 +1,17 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Calendar from '../pages/Calendar.jsx';
+import Calendar from '../layouts/ConsultantClendar.jsx';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
+import jwtDecode from 'jwt-decode'
+import AccessDenied from './AccessDenied';
+import { useEffect } from "react";
+// import PopUp from '../layouts/ConsultantPopups';
 
 const windowHeight = window.innerHeight-200;
-const drawerWidth = 280;
+const drawerWidth = 240;
 // console.log(windowHeight);
 // console.log(windowWidth);
 
@@ -33,6 +37,32 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function ConsultantDashboard() {
+
+    const [user, setUser] = React.useState("");
+    const [id, setID] = React.useState("");
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const user = jwtDecode(token)
+            if (!user) {
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if (user) {
+                if (user.type === "CONSULTANT") {
+                    setUser("CONSULTANT");
+                    setID(user._id);
+                    // handleGetShifts()
+
+                } else {
+                    setUser("NONE")
+                }
+
+            }
+        } else {
+            setUser("")
+        }
+    }, []);
     const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
@@ -42,17 +72,30 @@ export default function ConsultantDashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const handleLogout = async (e) => {
+        localStorage.removeItem('token')
+        window.location.href = "/"
+    }
+
+
     // document.body.style.backgroundImage = `url(${Back2})`;
-    return (
+    const consultantpage = 
         <div className='DashBody' >
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
-                <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
+
+                <Header handleDrawerOpen={handleDrawerOpen} open={open} handlelogout={handleLogout}/>
+                <SideBar handleDrawerClose={handleDrawerClose} open={open} />
+
                 <Main open={open} style={{paddingTop: '100px' }}>
-                    <Calendar windowHeight = {windowHeight} />
+                    <Calendar id = {id} windowHeight = {windowHeight} />
                 </Main>
             </Box>
         </div>
-    );
+        return (
+            <>
+                {user !== "" && user === "CONSULTANT" ? consultantpage : <> <AccessDenied></AccessDenied> </>}
+            </>
+        )
 }

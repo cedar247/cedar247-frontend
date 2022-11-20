@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {  useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid, TextField} from '@material-ui/core';
-import ShiftDetails from "../schedule/ShiftDetails";
+import { styled } from '@mui/material/styles';
+import { Button, Typography, TextField} from '@material-ui/core';
 import MonthPicker from "../schedule/MonthPicker";
 import ConsultantService from "../../services/API/ConsultantService";
 import { toast } from "react-toastify";
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -43,13 +43,36 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function SetDeadline() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    
     const [values, setValues] = React.useState({
         month: "",
         year: "",
         deadline: ""
     });
+    const [user, setUser] = React.useState("");
+
+    useEffect(() => {
+        const token  = localStorage.getItem('token');
+            if(token){
+                const user = jwtDecode(token)
+                if(!user){
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if(user){
+                    if(user.type ==='CONSULTANT'){
+                        setUser("CONSULTANT")
+                    }else{
+                        setUser("NONE")
+                    }
+                    
+                }
+            }else{
+                setUser("")
+            }
+    }, []);
 
 
     const handleChange = (prop) => (event) => {
@@ -66,12 +89,26 @@ export default function SetDeadline() {
         }
 
         try {
-            const response = await ConsultantService.setDeadline(values);
+            const token = localStorage.getItem('token');
+            const response = await ConsultantService.setDeadline(values, token);
     
             if(response.status === 201) {
-                toast.success("Deadline has been set successfully!", {
-                    toastId: "1"
-                })
+                const msg = response.data.msg;
+                    if( msg !== undefined) {
+                        toast.success(msg, {
+                            toastId: "1"
+                        })
+                    }
+
+                navigate('/ConsultantDashboard')
+            } else if(response.status === 200) {
+                const error = response.data.error;
+
+                    if(error !== undefined){
+                        toast.error(error, {
+                            toastId: "1"
+                        })
+                    }
             }
         } catch(error) {
             console.log(error)
@@ -86,16 +123,19 @@ export default function SetDeadline() {
         setOpen(false);
     };
 
-    return (
+    const setDeadlinePage =
         <div>
-            <Box sx={{ display: 'flex' }}>
+            <Box 
+                sx={{ display: 'flex' }}
+                className="container"
+            >
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
                 <Main open={open}>
                     <DrawerHeader />
                     <Typography 
-                        variant='h4' 
+                        variant='h3' 
                         component="h1"
                         align='center'
                         gutterBottom
@@ -114,7 +154,7 @@ export default function SetDeadline() {
                                 type="date"
                                 defaultValue="2022-09-23"
                                 InputLabelProps={{
-                                shrink: true,
+                                    shrink: true,
                                 }}
                                 margin='normal'
                                 color='secondary'
@@ -123,7 +163,7 @@ export default function SetDeadline() {
                         </Box>
 
                         <Box textAlign='center' m={3}>
-                            <Button variant="contained" color="primary" type='submit' onClick={handleSubmit}>
+                            <Button id="set-deadline-btn" variant="contained" color="primary" type='submit' onClick={handleSubmit}>
                                 Set Deadline
                             </Button>
                         </Box>
@@ -131,5 +171,10 @@ export default function SetDeadline() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user !== "" && user === "CONSULTANT" ? setDeadlinePage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

@@ -3,14 +3,15 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from "../common/consultant/SideBar";
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Button, Typography, Grid } from '@material-ui/core';
 import ShiftDetails from "../schedule/ShiftDetails";
 import adminService from '../../services/API/AdminService';
 import consulantService from '../../services/API/ConsultantService';
 import { toast } from "react-toastify";
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
+import { useNavigate } from 'react-router-dom' 
 
 const drawerWidth = 240;
 
@@ -43,20 +44,43 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function CreateSchedule() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [shifts, setShifts] = useState([]);
     const [doctorCategories, setDoctorCategories] = useState([]);
     const [requirements, setRequirements] = useState([])
+    const [user, setUser] = React.useState("");
    
     useEffect(() => {
+        // get the token and identify user type
+        const token  = localStorage.getItem('token');
+        if(token){
+            const user = jwtDecode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                window.location.href = "/"
+            }
+            else if(user){
+                if(user.type ==='CONSULTANT'){
+                    setUser("CONSULTANT")
+                }else{
+                    setUser("NONE")
+                }
+                
+            }
+        }else{
+            setUser("")
+        }
+
         getShifts();
         getDoctorCategories();
     }, []);
     
 
-    const getShifts = async () => {
+    const getShifts = async (token) => {
         try {
-            const response = await adminService.getShifts();
+            const token  = localStorage.getItem('token'); // get token
+            const response = await adminService.getShifts(token);
             if(response.data) {
                 setShifts(response.data)
                 const data = response.data;
@@ -77,7 +101,8 @@ export default function CreateSchedule() {
 
     const getDoctorCategories = async () => {
         try {
-            const response = await consulantService.getDoctorCategories();
+            const token  = localStorage.getItem('token'); // get token
+            const response = await consulantService.getDoctorCategories(token);
             if(response.data) {
                 setDoctorCategories(response.data)
             }
@@ -90,7 +115,7 @@ export default function CreateSchedule() {
     const handleRequirements = (id, index, e, doctorCategory) => {
         let cpRequirements = [...requirements]
         let requirement = {...cpRequirements[index]}
-        if(requirement.shiftId == id) {
+        if(requirement.shiftId === id) {
             // console.log(typeof doctorCategory)
             requirement[doctorCategory] = e.target.value;
             cpRequirements[index] = requirement;
@@ -101,30 +126,44 @@ export default function CreateSchedule() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let error = false;
+        console.log(requirements)
         for(let i = 0; i < requirements.length; i++){
             const requirementDetails = requirements[i];
 
-            for(const [key, value] of Object.entries(requirementDetails)) {
-                console.log(value)
-                if(value === 0 || value === ""){
-                    error = true;
+            // iterate through doctor cactegories
+            for(let i = 0; i < doctorCategories.length; i++){
+                if(requirementDetails[doctorCategories[i]] === ""){
+                    error = true
                 }
             }
         }
 
-        // if(error) {
-        //     toast.warning("Fill all the fields", {
-        //         toastId: "1"
-        //     })
+        
         
         try {
-            const response = await consulantService.createSchedule(requirements);
-            if(response.status === 201) {
-                toast.success("Schedule created successfully!!", {
+            if(error) {
+                toast.warning("Fill all the fields", {
                     toastId: "1"
                 })
+            } else {
+                const token = localStorage.getItem('token')
+                const response = await consulantService.createSchedule(requirements, token);
+                if(response.status === 201) {
+                    
+                    toast.success("Schedule created successfully!!", {
+                        toastId: "1"
+                    })
+                    navigate('/ConsultantDashboard')
+                } else if(response.status === 200) {
+                    const error = response.data.error;
+
+                    if(error !== undefined){
+                        toast.error(error, {
+                            toastId: "1"
+                        })
+                    }
+                }
             }
-            console.log(response)
         } catch(error) {
             console.log(error)
         }
@@ -141,9 +180,12 @@ export default function CreateSchedule() {
         setOpen(false);
     };
 
-    return (
+    const CreateSchedulePage =
         <div>
-            <Box sx={{ display: 'flex' }}>
+            <Box 
+                sx={{ display: 'flex' }}
+                className="container"
+            >
                 <CssBaseline/>
                 <Header handleDrawerOpen={handleDrawerOpen} open={open}/>
                 <SideBar handleDrawerClose={handleDrawerClose} open={open}/>
@@ -171,7 +213,7 @@ export default function CreateSchedule() {
                             {
                                 shifts.map(
                                     (shift, index, arr) => (
-                                        <ShiftDetails handleRequirements={handleRequirements} index={index} id={shift._id} shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
+                                        <ShiftDetails requirements={requirements} handleRequirements={handleRequirements} index={index} id={shift._id} shiftName={shift.name} doctorCategories={doctorCategories} key={shift._id}/>
                                     )
                                 )
                             }
@@ -192,5 +234,10 @@ export default function CreateSchedule() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user !== "" && user === "CONSULTANT" ? CreateSchedulePage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }

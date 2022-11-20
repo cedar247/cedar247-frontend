@@ -26,7 +26,7 @@ import Checkbox from '@mui/material/Checkbox';
         const [calendar, setCalendar] = React.useState([]);
         const [doctors, setDoctors] = React.useState([]);
 
-        const id = "633ab0f123be88c950fb8a89";
+        const id = props.id;
 
         const [windowHeight]= React.useState(props.windowHeight);
 
@@ -54,21 +54,24 @@ import Checkbox from '@mui/material/Checkbox';
             const date = data[i]["date"].split("-");
             const startTime = data[i]["startTime"].split(":");
             const endTime = data[i]["endTime"].split(":");
-            const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]))
-
-            if (data[i]["title"] === "night"){
-                endDate.setDate(endDate.getDate()+ 1)            
+            const startDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(startTime[0]), Number(startTime[1]));
+            const endDate = new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(endTime[0]), Number(endTime[1]));
+            // console.log(endDate)           
+            if (startDate > endDate){
+                endDate.setDate(endDate.getDate() + 1) 
+                // console.log(endDate)           
             }
 
             const item = {
                     title : data[i]["title"],
-                    startDate: new Date(Number(date[0]), Number(date[1])-1, Number(date[2]), Number(startTime[0]), Number(startTime[1])),
+                    startDate: startDate,
                     endDate: endDate,
                     id: data[i]["id"],
                     doctors: data[i]["doctors"]
                 }
             formatedData.push(item);
             }
+            // console.log(formatedData);
             return(formatedData);
         }
 
@@ -83,9 +86,9 @@ import Checkbox from '@mui/material/Checkbox';
                 console.log(response);
                     setCalendar(formatData(response.data[0]));
                     setDoctors(response.data[1]);
-                console.log(resourcesData);
-                console.log(response.data[1]);
-                console.log(formatData(response.data[0]));
+                // console.log(resourcesData);
+                // console.log(response.data[1]);
+                // console.log(formatData(response.data[0]));
             } catch (error) {
                 console.log(error);
             }

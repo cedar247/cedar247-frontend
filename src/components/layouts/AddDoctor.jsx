@@ -39,11 +39,13 @@ export default function AddDoctor(props) {
   //use effects to fetch wards and doctor types while rendering
   useEffect(() => {
     getAllWards();
-    getDoctorTypes();
   }, []);
+
 // to set the value for the wards (ID)
-  const handleChange3 = (event) => {
+  const handleChange3 = async (event) => {
+    console.log("Hi");
     setValues({ ...values, ["WardID"]: event.target.value });
+    getDoctorTypes(event.target.value);
   };
 
   // to fetch all details of the wards
@@ -51,8 +53,8 @@ export default function AddDoctor(props) {
     try {
       //fetches the data of wards 
       const response = await AdminService.getWards();
-      console.log(response);
-      console.log(response.data);
+      // console.log(response);
+      // console.log(response.data);
       //sets the ward names with id in the wards array
       setWards(response.data);
     } catch (error) {
@@ -62,12 +64,14 @@ export default function AddDoctor(props) {
   };
 
   //to fetch the doctor types from the backend
-  const getDoctorTypes = async () => {
+  const getDoctorTypes = async (val) => {
+    
     try {
       //fetches the data from the backend
-      const response = await AdminService.getDoctorTypes();
+      // setTimeout(function(){ }, 500);
+      const response = await AdminService.getDoctorTypes(val);
       //for debugging purpose
-      console.log(response);
+      // console.log(response);
       console.log(response.data);
       //sets the doctor types in the array
       setmodels(response.data);
@@ -101,8 +105,8 @@ export default function AddDoctor(props) {
 //to handle the submin
   const onSubmit = async (e) => {
     //to check the access of the .env file
-    console.log(process.env.REACT_APP_DEFAULT_PASSWORD);
-    console.log(models);
+    // console.log(process.env.REACT_APP_DEFAULT_PASSWORD);
+    // console.log(models);
     //to check whether the fields are empty or not
     if (values.WardID === "" || values.name === "" || values.email === "" || values.phoneNumber === "" || (values.NewCategory === "" && values.category==="") ){
       e.preventDefault();// to prevent page refresh
@@ -124,6 +128,7 @@ export default function AddDoctor(props) {
           toast.success("New Doctor Added", {
             toastId: "1"
           })
+          setTimeout(function(){ window.location.reload(false); }, 1000);
         }
         // gives a warning if the email id already exits
         if(response.data.msg === "User validation failed: email: The specified email address is already in use."){

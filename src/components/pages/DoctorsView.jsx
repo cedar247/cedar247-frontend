@@ -3,12 +3,13 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '../common/consultant/Header';
 import SideBar from '../common/consultant/SideBar';
-import { styled, useTheme } from '@mui/material/styles';
-import WardDetails from '../ward/WardDetails';
-import Constraints from '../ward/Constraints';
-import { Button, Typography, Grid } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import Doctor from '../ward/Doctor';
 import consulantService from '../../services/API/ConsultantService';
+import jwtDecode from 'jwt-decode' 
+import AccessDenied from './AccessDenied';
+import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -43,6 +44,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function DoctorsView() {
     const [open, setOpen] = useState(false);
     const [doctors, setDoctors] = useState([]);
+    const [user, setUser] = React.useState("");
 
     useEffect(() => {
         getDoctors();
@@ -50,7 +52,26 @@ export default function DoctorsView() {
 
     const getDoctors = async () => {
         try {
-            const response = await consulantService.getDoctors();
+            const token  = localStorage.getItem('token');
+            if(token){
+                const user = jwtDecode(token)
+                if(!user){
+                    localStorage.removeItem('token')
+                    window.location.href = "/"
+                }
+                else if(user){
+                    if(user.type ==='CONSULTANT'){
+                        setUser("CONSULTANT")
+                    }else{
+                        setUser("NONE")
+                    }
+                    
+                }
+            }else{
+                setUser("")
+            }
+
+            const response = await consulantService.getDoctors(token);
             setDoctors(response.data);
         } catch (error) {
 
@@ -65,7 +86,7 @@ export default function DoctorsView() {
         setOpen(false);
     };
 
-    return (
+    const doctorsViewPage = 
         <div>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline/>
@@ -97,5 +118,10 @@ export default function DoctorsView() {
                 </Main>
             </Box>
         </div>
-    );
+    
+    return (
+        <>
+        {user !== "" && user === "CONSULTANT" ? doctorsViewPage :<> <AccessDenied></AccessDenied> </> }
+        </>
+    )
 }
