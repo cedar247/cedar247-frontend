@@ -13,7 +13,7 @@ import {
     Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import DoctorService from "../../services/API/DoctorService";
-import { appointments, resourcesData} from "../pages/dummy_data.js";
+// import { appointments, resourcesData} from "../pages/dummy_data.js";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
